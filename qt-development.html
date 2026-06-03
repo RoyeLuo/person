@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qt开发指南 - 技术知识</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #41cd52 0%, #2cb535 100%); color: white; padding: 2rem; text-align: center; }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.9; }
+        nav { background: #2d2d2d; padding: 0.5rem 2rem; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1rem; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #ccc; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background: #41cd52; color: white; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card h2 { color: #41cd52; border-bottom: 2px solid #41cd52; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.3rem; }
+        .card h3 { color: #333; margin: 1rem 0 0.5rem; font-size: 1.1rem; }
+        .card p { margin-bottom: 0.8rem; color: #555; }
+        .tag { display: inline-block; background: #e8f5e9; color: #41cd52; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; margin: 0.2rem; }
+        .tag.blue { background: #e3f2fd; color: #1976d2; }
+        .tag.orange { background: #fff3e0; color: #f57c00; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 1rem 0; font-size: 0.9rem; line-height: 1.5; }
+        code { font-family: "Fira Code", "Consolas", monospace; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .class { color: #4ec9b0; }
+        .function { color: #dcdcaa; }
+        .string { color: #ce9178; }
+        .macro { color: #c586c0; }
+        ul { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .highlight-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .warning-box { background: #ffebee; border-left: 4px solid #d32f2f; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .success-box { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        footer { background: #2d2d2d; color: #888; text-align: center; padding: 2rem; margin-top: 3rem; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: #41cd52; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .grid-item { background: #fafafa; padding: 1rem; border-radius: 6px; border: 1px solid #eee; }
+        .grid-item h4 { color: #41cd52; margin-bottom: 0.5rem; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.75rem; text-align: left; }
+        th { background: #41cd52; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Qt开发指南</h1>
+        <p>C++跨平台应用开发框架 | 信号槽、QML、模型视图、数据库</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我</a></li>
+            <li><a href="tech-knowledge.html">技术知识</a></li>
+            <li><a href="contact.html">联系我</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <a href="tech-knowledge.html" class="back-link">← 返回技术知识总览</a>
+
+        <div class="card">
+            <h2>Qt基础</h2>
+            <p>Qt是一个跨平台的C++图形用户界面应用程序开发框架，支持Windows、Linux、macOS、Android、iOS等平台。</p>
+
+            <h3>信号与槽机制</h3>
+            <p>Qt的核心机制，用于对象间的通信。</p>
+<pre><code><span class="comment">// 连接信号和槽</span>
+<span class="keyword">connect</span>(btn, &QPushButton::clicked, this, &MyWidget::onButtonClicked);
+<span class="keyword">connect</span>(spinBox, QOverload<int>::of(&QSpinBox::valueChanged),
+           label, QOverload<int>::of(&QLabel::setNum));
+
+<span class="comment">// Lambda表达式（Qt5+）</span>
+<span class="keyword">connect</span>(btn, &QPushButton::clicked, [<span class="keyword">this</span>](){
+    qDebug() << <span class="string">"Button clicked!"</span>;
+    <span class="keyword">this</span>->process();
+});
+
+<span class="comment">// 信号连接信号</span>
+<span class="keyword">connect</span>(lineEdit, &QLineEdit::returnPressed, lineEdit, &QLineEdit::clear);
+
+<span class="comment">// 断开连接</span>
+<span class="keyword">disconnect</span>(btn, &QPushButton::clicked, <span class="keyword">this</span>, QOverload<>::of(&MyWidget::onClicked));</code></pre>
+
+            <h3>常用类</h3>
+            <table>
+                <tr><th>类</th><th>功能</th><th>头文件</th></tr>
+                <tr><td>QWidget</td><td>所有UI部件基类</td><td>&lt;QWidget&gt;</td></tr>
+                <tr><td>QPushButton</td><td>按钮</td><td>&lt;QPushButton&gt;</td></tr>
+                <tr><td>QLineEdit</td><td>单行输入</td><td>&lt;QLineEdit&gt;</td></tr>
+                <tr><td>QTextEdit</td><td>多行文本</td><td>&lt;QTextEdit&gt;</td></tr>
+                <tr><td>QComboBox</td><td>下拉框</td><td>&lt;QComboBox&gt;</td></tr>
+                <tr><td>QListWidget</td><td>列表控件</td><td>&lt;QListWidget&gt;</td></tr>
+                <tr><td>QTableWidget</td><td>表格控件</td><td>&lt;QTableWidget&gt;</td></tr>
+                <tr><td>QLabel</td><td>标签</td><td>&lt;QLabel&gt;</td></tr>
+                <tr><td>QDialog</td><td>对话框基类</td><td>&lt;QDialog&gt;</td></tr>
+                <tr><td>QMenuBar</td><td>菜单栏</td><td>&lt;QMenuBar&gt;</td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>布局管理</h2>
+<pre><code><span class="comment">// 水平布局</span>
+<span class="class">QHBoxLayout</span> *hLayout = <span class="keyword">new</span> <span class="class">QHBoxLayout</span>;
+hLayout->addWidget(label);
+hLayout->addWidget(lineEdit);
+hLayout->addStretch();           <span class="comment">// 添加弹簧</span>
+
+<span class="comment">// 垂直布局</span>
+<span class="class">QVBoxLayout</span> *vLayout = <span class="keyword">new</span> <span class="class">QVBoxLayout</span>;
+vLayout->addLayout(hLayout);
+vLayout->addWidget(button);
+
+<span class="comment">// 网格布局</span>
+<span class="class">QGridLayout</span> *grid = <span class="keyword">new</span> <span class="class">QGridLayout</span>;
+grid->addWidget(nameLabel, <span class="number">0</span>, <span class="number">0</span>);
+grid->addWidget(nameEdit, <span class="number">0</span>, <span class="number">1</span>);
+grid->addWidget(ageLabel, <span class="number">1</span>, <span class="number">0</span>);
+grid->addWidget(ageEdit, <span class="number">1</span>, <span class="number">1</span>);
+grid->setColumnStretch(<span class="number">1</span>, <span class="number">1</span>);  <span class="comment">// 第二列可拉伸</span>
+
+<span class="comment">// 表单布局</span>
+<span class="class">QFormLayout</span> *form = <span class="keyword">new</span> <span class="class">QFormLayout</span>;
+form->addRow(<span class="string">"姓名:"</span>, nameEdit);
+form->addRow(<span class="string">"年龄:"</span>, ageEdit);
+
+<span class="comment">// 嵌套布局示例</span>
+<span class="class">QWidget</span> *window = <span class="keyword">new</span> <span class="class">QWidget</span>;
+<span class="class">QVBoxLayout</span> *mainLayout = <span class="keyword">new</span> <span class="class">QVBoxLayout</span>(window);
+mainLayout->addLayout(topLayout);
+mainLayout->addLayout(bottomLayout);
+window->setLayout(mainLayout);</code></pre>
+
+            <div class="highlight-box">
+                <strong>布局技巧：</strong>
+                <ul>
+                    <li><code>setSpacing(10)</code> - 设置控件间距</li>
+                    <li><code>setContentsMargins(10,10,10,10)</code> - 设置边距</li>
+                    <li><code>addStretch()</code> - 添加弹簧使控件靠边</li>
+                    <li><code>setSizePolicy()</code> - 控制控件大小策略</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>主窗口结构</h2>
+<pre><code><span class="comment">// MainWindow.h</span>
+<span class="keyword">class</span> <span class="class">MainWindow</span> : <span class="keyword">public</span> <span class="class">QMainWindow</span>
+{
+    Q_OBJECT
+<span class="keyword">public</span>:
+    <span class="function">MainWindow</span>(QWidget *parent = <span class="keyword">nullptr</span>);
+    ~<span class="function">MainWindow</span>();
+    
+<span class="keyword">private</span> <span class="keyword">slots</span>:
+    <span class="keyword">void</span> <span class="function">openFile</span>();
+    <span class="keyword">void</span> <span class="function">saveFile</span>();
+    <span class="keyword">void</span> <span class="function">about</span>();
+    
+<span class="keyword">private</span>:
+    <span class="keyword">void</span> <span class="function">createActions</span>();
+    <span class="keyword">void</span> <span class="function">createMenus</span>();
+    <span class="keyword">void</span> <span class="function">createToolBars</span>();
+    <span class="keyword">void</span> <span class="function">createStatusBar</span>();
+    
+    <span class="class">QTextEdit</span> *textEdit;
+    <span class="class">QMenuBar</span> *menuBar;
+    <span class="class">QToolBar</span> *toolBar;
+    <span class="class">QStatusBar</span> *statusBar;
+};
+
+<span class="comment">// MainWindow.cpp</span>
+<span class="class">MainWindow</span>::<span class="function">MainWindow</span>(QWidget *parent)
+    : QMainWindow(parent)
+{
+    textEdit = <span class="keyword">new</span> <span class="class">QTextEdit</span>(<span class="keyword">this</span>);
+    setCentralWidget(textEdit);              <span class="comment">// 设置中心部件</span>
+    
+    <span class="function">createActions</span>();
+    <span class="function">createMenus</span>();
+    <span class="function">createToolBars</span>();
+    <span class="function">createStatusBar</span>();
+    
+    <span class="comment">// 状态栏</span>
+    statusBar()->showMessage(<span class="string">"就绪"</span>);
+}
+
+<span class="keyword">void</span> <span class="class">MainWindow</span>::<span class="function">createMenus</span>()
+{
+    <span class="class">QMenu</span> *fileMenu = menuBar()->addMenu(<span class="string">"文件(&amp;F)"</span>);
+    fileMenu->addAction(openAct);
+    fileMenu->addAction(saveAct);
+    fileMenu->addSeparator();
+    fileMenu->addAction(exitAct);
+}
+
+<span class="keyword">void</span> <span class="class">MainWindow</span>::<span class="function">createToolBars</span>()
+{
+    <span class="class">QToolBar</span> *toolBar = addToolBar(<span class="string">"工具栏"</span>);
+    toolBar->addAction(openAct);
+    toolBar->addAction(saveAct);
+}</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>对话框</h2>
+<pre><code><span class="comment">// 消息框</span>
+<span class="class">QMessageBox</span>::StandardButton reply;
+reply = <span class="class">QMessageBox</span>::<span class="function">question</span>(<span class="keyword">this</span>, <span class="string">"确认"</span>, <span class="string">"确定要退出吗?"</span>,
+                <span class="class">QMessageBox</span>::Yes | <span class="class">QMessageBox</span>::No);
+
+<span class="keyword">if</span> (reply == <span class="class">QMessageBox</span>::Yes) {
+    qApp->quit();
+}
+
+<span class="comment">// 输入对话框</span>
+<span class="class">QInputDialog</span> dialog(<span class="keyword">this</span>);
+dialog.setWindowTitle(<span class="string">"输入"</span>);
+dialog.setLabelText(<span class="string">"请输入用户名:"</span>);
+dialog.setTextValue(<span class="string">"admin"</span>);
+
+<span class="keyword">if</span> (dialog.exec() == QDialog::Accepted) {
+    QString username = dialog.textValue();
+}
+
+<span class="comment">// 颜色选择对话框</span>
+<span class="class">QColor</span> color = <span class="class">QColorDialog</span>::<span class="function">getColor</span>(Qt::green, <span class="keyword">this</span>);
+
+<span class="comment">// 文件对话框</span>
+<span class="class">QString</span> fileName = <span class="class">QFileDialog</span>::<span class="function">getOpenFileName</span>(<span class="keyword">this</span>,
+    <span class="string">"打开文件"</span>, <span class="string">"/home"</span>, <span class="string">"文本文件 (*.txt);;所有文件 (*.*)"</span>);
+
+<span class="class">QStringList</span> files = <span class="class">QFileDialog</span>::<span class="function">getOpenFileNames</span>(<span class="keyword">this</span>,
+    <span class="string">"选择多个文件"</span>, <span class="string">"/home"</span>, <span class="string">"图片 (*.png *.jpg)"</span>);
+
+<span class="comment">// 自定义对话框</span>
+<span class="class">QDialog</span> *dlg = <span class="keyword">new</span> <span class="class">QDialog</span>(<span class="keyword">this</span>);
+dlg->setWindowTitle(<span class="string">"自定义对话框"</span>);
+dlg->setModal(<span class="keyword">true</span>);  <span class="comment">// 模态对话框</span>
+dlg->exec();</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>文件操作</h2>
+<pre><code><span class="comment">// 文本文件读写</span>
+<span class="class">QFile</span> file(<span class="string">"data.txt"</span>);
+<span class="keyword">if</span> (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    <span class="class">QTextStream</span> in(&file);
+    <span class="keyword">while</span> (!in.atEnd()) {
+        QString line = in.readLine();
+        <span class="comment">// 处理行</span>
+    }
+    file.close();
+}
+
+<span class="comment">// 写入文件</span>
+<span class="class">QFile</span> outFile(<span class="string">"output.txt"</span>);
+<span class="keyword">if</span> (outFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    <span class="class">QTextStream</span> out(&outFile);
+    out << <span class="string">"Hello Qt\n"</span>;
+    out << <span class="string">"Line: "</span> << <span class="number">123</span> << <span class="string">"\n"</span>;
+    outFile.close();
+}
+
+<span class="comment">// JSON文件</span>
+<span class="class">QJsonObject</span> json;
+json[<span class="string">"name"</span>] = <span class="string">"张三"</span>;
+json[<span class="string">"age"</span>] = <span class="number">25</span>;
+
+<span class="class">QJsonDocument</span> doc(json);
+<span class="class">QFile</span> file(<span class="string">"user.json"</span>);
+<span class="keyword">if</span> (file.open(QIODevice::WriteOnly)) {
+    file.write(doc.toJson());
+    file.close();
+}
+
+<span class="comment">// 读取JSON</span>
+file.open(QIODevice::ReadOnly);
+<span class="class">QJsonDocument</span> doc = <span class="class">QJsonDocument</span>::<span class="function">fromJson</span>(file.readAll());
+<span class="class">QJsonObject</span> obj = doc.object();
+QString name = obj[<span class="string">"name"</span>].toString();
+<span class="keyword">int</span> age = obj[<span class="string">"age"</span>].toInt();</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>数据库操作</h2>
+<pre><code><span class="comment">// 数据库连接</span>
+<span class="class">QSqlDatabase</span> db = <span class="class">QSqlDatabase</span>::addDatabase(<span class="string">"QSQLITE"</span>);
+db.setDatabaseName(<span class="string">"myapp.db"</span>);
+<span class="keyword">if</span> (!db.open()) {
+    qDebug() << <span class="string">"数据库打开失败:"</span> << db.lastError().text();
+}
+
+<span class="comment">// 创建表</span>
+<span class="class">QSqlQuery</span> query;
+query.exec(<span class="string">"CREATE TABLE IF NOT EXISTS users ("
+           "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+           "name TEXT NOT NULL, "
+           "email TEXT"
+           ")"</span>);
+
+<span class="comment">// 插入数据</span>
+query.prepare(<span class="string">"INSERT INTO users (name, email) VALUES (:name, :email)"</span>);
+query.bindValue(<span class="string">":name"</span>, <span class="string">"张三"</span>);
+query.bindValue(<span class="string">":email"</span>, <span class="string">"zhang@example.com"</span>);
+query.exec();
+
+<span class="comment">// 查询数据</span>
+query.exec(<span class="string">"SELECT * FROM users WHERE age > 20"</span>);
+<span class="keyword">while</span> (query.next()) {
+    <span class="keyword">int</span> id = query.value(<span class="string">"id"</span>).toInt();
+    QString name = query.value(<span class="string">"name"</span>).toString();
+    qDebug() << id << name;
+}
+
+<span class="comment">// 更新数据</span>
+query.prepare(<span class="string">"UPDATE users SET name = :name WHERE id = :id"</span>);
+query.bindValue(<span class="string">":name"</span>, <span class="string">"李四"</span>);
+query.bindValue(<span class="string">":id"</span>, <span class="number">1</span>);
+query.exec();
+
+<span class="comment">// 删除数据</span>
+query.exec(<span class="string">"DELETE FROM users WHERE id = 1"</span>);
+
+<span class="comment">// 事务</span>
+db.transaction();
+<span class="comment">// ... 执行多个操作 ...</span>
+db.commit();  <span class="comment">// 或 db.rollback();</span></code></pre>
+
+            <h3>QSqlTableModel 简化CRUD</h3>
+<pre><code><span class="class">QSqlTableModel</span> *model = <span class="keyword">new</span> <span class="class">QSqlTableModel</span>(<span class="keyword">this</span>);
+model->setTable(<span class="string">"users"</span>);
+model->setEditStrategy(<span class="class">QSqlTableModel</span>::OnManualSubmit);
+
+<span class="comment">// 查询</span>
+model->select();
+model->setFilter(<span class="string">"age > 20"</span>);
+
+<span class="comment">// 添加行</span>
+model->insertRows(<span class="number">0</span>, <span class="number">1</span>);
+model->setData(model->index(<span class="number">0</span>, <span class="number">1</span>), <span class="string">"新用户"</span>);
+model->submitAll();
+
+<span class="comment">// 删除选中行</span>
+model->removeRow(view->currentIndex().row());
+model->submitAll();
+
+<span class="comment">// 显示在TableView</span>
+<span class="class">QTableView</span> *view = <span class="keyword">new</span> <span class="class">QTableView</span>;
+view->setModel(model);
+view->setModel(model);</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>多线程</h2>
+<pre><code><span class="comment">// 方式1：继承 QThread</span>
+<span class="keyword">class</span> <span class="class">WorkerThread</span> : <span class="keyword">public</span> <span class="class">QThread</span>
+{
+    Q_OBJECT
+<span class="keyword">protected</span>:
+    <span class="keyword">void</span> <span class="function">run</span>() <span class="keyword">override</span> {
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">100</span>; ++i) {
+            <span class="class">QThread</span>::sleep(<span class="number">1</span>);
+            <span class="function">emit</span> progress(i);      <span class="comment">// 发出信号</span>
+        }
+    }
+<span class="keyword">signals</span>:
+    <span class="keyword">void</span> <span class="function">progress</span>(<span class="keyword">int</span> value);
+};
+
+<span class="comment">// 使用</span>
+WorkerThread *thread = <span class="keyword">new</span> WorkerThread;
+<span class="function">connect</span>(thread, &WorkerThread::progress, <span class="keyword">this</span>, [<span class="keyword">this</span>](<span class="keyword">int</span> v){
+    progressBar->setValue(v);
+});
+<span class="function">connect</span>(thread, &WorkerThread::finished, thread, &QObject::deleteLater);
+thread->start();
+
+<span class="comment">// 方式2：QRunnable + QThreadPool（推荐）</span>
+<span class="keyword">class</span> <span class="class">Task</span> : <span class="keyword">public</span> <span class="class">QRunnable</span>
+{
+<span class="keyword">public</span>:
+    <span class="keyword">void</span> <span class="function">run</span>() <span class="keyword">override</span> {
+        <span class="comment">// 任务代码...</span>
+        <span class="function">emit</span> finished();
+    }
+<span class="keyword">signals</span>:
+    <span class="keyword">void</span> <span class="function">finished</span>();
+};
+
+<span class="class">QThreadPool</span>::globalInstance()-><span class="function">start</span>(<span class="keyword">new</span> Task);</code></pre>
+
+            <div class="warning-box">
+                <strong>注意：</strong>Qt GUI操作必须在主线程执行，跨线程通信使用信号槽
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>网络编程</h2>
+<pre><code><span class="comment">// HTTP请求（Qt5+）</span>
+<span class="class">QNetworkAccessManager</span> *manager = <span class="keyword">new</span> <span class="class">QNetworkAccessManager</span>(<span class="keyword">this</span>);
+<span class="class">QNetworkRequest</span> request(QUrl(<span class="string">"https://api.example.com/data"</span>));
+request.setHeader(QNetworkRequest::ContentTypeHeader, <span class="string">"application/json"</span>);
+
+<span class="comment">// GET请求</span>
+<span class="class">QNetworkReply</span> *reply = manager-><span class="function">get</span>(request);
+<span class="function">connect</span>(reply, &QNetworkReply::finished, [<span class="keyword">this</span>, reply]() {
+    <span class="keyword">if</span> (reply->error() == QNetworkReply::NoError) {
+        QByteArray data = reply->readAll();
+        <span class="comment">// 处理数据</span>
+    }
+    reply->deleteLater();
+});
+
+<span class="comment">// POST请求</span>
+<span class="class">QNetworkRequest</span> request(QUrl(<span class="string">"https://api.example.com/login"</span>));
+QByteArray postData = <span class="string">"username=admin&amp;password=123"</span>.toUtf8();
+manager-><span class="function">post</span>(request, postData);
+
+<span class="comment">// TCP通信</span>
+<span class="class">QTcpSocket</span> *socket = <span class="keyword">new</span> <span class="class">QTcpSocket</span>(<span class="keyword">this</span>);
+socket-><span class="function">connectToHost</span>(<span class="string">"192.168.1.100"</span>, <span class="number">8080</span>);
+<span class="keyword">if</span> (socket->waitForConnected()) {
+    socket->write(<span class="string">"Hello Server\n"</span>);
+    socket->waitForReadyRead();
+    QString response = socket->readAll();
+}
+
+<span class="comment">// TCP服务器</span>
+<span class="class">QTcpServer</span> *server = <span class="keyword">new</span> <span class="class">QTcpServer</span>(<span class="keyword">this</span>);
+<span class="function">connect</span>(server, &QTcpServer::newConnection, [<span class="keyword">this</span>](){
+    <span class="class">QTcpSocket</span> *client = server->nextPendingConnection();
+    <span class="comment">// 处理客户端连接</span>
+});
+server->listen(QHostAddress::Any, <span class="number">8080</span>);</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>模型视图架构</h2>
+<pre><code><span class="comment">// QStandardItemModel 示例</span>
+<span class="class">QStandardItemModel</span> *model = <span class="keyword">new</span> <span class="class">QStandardItemModel</span>(<span class="number">3</span>, <span class="number">3</span>, <span class="keyword">this</span>);
+model->setHorizontalHeaderLabels({<span class="string">"姓名"</span>, <span class="string">"年龄"</span>, <span class="string">"城市"</span>});
+
+<span class="comment">// 设置数据</span>
+model->setItem(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">new</span> <span class="class">QStandardItem</span>(<span class="string">"张三"</span>));
+model->setItem(<span class="number">0</span>, <span class="number">1</span>, <span class="keyword">new</span> <span class="class">QStandardItem</span>(<span class="string">"25"</span>));
+
+<span class="comment">// 显示在TableView</span>
+<span class="class">QTableView</span> *tableView = <span class="keyword">new</span> <span class="class">QTableView</span>(<span class="keyword">this</span>);
+tableView->setModel(model);
+tableView-><span class="function">setAlternatingRowColors</span>(<span class="keyword">true</span>);
+
+<span class="comment">// 自定义模型示例</span>
+<span class="keyword">class</span> <span class="class">MyTableModel</span> : <span class="keyword">public</span> <span class="class">QAbstractTableModel</span>
+{
+    Q_OBJECT
+<span class="keyword">public</span>:
+    <span class="keyword">int</span> <span class="function">rowCount</span>(<span class="keyword">const</span> <span class="class">QModelIndex</span> &parent) <span class="keyword">const override</span> { <span class="keyword">return</span> m_data.size(); }
+    <span class="keyword">int</span> <span class="function">columnCount</span>(<span class="keyword">const</span> <span class="class">QModelIndex</span> &parent) <span class="keyword">const override</span> { <span class="keyword">return</span> <span class="number">3</span>; }
+    <span class="class">QVariant</span> <span class="function">data</span>(<span class="keyword">const</span> <span class="class">QModelIndex</span> &index, <span class="keyword">int</span> role) <span class="keyword">const override</span> {
+        <span class="keyword">if</span> (role == Qt::DisplayRole) {
+            <span class="keyword">return</span> m_data[index.row()][index.column()];
+        }
+        <span class="keyword">return</span> {};
+    }
+    <span class="class">QVariant</span> <span class="function">headerData</span>(<span class="keyword">int</span> section, Qt::Orientation orientation, <span class="keyword">int</span> role) <span class="keyword">const override</span> {
+        <span class="keyword">if</span> (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
+            <span class="keyword">return</span> m_headers[section];
+        }
+        <span class="keyword">return</span> {};
+    }
+<span class="keyword">private</span>:
+    <span class="class">QVector</span>&lt;<span class="class">QVector</span>&lt;<span class="class">QString</span>&gt;&gt; m_data;
+    <span class="class">QStringList</span> m_headers = {<span class="string">"姓名"</span>, <span class="string">"年龄"</span>, <span class="string">"城市"</span>};
+};</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>QML与Quick</h2>
+            <p>QML是一种声明式语言，用于构建现代化的UI。</p>
+<pre><code><span class="comment">// main.qml</span>
+<span class="keyword">import</span> QtQuick <span class="number">2.15</span>
+<span class="keyword">import</span> QtQuick.Controls <span class="number">2.15</span>
+
+<span class="class">ApplicationWindow</span> {
+    visible: <span class="keyword">true</span>
+    width: <span class="number">800</span>
+    height: <span class="number">600</span>
+    title: <span class="string">"Qt QML Demo"</span>
+    
+    <span class="class">Column</span> {
+        anchors.centerIn: parent
+        spacing: <span class="number">10</span>
+        
+        <span class="class">Text</span> {
+            text: <span class="string">"Hello, Qt!"</span>
+            font.pixelSize: <span class="number">24</span>
+            color: <span class="string">"#41cd52"</span>
+        }
+        
+        <span class="class">Button</span> {
+            text: <span class="string">"Click Me"</span>
+            onClicked: {
+                console.log(<span class="string">"Button clicked!"</span>)
+            }
+        }
+        
+        <span class="class">TextField</span> {
+            placeholderText: <span class="string">"输入内容"</span>
+            onAccepted: console.log(text)
+        }
+    }
+}
+
+<span class="comment">// main.cpp 加载QML</span>
+<span class="class">QQmlApplicationEngine</span> engine;
+engine.load(QUrl(QStringLiteral(<span class="string">"qrc:/main.qml"</span>)));
+<span class="keyword">if</span> (engine.rootObjects().isEmpty())
+    <span class="keyword">return</span> -1;
+<span class="keyword">return</span> app.exec();</code></pre>
+
+            <div class="success-box">
+                <strong>QML优势：</strong>
+                <span class="tag">声明式语法</span>
+                <span class="tag">流畅动画</span>
+                <span class="tag">硬件加速</span>
+                <span class="tag">移动端支持</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>最佳实践</h2>
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>内存管理</h4>
+                    <ul>
+                        <li>使用父对象自动析构</li>
+                        <li>new后确保有父对象</li>
+                        <li>避免内存泄漏</li>
+                    </ul>
+                </div>
+                <div class="grid-item">
+                    <h4>编码规范</h4>
+                    <ul>
+                        <li>使用QString而非char*</li>
+                        <li>Qt::UTF8编码</li>
+                        <li>统一字符编码</li>
+                    </ul>
+                </div>
+                <div class="grid-item">
+                    <h4>调试技巧</h4>
+<pre><code>qDebug() << <span class="string">"Debug"</span>;
+qWarning() << <span class="string">"Warning"</span>;
+qCritical() << <span class="string">"Error"</span>;
+qFatal() << <span class="string">"Fatal"</span>;</code></pre>
+                </div>
+                <div class="grid-item">
+                    <h4>发布配置</h4>
+<pre><code><span class="comment">// .pro 文件</span>
+QT += core gui sql network
+<span class="macro">greaterThan</span>(QT_MAJOR_VERSION, <span class="number">4</span>): QT += widgets
+<span class="macro">CONFIG</span> += c++<span class="number">17</span></code></pre>
+                </div>
+            </div>
+
+            <h3>常用宏</h3>
+            <table>
+                <tr><th>宏</th><th>说明</th></tr>
+                <tr><td>Q_OBJECT</td><td>启用元对象系统（信号槽等）</td></tr>
+                <tr><td>signals</td><td>声明信号</td></tr>
+                <tr><td>slots</td><td>声明槽函数</td></tr>
+                <tr><td>Q_PROPERTY</td><td>定义属性</td></tr>
+                <tr><td>Q_INVOKABLE</td><td>允许从QML调用</td></tr>
+                <tr><td>Q_ENUM</td><td>枚举类型注册</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 技术知识库 | 由 Hexo 驱动</p>
+    </footer>
+</body>
+</html>

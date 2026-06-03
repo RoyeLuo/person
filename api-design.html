@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API设计指南 - 技术知识</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%); color: white; padding: 2rem; text-align: center; }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.9; }
+        nav { background: #2d2d2d; padding: 0.5rem 2rem; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1rem; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #ccc; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background: #1976d2; color: white; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card h2 { color: #1976d2; border-bottom: 2px solid #1976d2; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.3rem; }
+        .card h3 { color: #333; margin: 1rem 0 0.5rem; font-size: 1.1rem; }
+        .card p { margin-bottom: 0.8rem; color: #555; }
+        .tag { display: inline-block; background: #e3f2fd; color: #1976d2; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; margin: 0.2rem; }
+        .tag.green { background: #e8f5e9; color: #388e3c; }
+        .tag.orange { background: #fff3e0; color: #f57c00; }
+        .tag.red { background: #ffebee; color: #d32f2f; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 1rem 0; font-size: 0.9rem; }
+        code { font-family: "Fira Code", "Consolas", monospace; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .property { color: #9cdcfe; }
+        .value { color: #ce9178; }
+        ul { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .highlight-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .warning-box { background: #ffebee; border-left: 4px solid #d32f2f; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .success-box { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        footer { background: #2d2d2d; color: #888; text-align: center; padding: 2rem; margin-top: 3rem; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: #1976d2; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .grid-item { background: #fafafa; padding: 1rem; border-radius: 6px; border: 1px solid #eee; }
+        .grid-item h4 { color: #1976d2; margin-bottom: 0.5rem; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.75rem; text-align: left; }
+        th { background: #1976d2; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .method { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold; font-size: 0.8rem; }
+        .get { background: #61affe; color: white; }
+        .post { background: #49cc90; color: white; }
+        .put { background: #fca130; color: white; }
+        .delete { background: #f93e3e; color: white; }
+        .patch { background: #50e3c2; color: white; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>API设计指南</h1>
+        <p>RESTful规范、GraphQL与最佳实践</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我</a></li>
+            <li><a href="tech-knowledge.html">技术知识</a></li>
+            <li><a href="contact.html">联系我</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <a href="tech-knowledge.html" class="back-link">← 返回技术知识总览</a>
+
+        <div class="card">
+            <h2>RESTful API 基础</h2>
+            <p>REST（Representational State Transfer）是一种架构风格，核心是资源导向的URL设计。</p>
+
+            <h3>HTTP方法对应操作</h3>
+            <table>
+                <tr><th>方法</th><th>语义</th><th>幂等</th><th>安全</th><th>示例</th></tr>
+                <tr><td><span class="method get">GET</span></td><td>查询资源</td><td>✓</td><td>✓</td><td>GET /users/1001</td></tr>
+                <tr><td><span class="method post">POST</span></td><td>创建资源</td><td>✗</td><td>✗</td><td>POST /users</td></tr>
+                <tr><td><span class="method put">PUT</span></td><td>完整更新</td><td>✓</td><td>✗</td><td>PUT /users/1001</td></tr>
+                <tr><td><span class="method patch">PATCH</span></td><td>部分更新</td><td>✗</td><td>✗</td><td>PATCH /users/1001</td></tr>
+                <tr><td><span class="method delete">DELETE</span></td><td>删除资源</td><td>✓</td><td>✗</td><td>DELETE /users/1001</td></tr>
+            </table>
+
+            <div class="highlight-box">
+                <strong>幂等性：</strong>同一请求执行一次和执行多次效果相同<br>
+                <strong>安全性：</strong>请求是否改变服务器状态
+            </div>
+
+            <h3>URL命名规范</h3>
+<pre><code><span class="comment"># 正确示例</span>
+GET    /users              <span class="comment"># 用户列表（复数名词）</span>
+GET    /users/1001         <span class="comment"># 用户详情（资源+ID）</span>
+GET    /users/1001/orders  <span class="comment"># 用户的订单（嵌套资源）</span>
+POST   /users              <span class="comment"># 创建用户</span>
+PUT    /users/1001         <span class="comment"># 更新用户</span>
+DELETE /users/1001         <span class="comment"># 删除用户</span>
+
+<span class="comment"># 错误示例 ❌</span>
+GET /getUsers             <span class="comment"># 避免动词</span>
+GET /userInfo?id=1001     <span class="comment"># 资源名应为名词</span>
+POST /createUser          <span class="comment"># 避免动词</span>
+DELETE /deleteUser/1001   <span class="comment"># 避免动词</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>请求与响应</h2>
+
+            <h3>请求参数设计</h3>
+<pre><code><span class="comment"># Query参数 - 过滤、分页、排序</span>
+GET /users?status=active&page=1&size=20&sort=createdAt,desc
+GET /users?city=beijing&role=admin
+GET /products?minPrice=100&maxPrice=500
+
+<span class="comment"># Path参数 - 资源标识</span>
+GET /users/1001
+GET /orders/20240115/123
+
+<span class="comment"># Header参数 - 认证、分页、Content-Type</span>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+Content-Type: application/json
+Accept-Language: zh-CN
+X-Request-ID: uuid-xxx
+
+<span class="comment"># Body参数 - POST/PUT/PATCH请求体</span>
+{
+    "username": "zhangsan",
+    "email": "zhang@example.com",
+    "password": "********",
+    "profile": {
+        "age": 28,
+        "city": "Beijing"
+    }
+}</code></pre>
+
+            <h3>统一响应格式</h3>
+<pre><code><span class="comment"># 成功响应</span>
+{
+    <span class="property">"code"</span>: <span class="value">200</span>,
+    <span class="property">"message"</span>: <span class="value">"success"</span>,
+    <span class="property">"data"</span>: {
+        <span class="property">"id"</span>: <span class="value">1001</span>,
+        <span class="property">"name"</span>: <span class="value">"张三"</span>,
+        <span class="property">"email"</span>: <span class="value">"zhang@example.com"</span>
+    },
+    <span class="property">"timestamp"</span>: <span class="value">1705123456789</span>
+}
+
+<span class="comment"># 分页响应</span>
+{
+    <span class="property">"code"</span>: <span class="value">200</span>,
+    <span class="property">"data"</span>: {
+        <span class="property">"list"</span>: [...],
+        <span class="property">"pagination"</span>: {
+            <span class="property">"page"</span>: <span class="value">1</span>,
+            <span class="property">"size"</span>: <span class="value">20</span>,
+            <span class="property">"total"</span>: <span class="value">1000</span>,
+            <span class="property">"totalPages"</span>: <span class="value">50</span>
+        }
+    }
+}
+
+<span class="comment"># 错误响应</span>
+{
+    <span class="property">"code"</span>: <span class="value">40001</span>,
+    <span class="property">"message"</span>: <span class="value">"参数校验失败"</span>,
+    <span class="property">"errors"</span>: [
+        {<span class="property">"field"</span>: <span class="value">"email"</span>, <span class="property">"message"</span>: <span class="value">"邮箱格式不正确"</span>}
+    ]
+}</code></pre>
+
+            <h3>HTTP状态码</h3>
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>2xx 成功</h4>
+                    <span class="tag green">200 OK</span>
+                    <span class="tag green">201 Created</span>
+                    <span class="tag green">204 No Content</span>
+                </div>
+                <div class="grid-item">
+                    <h4>4xx 客户端错误</h4>
+                    <span class="tag red">400 Bad Request</span>
+                    <span class="tag red">401 Unauthorized</span>
+                    <span class="tag red">403 Forbidden</span>
+                    <span class="tag red">404 Not Found</span>
+                    <span class="tag red">422 Unprocessable</span>
+                </div>
+                <div class="grid-item">
+                    <h4>5xx 服务端错误</h4>
+                    <span class="tag orange">500 Internal Error</span>
+                    <span class="tag orange">502 Bad Gateway</span>
+                    <span class="tag orange">503 Unavailable</span>
+                    <span class="tag orange">504 Timeout</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>版本控制</h2>
+            <p>API需要演进但要保持向后兼容，版本控制是重要的策略。</p>
+
+<pre><code><span class="comment"># 方式1：URL路径（最常用）</span>
+GET /api/v1/users
+GET /api/v2/users
+
+<span class="comment"># 方式2：Query参数</span>
+GET /api/users?version=2
+
+<span class="comment"># 方式3：Header（推荐用于大版本）</span>
+GET /api/users
+Accept: application/vnd.myapp.v2+json
+
+<span class="comment"># 方式4：子域名</span>
+GET https://v2.api.example.com/users</code></pre>
+
+            <div class="success-box">
+                <strong>建议：</strong>小版本用向后兼容的升级，大版本才breaking change
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>认证与授权</h2>
+
+            <h3>JWT认证流程</h3>
+<pre><code><span class="comment"># 1. 登录获取Token</span>
+POST /auth/login
+Request: { "username": "xxx", "password": "xxx" }
+Response: { "accessToken": "xxx", "refreshToken": "xxx", "expiresIn": 7200 }
+
+<span class="comment"># 2. 请求时携带Token</span>
+GET /api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+<span class="comment"># 3. Token结构（Payload示例）</span>
+{
+    <span class="property">"sub"</span>: <span class="value">"1001"</span>,           <span class="comment"># 用户ID</span>
+    <span class="property">"username"</span>: <span class="value">"zhangsan"</span>,
+    <span class="property">"roles"</span>: [<span class="value">"admin"</span>, <span class="value">"user"</span>],
+    <span class="property">"iat"</span>: <span class="value">1705123456</span>,     <span class="comment"># 签发时间</span>
+    <span class="property">"exp"</span>: <span class="value">1705127056</span>      <span class="comment"># 过期时间</span>
+}</code></pre>
+
+            <h3>OAuth 2.0 授权模式</h3>
+            <table>
+                <tr><th>模式</th><th>适用场景</th><th>流程</th></tr>
+                <tr><td>Authorization Code</td><td>第三方登录（GitHub、Google）</td><td>用户授权 → 获取code → 换token</td></tr>
+                <tr><td>PKCE</td><td>移动端/SPA（无后端）</td><td>code + verifier + challenge</td></tr>
+                <tr><td>Client Credentials</td><td>服务间通信</td><td>client_id + client_secret</td></tr>
+                <tr><td>Refresh Token</td><td>Token续期</td><td>refresh_token换access_token</td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>GraphQL vs REST</h2>
+
+            <table>
+                <tr><th>特性</th><th>REST</th><th>GraphQL</th></tr>
+                <tr><td>数据获取</td><td>固定端点返回固定结构</td><td>客户端指定需要字段</td></tr>
+                <tr><td>请求次数</td><td>多个资源需多次请求</td><td>一次请求获取多资源</td></tr>
+                <tr><td>版本控制</td><td>通常需要v1/v2</td><td>字段演进，无需版本</td></tr>
+                <tr><td>缓存</td><td>HTTP缓存天然支持</td><td>需自行实现缓存</td></tr>
+                <tr><td>学习成本</td><td>简单直观</td><td>概念较多</td></tr>
+                <tr><td>适用场景</td><td>简单CRUD、移动API</td><td>复杂聚合、移动端、数据平台</td></tr>
+            </table>
+
+<pre><code><span class="comment"># GraphQL 示例</span>
+<span class="comment"># 查询</span>
+<span class="keyword">query</span> {
+    user(id: <span class="value">"1001"</span>) {
+        name
+        email
+        orders(limit: <span class="value">5</span>) {
+            id
+            amount
+            createdAt
+        }
+    }
+}
+
+<span class="comment"># 变更</span>
+<span class="keyword">mutation</span> {
+    createUser(input: {
+        name: <span class="value">"张三"</span>
+        email: <span class="value">"zhang@example.com"</span>
+    }) {
+        id
+        name
+    }
+}</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>API安全</h2>
+            <ul>
+                <li><strong>HTTPS：</strong>所有API必须使用HTTPS，防止中间人攻击</li>
+                <li><strong>参数校验：</strong>服务端必须校验所有输入参数，白名单过滤</li>
+                <li><strong>限流：</strong>防止DDoS和资源滥用（令牌桶/滑动窗口）</li>
+                <li><strong>CORS：</strong>正确配置跨域策略</li>
+                <li><strong>敏感数据：</strong>日志脱敏，密码不在响应中返回</li>
+                <li><strong>SQL注入：</strong>使用参数化查询</li>
+                <li><strong>XSS：</strong>输出编码，Content-Type设置</li>
+                <li><strong>CSRF：</strong>Token验证，非简单请求</li>
+            </ul>
+
+            <h3>限流响应头</h3>
+<pre><code>X-RateLimit-Limit: <span class="value">1000</span>        <span class="comment"># 请求总数限制</span>
+X-RateLimit-Remaining: <span class="value">999</span>    <span class="comment"># 剩余请求数</span>
+X-RateLimit-Reset: <span class="value">1705123800</span> <span class="comment"># 重置时间戳</span>
+Retry-After: <span class="value">3600</span>           <span class="comment"># 限流后需等待秒数</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>文档与工具</h2>
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>Swagger / OpenAPI</h4>
+                    <p>最流行的API文档标准，支持代码生成</p>
+                </div>
+                <div class="grid-item">
+                    <h4>Postman</h4>
+                    <p>API调试、测试、Mock的利器</p>
+                </div>
+                <div class="grid-item">
+                    <h4>Apifox</h4>
+                    <p>国产一体化工具，API设计+Mock+调试</p>
+                </div>
+                <div class="grid-item">
+                    <h4>Insomnia</h4>
+                    <p>轻量级API客户端，支持GraphQL</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>自动生成文档：</strong>Springdoc（Spring Boot）、Swashbuckle（.NET）、FastAPI（Python）都支持从代码注解自动生成OpenAPI文档
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 技术知识库 | 由 Hexo 驱动</p>
+    </footer>
+</body>
+</html>

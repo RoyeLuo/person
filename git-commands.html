@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git命令详解 - 技术知识</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #f05032 0%, #e44d26 100%); color: white; padding: 2rem; text-align: center; }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.9; }
+        nav { background: #2d2d2d; padding: 0.5rem 2rem; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1rem; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #ccc; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background: #f05032; color: white; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card h2 { color: #f05032; border-bottom: 2px solid #f05032; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.3rem; }
+        .card h3 { color: #333; margin: 1rem 0 0.5rem; font-size: 1.1rem; }
+        .card p { margin-bottom: 0.8rem; color: #555; }
+        .tag { display: inline-block; background: #fff0ed; color: #f05032; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; margin: 0.2rem; }
+        .tag.green { background: #e8f5e9; color: #388e3c; }
+        .tag.blue { background: #e3f2fd; color: #1976d2; }
+        .tag.orange { background: #fff3e0; color: #f57c00; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 1rem 0; font-size: 0.9rem; line-height: 1.5; }
+        code { font-family: "Fira Code", "Consolas", monospace; }
+        .comment { color: #6a9955; }
+        .cmd { color: #4ec9b0; }
+        .flag { color: #9cdcfe; }
+        .string { color: #ce9178; }
+        ul { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .highlight-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .warning-box { background: #ffebee; border-left: 4px solid #d32f2f; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .success-box { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        footer { background: #2d2d2d; color: #888; text-align: center; padding: 2rem; margin-top: 3rem; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: #f05032; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .grid-item { background: #fafafa; padding: 1rem; border-radius: 6px; border: 1px solid #eee; }
+        .grid-item h4 { color: #f05032; margin-bottom: 0.5rem; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.75rem; text-align: left; }
+        th { background: #f05032; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .branch-dia { background: #fafafa; padding: 1rem; border-radius: 6px; margin: 1rem 0; font-family: monospace; white-space: pre; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Git命令详解</h1>
+        <p>版本控制、分支管理、远程操作与GitFlow工作流</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我</a></li>
+            <li><a href="tech-knowledge.html">技术知识</a></li>
+            <li><a href="contact.html">联系我</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <a href="tech-knowledge.html" class="back-link">← 返回技术知识总览</a>
+
+        <div class="card">
+            <h2>基础配置</h2>
+<pre><code><span class="comment"># 初始化与配置</span>
+<span class="cmd">git</span> init                        <span class="comment"># 初始化仓库</span>
+<span class="cmd">git</span> clone https://github.com/user/repo.git   <span class="comment"># 克隆仓库</span>
+<span class="cmd">git</span> clone --depth 1 repo.git   <span class="comment"># 浅克隆（最近一次提交）</span>
+
+<span class="comment"># 用户配置</span>
+<span class="cmd">git</span> config --global user.name <span class="string">"Your Name"</span>
+<span class="cmd">git</span> config --global user.email <span class="string">"you@example.com"</span>
+<span class="cmd">git</span> config --global core.editor vim  <span class="comment"># 设置默认编辑器</span>
+<span class="cmd">git</span> config --list                <span class="comment"># 查看配置</span>
+
+<span class="comment"># SSH Key配置</span>
+<span class="cmd">ssh-keygen</span> -t ed25519 -C <span class="string">"you@example.com"</span>   <span class="comment"># 生成SSH密钥</span>
+<span class="comment"># 将 ~/.ssh/id_ed25519.pub 内容添加到 GitHub/GitLab</span>
+<span class="cmd">git</span> config --global url.<span class="string">"git@github.com:"</span>.insteadOf <span class="string">"https://github.com/"</span>  <span class="comment"># HTTPS转SSH</span></code></pre>
+
+            <div class="highlight-box">
+                <strong>~/.gitconfig 示例：</strong>
+<pre><code>[user]
+    name = Your Name
+    email = you@example.com
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[push]
+    default = simple
+[pull]
+    rebase = true</code></pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>日常工作流</h2>
+
+            <div class="branch-dia">  main:     A---B---C---F---G
+                  │           │
+  feature:        └---D---E---┘
+                 
+  工作区 → 暂存区 → 本地仓库 → 远程仓库</div>
+
+<pre><code><span class="comment"># 查看状态</span>
+<span class="cmd">git</span> status                      <span class="comment"># 查看工作区状态</span>
+<span class="cmd">git</span> status -s                   <span class="comment"># 简洁格式</span>
+<span class="cmd">git</span> diff                        <span class="comment"># 工作区vs暂存区差异</span>
+<span class="cmd">git</span> diff --cached              <span class="comment"># 暂存区vs提交差异</span>
+<span class="cmd">git</span> diff HEAD                  <span class="comment"># 工作区vs最新提交</span>
+<span class="cmd">git</span> diff branch1..branch2       <span class="comment"># 分支差异</span>
+
+<span class="comment"># 添加到暂存区</span>
+<span class="cmd">git</span> add file.txt                <span class="comment"># 添加单个文件</span>
+<span class="cmd">git</span> add .                       <span class="comment"># 添加所有更改</span>
+<span class="cmd">git</span> add -p                      <span class="comment"># 交互式添加（部分暂存）</span>
+<span class="cmd">git</span> add -u                      <span class="comment"># 只添加已跟踪文件</span>
+
+<span class="comment"># 提交</span>
+<span class="cmd">git</span> commit -m <span class="string">"提交信息"</span>        <span class="comment"># 提交</span>
+<span class="cmd">git</span> commit -am <span class="string">"提交信息"</span>       <span class="comment"># 暂存并提交（仅已跟踪文件）</span>
+<span class="cmd">git</span> commit --amend             <span class="comment"># 修改最后一次提交</span>
+<span class="cmd">git</span> commit --no-verify -m <span class="string">"msg"</span>  <span class="comment"># 跳过钩子</span></code></pre>
+
+            <div class="success-box">
+                <strong>简洁状态：</strong>
+                <span class="tag">??</span> 未跟踪 &nbsp;
+                <span class="tag green">A</span> 新添加 &nbsp;
+                <span class="tag orange">M</span> 修改 &nbsp;
+                <span class="tag red">D</span> 删除 &nbsp;
+                <span class="tag blue">R</span> 重命名
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>分支管理</h2>
+<pre><code><span class="comment"># 查看分支</span>
+<span class="cmd">git</span> branch                      <span class="comment"># 本地分支</span>
+<span class="cmd">git</span> branch -a                   <span class="comment"># 所有分支（含远程）</span>
+<span class="cmd">git</span> branch -r                   <span class="comment"># 远程分支</span>
+<span class="cmd">git</span> branch -v                   <span class="comment"># 显示最新提交</span>
+
+<span class="comment"># 创建与切换</span>
+<span class="cmd">git</span> branch feature              <span class="comment"># 创建分支</span>
+<span class="cmd">git</span> checkout feature            <span class="comment"># 切换分支（旧）</span>
+<span class="cmd">git</span> switch feature              <span class="comment"># 切换分支（新）</span>
+<span class="cmd">git</span> checkout -b feature         <span class="comment"># 创建并切换</span>
+<span class="cmd">git</span> switch -c feature          <span class="comment"># 创建并切换（新）</span>
+
+<span class="comment"># 删除</span>
+<span class="cmd">git</span> branch -d feature           <span class="comment"># 删除分支（已合并）</span>
+<span class="cmd">git</span> branch -D feature           <span class="comment"># 强制删除</span>
+<span class="cmd">git</span> push origin --delete feature <span class="comment"># 删除远程分支</span>
+
+<span class="comment"># 重命名</span>
+<span class="cmd">git</span> branch -m old new           <span class="comment"># 重命名当前分支</span>
+
+<span class="comment"># 合并</span>
+<span class="cmd">git</span> merge feature               <span class="comment"># 合并feature到当前分支</span>
+<span class="cmd">git</span> merge --no-ff feature       <span class="comment"># 禁用快进合并（保留分支历史）</span>
+<span class="cmd">git</span> merge --squash feature      <span class="comment"># 压缩合并（多条commit变一条）</span>
+
+<span class="comment"># 变基（Rebase）</span>
+<span class="cmd">git</span> rebase main                 <span class="comment"># 变基到main（保持线性历史）</span>
+<span class="cmd">git</span> rebase -i HEAD~3           <span class="comment"># 交互式变基（修改最近3条）</span>
+<span class="comment"># pick: 保留  squash: 合并  reword: 修改信息  drop: 删除</span>
+
+<span class="comment"># 暂存当前工作</span>
+<span class="cmd">git</span> stash                       <span class="comment"># 暂存当前更改</span>
+<span class="cmd">git</span> stash pop                   <span class="comment"># 恢复并删除stash</span>
+<span class="cmd">git</span> stash apply                 <span class="comment"># 恢复（保留stash）</span>
+<span class="cmd">git</span> stash list                  <span class="comment"># 查看stash列表</span>
+<span class="cmd">git</span> stash drop                  <span class="comment"># 删除stash</span></code></pre>
+
+            <div class="warning-box">
+                <strong>merge vs rebase：</strong>
+                <ul>
+                    <li><strong>merge：</strong>保留完整历史，合并commit，适合公共分支</li>
+                    <li><strong>rebase：</strong>线性历史，适合个人分支同步上游</li>
+                    <li><strong>黄金法则：</strong>不要对已推送的提交执行rebase</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>远程操作</h2>
+<pre><code><span class="comment"># 远程仓库管理</span>
+<span class="cmd">git</span> remote -v                   <span class="comment"># 查看远程仓库</span>
+<span class="cmd">git</span> remote add origin url       <span class="comment"># 添加远程仓库</span>
+<span class="cmd">git</span> remote rename origin github  <span class="comment"># 重命名</span>
+<span class="cmd">git</span> remote remove origin        <span class="comment"># 删除</span>
+<span class="cmd">git</span> remote set-url origin url    <span class="comment"># 修改URL</span>
+
+<span class="comment"># 推送</span>
+<span class="cmd">git</span> push origin main            <span class="comment"># 推送到远程</span>
+<span class="cmd">git</span> push -u origin feature       <span class="comment"># 推送并设置上游分支</span>
+<span class="cmd">git</span> push --force                <span class="comment"># 强制推送（慎用！）</span>
+<span class="cmd">git</span> push --force-with-lease      <span class="comment"># 安全强制推送</span>
+<span class="cmd">git</span> push origin --delete feature <span class="comment"># 删除远程分支</span>
+
+<span class="comment"># 拉取</span>
+<span class="cmd">git</span> pull                        <span class="comment"># 拉取并合并（fetch + merge）</span>
+<span class="cmd">git</span> pull --rebase               <span class="comment"># 拉取并变基</span>
+<span class="cmd">git</span> fetch                       <span class="comment"># 仅获取（不合并）</span>
+<span class="cmd">git</span> fetch --all                <span class="comment"># 获取所有远程</span>
+
+<span class="comment"># 拉取请求/合并请求</span>
+<span class="cmd">git</span> request-pull main origin    <span class="comment"># 生成pull请求摘要</span></code></pre>
+
+            <div class="success-box">
+                <strong>git pull = git fetch + git merge</strong><br>
+                <strong>git pull --rebase = git fetch + git rebase</strong>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>查看历史</h2>
+<pre><code><span class="comment"># 日志查看</span>
+<span class="cmd">git</span> log                          <span class="comment"># 完整日志</span>
+<span class="cmd">git</span> log --oneline               <span class="comment"># 简洁一行</span>
+<span class="cmd">git</span> log -10                     <span class="comment"># 最近10条</span>
+<span class="cmd">git</span> log --graph                <span class="comment"># 图形化分支</span>
+<span class="cmd">git</span> log --author=<span class="string">"name"</span>         <span class="comment"># 按作者筛选</span>
+<span class="cmd">git</span> log --since=<span class="string">"2024-01-01"</span>  <span class="comment"># 时间范围</span>
+<span class="cmd">git</span> log -p file.txt            <span class="comment"># 文件变更历史</span>
+<span class="cmd">git</span> log --all --grep=<span class="string">"fix"</span>     <span class="comment"># 按提交信息搜索</span>
+
+<span class="comment"># 文件历史</span>
+<span class="cmd">git</span> log --follow file.txt       <span class="comment"># 文件重命名历史</span>
+<span class="cmd">git</span> blame file.txt             <span class="comment"># 逐行追溯</span>
+<span class="cmd">git</span> show commit:file.txt        <span class="comment"># 查看某提交的版本</span>
+
+<span class="comment"># 其他查看</span>
+<span class="cmd">git</span> reflog                      <span class="comment"># 所有操作历史（找回丢失的commit）</span>
+<span class="cmd">git</span> shortlog                    <span class="comment"># 按贡献者统计</span>
+<span class="cmd">git</span> describe --tags             <span class="comment"># 最近标签描述</span></code></pre>
+
+<pre><code><span class="comment"># 别名 log --graph 格式化输出</span>
+<span class="cmd">git</span> lg
+
+<span class="comment"># 输出示例：</span>
+* 7d8f3a2 - feat: 添加用户模块 (2 hours ago) &lt;Zhang San&gt;
+|\
+| * a3b5c1d - fix: 修复登录bug (3 hours ago) &lt;Li Si&gt;
+* | 9e2f4b1 - refactor: 重构数据库层 (5 hours ago) &lt;Wang Wu&gt;
+|/
+* 1a2b3c4 - init: 项目初始化 (1 day ago) &lt;Zhang San&gt;</code></pre>
+        </div>
+
+        <div class="card">
+            <h2>撤销与回退</h2>
+<pre><code><span class="comment"># 工作区撤销</span>
+<span class="cmd">git</span> checkout -- file.txt         <span class="comment"># 撤销工作区更改</span>
+<span class="cmd">git</span> restore file.txt             <span class="comment"># 同上（新命令）</span>
+<span class="cmd">git</span> restore .                    <span class="comment"># 撤销所有工作区更改</span>
+
+<span class="comment"># 暂存区撤销</span>
+<span class="cmd">git</span> reset HEAD file.txt          <span class="comment"># 取消暂存</span>
+<span class="cmd">git</span> reset --soft HEAD~1         <span class="comment"># 撤销提交，保留更改在暂存</span>
+<span class="cmd">git</span> reset --mixed HEAD~1        <span class="comment"># 撤销提交，保留更改在工作区（默认）</span>
+<span class="cmd">git</span> reset --hard HEAD~1         <span class="comment"># 完全撤销（危险！）</span>
+
+<span class="comment"># 回退到指定版本</span>
+<span class="cmd">git</span> revert commit_id             <span class="comment"># 反向合并（保留历史，推荐）</span>
+<span class="cmd">git</span> reset --hard commit_id       <span class="comment"># 硬回退（危险）</span>
+
+<span class="comment"># 恢复误删的文件</span>
+<span class="cmd">git</span> checkout -- file.txt         <span class="comment"># 从暂存区恢复</span>
+<span class="cmd">git</span> reflog                       <span class="comment"># 找到删除前的commit</span>
+<span class="cmd">git</span> checkout abc123 -- file.txt  <span class="comment"># 从历史恢复</span></code></pre>
+
+            <div class="highlight-box">
+                <strong>三种reset模式对比：</strong>
+                <table>
+                    <tr><th>模式</th><th>HEAD</th><th>Index</th><th>Working</th></tr>
+                    <tr><td>--soft</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                    <tr><td>--mixed（默认）</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                    <tr><td>--hard</td><td>✓</td><td>✓</td><td>✓</td></tr>
+                </table>
+                <p>✓ 表示保留，灰色表示改变</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>标签管理</h2>
+<pre><code><span class="comment"># 创建标签</span>
+<span class="cmd">git</span> tag v1.0.0                    <span class="comment"># 轻量标签</span>
+<span class="cmd">git</span> tag -a v1.0.0 -m <span class="string">"版本1.0.0"</span>  <span class="comment"># 附注标签（推荐）</span>
+<span class="cmd">git</span> tag -a v1.0.0 commit_id      <span class="comment"># 给历史commit打标签</span>
+
+<span class="comment"># 查看标签</span>
+<span class="cmd">git</span> tag                          <span class="comment"># 列出所有标签</span>
+<span class="cmd">git</span> tag -l <span class="string">"v1.*"</span>               <span class="comment"># 搜索标签</span>
+<span class="cmd">git</span> show v1.0.0                  <span class="comment"># 查看标签详情</span>
+
+<span class="comment"># 推送标签</span>
+<span class="cmd">git</span> push origin v1.0.0          <span class="comment"># 推送单个标签</span>
+<span class="cmd">git</span> push origin --tags          <span class="comment"># 推送所有标签</span>
+
+<span class="comment"># 删除标签</span>
+<span class="cmd">git</span> tag -d v1.0.0               <span class="comment"># 删除本地标签</span>
+<span class="cmd">git</span> push origin :refs/tags/v1.0.0  <span class="comment"># 删除远程标签</span>
+<span class="cmd">git</span> push origin --delete v1.0.0    <span class="comment"># 同上</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>GitFlow工作流</h2>
+            <div class="branch-dia">  main (生产)
+      │
+      ├────────────●────────────●───→ v1.0    v2.0
+      │           │            │
+  release         │            │
+      │           ▼            ▼
+      └────●──────●────────────●
+           │      │
+      hotfix      │
+           │      │
+           ▼      ▼────●────●────●────●────→ develop
+                │    │    │    │    │    │
+           ┌────┴────┴────┴────┴────┴────┴────┐
+           │                                   │
+           ▼                                   ▼
+        ──●────●────→ feature/login      ──●────●────→ feature/payment
+           feature                      feature</div>
+
+<pre><code><span class="comment"># GitFlow 分支命名</span>
+main/master          <span class="comment"># 主分支（生产环境）</span>
+develop              <span class="comment"># 开发分支</span>
+feature/xxx          <span class="comment"># 功能分支</span>
+release/v1.0         <span class="comment"># 发布分支</span>
+hotfix/xxx           <span class="comment"># 热修复分支</span>
+
+<span class="comment"># 开始新功能</span>
+<span class="cmd">git</span> checkout -b feature/login develop
+<span class="comment"># ... 开发完成 ...</span>
+<span class="cmd">git</span> checkout develop
+<span class="cmd">git</span> merge --no-ff feature/login
+<span class="cmd">git</span> branch -d feature/login
+
+<span class="comment"># 创建发布分支</span>
+<span class="cmd">git</span> checkout -b release/v1.0 develop
+<span class="comment"># ... 修复bug，测试 ...</span>
+<span class="cmd">git</span> checkout main
+<span class="cmd">git</span> merge --no-ff release/v1.0
+<span class="cmd">git</span> tag -a v1.0 -m <span class="string">"Version 1.0"</span>
+<span class="cmd">git</span> checkout develop
+<span class="cmd">git</span> merge --no-ff release/v1.0
+<span class="cmd">git</span> branch -d release/v1.0
+
+<span class="comment"># 热修复</span>
+<span class="cmd">git</span> checkout -b hotfix/critical main
+<span class="comment"># ... 紧急修复 ...</span>
+<span class="cmd">git</span> checkout main
+<span class="cmd">git</span> merge --no-ff hotfix/critical
+<span class="cmd">git</span> tag -a v1.0.1 -m <span class="string">"Hotfix 1.0.1"</span>
+<span class="cmd">git</span> checkout develop
+<span class="cmd">git</span> merge --no-ff hotfix/critical
+<span class="cmd">git</span> branch -d hotfix/critical</code></pre>
+
+            <div class="success-box">
+                <strong>Git Flow 工具：</strong>
+                <span class="tag">git-flow</span> <span class="tag">GitHub Flow</span> <span class="tag">Trunk-Based Development</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>子模块与子树</h2>
+<pre><code><span class="comment"># 子模块操作</span>
+<span class="cmd">git</span> submodule add https://github.com/user/lib.git libs/lib  <span class="comment"># 添加子模块</span>
+<span class="cmd">git</span> submodule init                  <span class="comment"># 初始化子模块</span>
+<span class="cmd">git</span> submodule update                <span class="comment"># 更新子模块</span>
+<span class="cmd">git</span> submodule update --remote libs/lib  <span class="comment"># 更新到远程最新</span>
+<span class="cmd">git</span> submodule foreach git pull       <span class="comment"># 更新所有子模块</span>
+
+<span class="comment"># 子树操作</span>
+<span class="cmd">git</span> subtree add --prefix=libs https://github.com/user/lib.git main  <span class="comment"># 添加</span>
+<span class="cmd">git</span> subtree pull --prefix=libs https://github.com/user/lib.git main  <span class="comment"># 拉取</span>
+<span class="cmd">git</span> subtree push --prefix=libs https://github.com/user/lib.git main  <span class="comment"># 推送</span></code></pre>
+
+            <div class="highlight-box">
+                <strong>子模块 vs 子树：</strong>
+                <ul>
+                    <li><strong>子模块：</strong>独立仓库指针，clone时需额外命令</li>
+                    <li><strong>子树：</strong>合并到主仓库，clone时自动包含</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>高级技巧</h2>
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>Cherry-pick</h4>
+<pre><code><span class="cmd">git</span> cherry-pick commit_id    <span class="comment"># 拣选单个提交</span>
+<span class="cmd">git</span> cherry-pick commit1..commit3  <span class="comment"># 拣选范围</span>
+<span class="cmd">git</span> cherry-pick --continue  <span class="comment"># 解决冲突后继续</span>
+<span class="cmd">git</span> cherry-pick --abort      <span class="comment"># 取消拣选</span></code></pre>
+                </div>
+                <div class="grid-item">
+                    <h4>Bisect 定位bug</h4>
+<pre><code><span class="cmd">git</span> bisect start            <span class="comment"># 开始二分查找</span>
+<span class="cmd">git</span> bisect bad              <span class="comment"># 当前版本有bug</span>
+<span class="cmd">git</span> bisect good v1.0        <span class="comment"># 标记好的版本</span>
+<span class="comment"># Git自动切换，测试后标记</span>
+<span class="cmd">git</span> bisect good/bad         <span class="comment"># 重复直到定位</span>
+<span class="cmd">git</span> bisect reset           <span class="comment"># 结束</span></code></pre>
+                </div>
+                <div class="grid-item">
+                    <h4>工作区清理</h4>
+<pre><code><span class="cmd">git</span> clean -n               <span class="comment"># 预览将删除的文件</span>
+<span class="cmd">git</span> clean -f               <span class="comment"># 删除未跟踪文件</span>
+<span class="cmd">git</span> clean -fd              <span class="comment"># 删除未跟踪文件和目录</span>
+<span class="cmd">git</span> clean -fX              <span class="comment"># 只删除忽略的文件</span>
+<span class="cmd">git</span> clean -fx              <span class="comment"># 删除所有未跟踪文件</span></code></pre>
+                </div>
+                <div class="grid-item">
+                    <h4>Hook钩子</h4>
+<pre><code><span class="comment"># .git/hooks/ 目录</span>
+pre-commit           <span class="comment"># 提交前执行</span>
+prepare-commit-msg   <span class="comment"># 填写提交信息前</span>
+commit-msg           <span class="comment"># 验证提交信息</span>
+post-commit          <span class="comment"># 提交后执行</span>
+pre-push             <span class="comment"># 推送前执行</span></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 技术知识库 | 由 Hexo 驱动</p>
+    </footer>
+</body>
+</html>

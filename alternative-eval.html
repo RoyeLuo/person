@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self';">
+    <title>替代eval的方案</title>
+</head>
+<body>
+    <h1>不使用eval的替代方案</h1>
+    
+    <div id="result"></div>
+    
+    <script>
+        // 替代eval的几种方案：
+        
+        // 1. 使用JSON.parse处理JSON字符串
+        const jsonString = '{"name": "John", "age": 30}';
+        const data = JSON.parse(jsonString);
+        console.log('JSON.parse结果:', data);
+        
+        // 2. 使用Function构造函数（比eval安全）
+        const expression = 'return x * y';
+        const multiply = new Function('x', 'y', expression);
+        const result1 = multiply(5, and 6);
+        console.log('Function构造函数结果:', result1);
+        
+        // 3. 使用eval的替代方案：安全计算
+        function safeEval(expression, context = {}) {
+            // 创建一个安全的环境
+            const safeContext = Object.create(null);
+            
+            // 只允许白名单中的变量
+            const allowedVars = ['Math', 'Date', 'Number', 'String', 'Array', 'Object'];
+            allowedVars.forEach(key => {
+                if (window[key]) safeContext[key] = window[key];
+            });
+            
+            // 添加自定义上下文
+            Object.assign(safeContext, context);
+            
+            // 使用Function构造函数
+            const keys = Object.keys(safeContext);
+            const values = keys.map(key => safeContext[key]);
+            
+            try {
+                const fn = new Function(...keys, `return (${expression})`);
+                return fn(...values);
+            } catch (error) {
+                console.error('安全计算失败:', error);
+                return null;
+            }
+        }
+        
+        // 示例使用
+        const safeResult = safeEval('Math.pow(2, 3) + 5');
+        document.getElementById('result').textContent = '安全计算结果: ' + safeResult;
+        console.log('安全计算结果:', safeResult);
+        
+        // 4. 针对动态代码执行的特殊情况
+        // 如果必须执行动态代码，考虑使用Web Workers
+        function executeInWorker(code) {
+            const blob = new Blob([`
+                self.onmessage = function(e) {
+                    try {
+                        const result = eval(e.data);
+                        self.postMessage({result: result});
+                    } catch (error) {
+                        self.postMessage({error: error.message});
+                    }
+                };
+            `], {type: 'application/javascript'});
+            
+            const worker = new Worker(URL.createObjectURL(blob));
+            worker.postMessage(code);
+            
+            return new Promise((resolve, reject) => {
+                worker.onmessage = function(e) {
+                    worker.terminate();
+                    if (e.data.error) {
+                        reject(new Error(e.data.error));
+                    } else {
+                        resolve(e.data.result);
+                    }
+                };
+                worker.onerror = reject;
+            });
+        }
+        
+        // 使用示例
+        executeInWorker('3 * 7')
+            .then(result => console.log('Web Worker计算结果:', result))
+            .catch(error => console.error('Web Worker错误:', error));
+    </script>
+</body>
+</html>

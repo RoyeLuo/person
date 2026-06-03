@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redis缓存指南 - 技术知识</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #dc382d 0%, #a02620 100%); color: white; padding: 2rem; text-align: center; }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.9; }
+        nav { background: #2d2d2d; padding: 0.5rem 2rem; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1rem; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #ccc; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background: #dc382d; color: white; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card h2 { color: #dc382d; border-bottom: 2px solid #dc382d; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.3rem; }
+        .card h3 { color: #333; margin: 1rem 0 0.5rem; font-size: 1.1rem; }
+        .card p { margin-bottom: 0.8rem; color: #555; }
+        .tag { display: inline-block; background: #ffecec; color: #dc382d; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; margin: 0.2rem; }
+        .tag.blue { background: #e3f2fd; color: #1976d2; }
+        .tag.green { background: #e8f5e9; color: #388e3c; }
+        .tag.orange { background: #fff3e0; color: #f57c00; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 1rem 0; font-size: 0.9rem; }
+        code { font-family: "Fira Code", "Consolas", monospace; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+        ul { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .highlight-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .warning-box { background: #ffebee; border-left: 4px solid #dc382d; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        footer { background: #2d2d2d; color: #888; text-align: center; padding: 2rem; margin-top: 3rem; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: #dc382d; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .grid-item { background: #fafafa; padding: 1rem; border-radius: 6px; border: 1px solid #eee; }
+        .grid-item h4 { color: #dc382d; margin-bottom: 0.5rem; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .comparison-table th, .comparison-table td { border: 1px solid #ddd; padding: 0.75rem; text-align: left; }
+        .comparison-table th { background: #dc382d; color: white; }
+        .comparison-table tr:nth-child(even) { background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Redis缓存指南</h1>
+        <p>高性能缓存、分布式锁与消息队列实战</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我</a></li>
+            <li><a href="tech-knowledge.html">技术知识</a></li>
+            <li><a href="contact.html">联系我</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <a href="tech-knowledge.html" class="back-link">← 返回技术知识总览</a>
+
+        <div class="card">
+            <h2>缓存基础</h2>
+            <p>Redis（Remote Dictionary Server）是一个开源的内存数据结构存储系统，常用作数据库、缓存和消息队列。</p>
+            
+            <h3>数据类型</h3>
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>String</h4>
+                    <p>最基本的键值类型，最大512MB</p>
+                    <span class="tag">计数器</span><span class="tag">Session</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Hash</h4>
+                    <p>字段值对，适合存储对象</p>
+                    <span class="tag">用户信息</span><span class="tag">商品详情</span>
+                </div>
+                <div class="grid-item">
+                    <h4>List</h4>
+                    <p>有序字符串列表，LPUSH/RPOP</p>
+                    <span class="tag">消息队列</span><span class="tag">最新列表</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Set</h4>
+                    <p>无序唯一成员集合</p>
+                    <span class="tag">标签</span><span class="tag">去重</span>
+                </div>
+                <div class="grid-item">
+                    <h4>ZSet</h4>
+                    <p>有序集合，带分数排序</p>
+                    <span class="tag">排行榜</span><span class="tag">权重队列</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Bitmap</h4>
+                    <p>位图，适合大规模状态</p>
+                    <span class="tag">签到</span><span class="tag">活跃用户</span>
+                </div>
+            </div>
+
+            <h3>常用命令</h3>
+<pre><code><span class="comment"># 字符串操作</span>
+<span class="keyword">SET</span> user:1001:name "张三" <span class="comment"># 设置值</span>
+<span class="keyword">GET</span> user:1001:name           <span class="comment"># 获取值</span>
+<span class="keyword">SETNX</span> lock:order:123 <span class="string">"1"</span>  <span class="comment"># 分布式锁（需配合EXPIRE）</span>
+<span class="keyword">INCR</span> page:view:20240101     <span class="comment"># 原子递增</span>
+
+<span class="comment"># Hash操作</span>
+<span class="keyword">HSET</span> product:1001 name "手机" price 2999
+<span class="keyword">HGET</span> product:1001 name
+<span class="keyword">HGETALL</span> product:1001
+
+<span class="comment"># 有序集合 - 排行榜</span>
+<span class="keyword">ZADD</span> leaderboard 1500 "用户A"
+<span class="keyword">ZINCRBY</span> leaderboard 100 "用户A"  <span class="comment"># 增加分数</span>
+<span class="keyword">ZREVRANGE</span> leaderboard 0 9 <span class="keyword">WITHSCORES</span>  <span class="comment"># 获取前10</span>
+
+<span class="comment"># 过期时间</span>
+<span class="keyword">EXPIRE</span> session:abc <span class="number">3600</span>  <span class="comment"># 1小时后过期</span>
+<span class="keyword">TTL</span> session:abc              <span class="comment"># 查看剩余时间</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>缓存策略</h2>
+            
+            <h3>缓存模式</h3>
+            <table class="comparison-table">
+                <tr><th>模式</th><th>原理</th><th>适用场景</th><th>一致性</th></tr>
+                <tr><td>Cache Aside</td><td>读：先缓存后DB<br>写：先DB后删缓存</td><td>读多写少</td><td>最终一致</td></tr>
+                <tr><td>Read Through</td><td>应用只读缓存，缓存负责加载</td><td>简单读场景</td><td>强一致</td></tr>
+                <tr><td>Write Through</td><td>写操作同时写缓存和DB</td><td>强一致性需求</td><td>强一致</td></tr>
+                <tr><td>Write Behind</td><td>异步批量写DB</td><td>高并发写</td><td>最终一致</td></tr>
+            </table>
+
+            <h3>缓存问题与解决方案</h3>
+            <div class="warning-box">
+                <strong>缓存穿透：</strong>大量请求查询不存在的数据<br>
+                <strong>解决：</strong>布隆过滤器 / 缓存空值 / 限流保护
+            </div>
+            <div class="warning-box">
+                <strong>缓存击穿：</strong>热点key过期瞬间大量请求击穿到DB<br>
+                <strong>解决：</strong>互斥锁 / 永不过期+异步更新 / 热点数据永不过期
+            </div>
+            <div class="warning-box">
+                <strong>缓存雪崩：</strong>大量缓存同时过期或Redis宕机<br>
+                <strong>解决：</strong>过期时间加随机值 / 多级缓存 / Redis高可用 / 限流降级
+            </div>
+
+            <h3>过期策略</h3>
+            <p><span class="tag">volatile-lru</span> 仅删除过期键中LRU最近最少使用</p>
+            <p><span class="tag">allkeys-lru</span> 所有键中LRU最近最少使用</p>
+            <p><span class="tag">volatile-ttl</span> 删除即将过期的键</p>
+            <p><span class="tag">noeviction</span> 不删除，返回错误（默认）</p>
+        </div>
+
+        <div class="card">
+            <h2>分布式锁</h2>
+            <p>基于Redis实现分布式锁，是分布式系统中常用的同步机制。</p>
+
+<pre><code><span class="comment"># 1. 基础加锁（NX保证原子性，PX设置过期时间）</span>
+<span class="keyword">SET</span> lock:order:123 <span class="string">"unique_value"</span> <span class="keyword">NX</span> <span class="keyword">PX</span> <span class="number">30000</span>
+
+<span class="comment"># 2. 释放锁（Lua脚本保证只能释放自己的锁）</span>
+<span class="keyword">if</span> redis.call(<span class="string">"get"</span>, KEYS[<span class="number">1</span>]) == ARGV[<span class="number">1</span>] <span class="keyword">then</span>
+    <span class="keyword">return</span> redis.call(<span class="string">"del"</span>, KEYS[<span class="number">1</span>])
+<span class="keyword">else</span>
+    <span class="keyword">return</span> <span class="number">0</span>
+<span class="keyword">end</span></code></pre>
+
+            <div class="highlight-box">
+                <strong>Redisson 客户端实现：</strong>
+<pre><code><span class="comment">// Java示例</span>
+<span class="keyword">RLock</span> lock = redisson.getLock(<span class="string">"order:123"</span>);
+lock.lock(<span class="number">30</span>, TimeUnit.SECONDS);
+<span class="keyword">try</span> {
+    <span class="comment">// 业务逻辑</span>
+} <span class="keyword">finally</span> {
+    lock.unlock();
+}</code></pre>
+            </div>
+
+            <h3>分布式锁要点</h3>
+            <ul>
+                <li><strong>互斥性：</strong>同一时刻只有一个客户端能获取锁</li>
+                <li><strong>死锁避免：</strong>设置锁的自动过期时间</li>
+                <li><strong>安全性：</strong>只能释放自己的锁（value唯一标识）</li>
+                <li><strong>容错性：</strong>RedLock算法（多Redis实例多数派获取锁）</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>消息队列</h2>
+            <p>Redis的List和Stream类型可以用作轻量级消息队列。</p>
+
+<pre><code><span class="comment"># 生产者 - LPUSH消息</span>
+<span class="keyword">LPUSH</span> queue:orders <span class="string">"{\"orderId\":123,\"amount\":99}"</span>
+
+<span class="comment"># 消费者 - BRPOP阻塞读取（超时0表示无限等待）</span>
+<span class="keyword">BRPOP</span> queue:orders <span class="number">0</span>
+
+<span class="comment"># 消息ID - 每次自动生成递增ID</span>
+<span class="keyword">XADD</span> stream:orders * <span class="string">orderId 123 amount 99</span>
+
+<span class="comment"># 消费组 - 消息确认机制</span>
+<span class="keyword">XGROUP CREATE</span> stream:orders mygroup $ <span class="comment"># 创建消费组，从最新消息开始</span>
+<span class="keyword">XREADGROUP GROUP</span> mygroup consumer1 <span class="keyword">COUNT</span> <span class="number">10</span> <span class="keyword">STREAMS</span> stream:orders <span class="string">></span>
+<span class="keyword">XACK</span> stream:orders mygroup <span class="string">消息ID</span></code></pre>
+
+            <div class="highlight-box">
+                <strong>List vs Stream 对比：</strong>
+                <table class="comparison-table">
+                    <tr><th>特性</th><th>List</th><th>Stream</th></tr>
+                    <tr><td>消息ID</td><td>需手动生成</td><td>自动生成唯一ID</td></tr>
+                    <tr><td>消费组</td><td>不支持</td><td>支持（N个消费者负载均衡）</td></tr>
+                    <tr><td>消息确认</td><td>需手动处理</td><td>XACK确认</td></tr>
+                    <tr><td>广播模式</td><td>不支持</td><td>支持（多个消费组独立消费）</td></tr>
+                    <tr><td>适用场景</td><td>简单队列</td><td>可靠消息、发布订阅</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Redis集群</h2>
+            
+            <h3>主从复制</h3>
+            <p>一主多从架构，实现数据冗余和读写分离。</p>
+<pre><code><span class="comment"># 从节点配置</span>
+replicaof <span class="number">192.168.1.100</span> <span class="number">6379</span>
+replica-read-only yes  <span class="comment"># 从节点只读</span>
+
+<span class="comment"># 全量同步（RDB + AOF）</span>
+<span class="comment"># 增量同步（命令传播）</span>
+<span class="comment"># 无磁盘复制（repl-diskless-sync yes）</span></code></pre>
+
+            <h3>Sentinel哨兵</h3>
+            <p>监控主从节点，自动故障转移，对客户端透明。</p>
+            <ul>
+                <li>监控：心跳检测主节点存活</li>
+                <li>通知：故障时通知应用</li>
+                <li>自动故障转移：选举新主节点</li>
+                <li>配置提供者：返回当前主节点地址</li>
+            </ul>
+
+            <h3>Cluster集群</h3>
+            <p>数据分片（16384个槽），每节点存储部分数据。</p>
+<pre><code><span class="comment"># 集群节点数：至少6个（3主3从）</span>
+<span class="comment"># 槽分配：每个主节点约5461个槽</span>
+<span class="comment"># 故障转移：主节点宕机后从节点自动升级</span>
+
+<span class="comment"># 集群命令</span>
+<span class="keyword">CLUSTER</span> NODES       <span class="comment"># 查看集群节点</span>
+<span class="keyword">CLUSTER</span> INFO        <span class="comment"># 集群状态</span>
+<span class="keyword">CLUSTER</span> SLOTS       <span class="comment"># 槽分配情况</span></code></pre>
+
+            <h3>Redis vs Memcached</h3>
+            <table class="comparison-table">
+                <tr><th>特性</th><th>Redis</th><th>Memcached</th></tr>
+                <tr><td>数据类型</td><td>丰富（String/Hash/List/Set/ZSet等）</td><td>仅String</td></tr>
+                <tr><td>持久化</td><td>支持（RDB + AOF）</td><td>不支持</td></tr>
+                <tr><td>集群</td><td>Cluster原生支持</td><td>需第三方（membase）</td></tr>
+                <tr><td>内存管理</td><td>支持虚拟内存</td><td>固定内存分配</td></tr>
+                <tr><td>性能</td><td>稍低（数据结构更丰富）</td><td>纯KV更高</td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>最佳实践</h2>
+            <ul>
+                <li><strong>Key命名规范：</strong><code>业务:模块:标识</code> 如 <code>user:profile:1001</code></li>
+                <li><strong>避免大Key：</strong>单个Value不超过10MB，Hash/Set建议不超过10000字段</li>
+                <li><strong>合理过期时间：</strong>热点数据短、配置数据长、Log类 TTL</li>
+                <li><strong>Pipeline批量：</strong>减少网络往返，提升性能</li>
+                <li><strong>连接池复用：</strong>使用连接池而非频繁创建连接</li>
+                <li><strong>监控指标：</strong>内存使用、连接数、命中率、慢查询</li>
+                <li><strong>安全配置：</strong>开启密码认证、禁用危险命令（FLUSHDB/FLUSHALL/KEYS）</li>
+            </ul>
+
+            <div class="highlight-box">
+                <strong>Pipeline vs Transaction (MULTI/EXEC)：</strong><br>
+                Pipeline：批量执行命令，原子性无保证，返回顺序固定<br>
+                Transaction：保证原子性，但无回滚能力（Watch乐观锁除外）
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 技术知识库 | 由 Hexo 驱动</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工业AI知识体系 - 技术知识</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e8e8e8;
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1.1em;
+        }
+        nav {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px 30px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 5px 15px;
+            border-radius: 6px;
+        }
+        nav a:hover {
+            background: rgba(102,126,234,0.2);
+        }
+        .back-link {
+            margin-bottom: 30px;
+        }
+        .back-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
+        .back-link a:hover {
+            color: #8fa4f0;
+            transform: translateX(-5px);
+        }
+        .section {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+        .section:hover {
+            border-color: rgba(102,126,234,0.3);
+            transform: translateY(-2px);
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h3 {
+            font-size: 1.3em;
+            color: #8fa4f0;
+            margin: 25px 0 15px;
+        }
+        p {
+            margin-bottom: 15px;
+            color: #c0c0c0;
+        }
+        .highlight {
+            background: rgba(102,126,234,0.15);
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .highlight-blue {
+            background: rgba(52,152,219,0.15);
+            border-left: 4px solid #3498db;
+        }
+        .highlight-green {
+            background: rgba(39,174,96,0.15);
+            border-left: 4px solid #27ae60;
+        }
+        .highlight-orange {
+            background: rgba(230,126,34,0.15);
+            border-left: 4px solid #e67e22;
+        }
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .feature-list li:before {
+            content: "▸";
+            color: #667eea;
+            font-weight: bold;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .tag-ai { background: rgba(156,39,176,0.2); color: #ce93d8; }
+        .tag-iot { background: rgba(0,150,136,0.2); color: #4db6ac; }
+        .tag-data { background: rgba(52,152,219,0.2); color: #60a5fa; }
+        .tag-ops { background: rgba(39,174,96,0.2); color: #2ecc71; }
+        .tag-core { background: rgba(230,126,34,0.2); color: #f39c12; }
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+        .roadmap-card {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid;
+        }
+        .roadmap-card.phase1 { border-color: #e74c3c; }
+        .roadmap-card.phase2 { border-color: #f39c12; }
+        .roadmap-card.phase3 { border-color: #27ae60; }
+        .roadmap-card.phase4 { border-color: #667eea; }
+        .roadmap-card h4 {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .roadmap-card ul {
+            list-style: none;
+            font-size: 0.9em;
+        }
+        .roadmap-card li {
+            padding: 6px 0;
+            color: #c0c0c0;
+        }
+        .roadmap-card li::before { content: "• "; color: #667eea; }
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .scenario-card {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            background: rgba(102,126,234,0.1);
+        }
+        .scenario-card h4 {
+            color: #8fa4f0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .scenario-card p {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        .scenario-card .tech-stack {
+            font-size: 0.8em;
+            color: #a0a0a0;
+        }
+        .tech-stack span {
+            display: inline-block;
+            background: rgba(102,126,234,0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin: 2px;
+            font-size: 0.85em;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .col-box {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .col-box h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .col-box ul {
+            list-style: none;
+            font-size: 0.9em;
+        }
+        .col-box li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .col-box li:last-child {
+            border-bottom: none;
+        }
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .resource-item {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+        .resource-item strong {
+            color: #8fa4f0;
+            display: block;
+            margin-bottom: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>工业AI知识体系</h1>
+            <p class="subtitle">AI赋能智能制造 · 工厂IT转型指南</p>
+        </header>
+        
+        <nav>
+            <a href="tech-knowledge.html">← 返回技术知识</a>
+            <a href="ai-fundamentals.html">AI基础</a>
+            <a href="iot-industry.html">工业物联网</a>
+        </nav>
+
+        <div class="back-link">
+            <a href="tech-knowledge.html">← 返回技术知识总览</a>
+        </div>
+
+        <!-- 学习路径 -->
+        <section class="section">
+            <h2>🛤️ 学习路径规划</h2>
+            <p>从传统IT转型到工业AI，建议分4个阶段循序渐进：</p>
+
+            <div class="roadmap">
+                <div class="roadmap-card phase1">
+                    <h4>📘 第一阶段：工业基础 (1-2月)</h4>
+                    <ul>
+                        <li>工业通信协议 (OPC UA/Modbus)</li>
+                        <li>SCADA系统原理</li>
+                        <li>MES系统架构</li>
+                        <li>工业数据采集 (PLC/传感器)</li>
+                        <li>工厂网络架构</li>
+                    </ul>
+                </div>
+                <div class="roadmap-card phase2">
+                    <h4>📗 第二阶段：数据能力 (2-3月)</h4>
+                    <ul>
+                        <li>时序数据库 (InfluxDB/TDengine)</li>
+                        <li>数据清洗与预处理</li>
+                        <li>特征工程</li>
+                        <li>工业数据标注</li>
+                        <li>数据可视化 (Grafana)</li>
+                    </ul>
+                </div>
+                <div class="roadmap-card phase3">
+                    <h4>📙 第三阶段：AI算法 (3-6月)</h4>
+                    <ul>
+                        <li>时序预测 (LSTM/Transformer)</li>
+                        <li>异常检测算法</li>
+                        <li>图像缺陷检测 (CNN)</li>
+                        <li>强化学习基础</li>
+                        <li>模型部署 (ONNX/Triton)</li>
+                    </ul>
+                </div>
+                <div class="roadbox-card phase4">
+                    <h4>📕 第四阶段：平台与实践 (持续)</h4>
+                    <ul>
+                        <li>工业互联网平台</li>
+                        <li>边缘计算部署</li>
+                        <li>数字孪生技术</li>
+                        <li>项目实战积累</li>
+                        <li>行业认证 (CortexAI等)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 应用场景 -->
+        <section class="section">
+            <h2>🏭 核心应用场景</h2>
+            <p>工业AI的六大典型应用场景，覆盖工厂生产全流程：</p>
+
+            <div class="scenario-grid">
+                <div class="scenario-card">
+                    <h4>🔧 预测性维护 (PdM)</h4>
+                    <p>通过分析设备振动、温度、电流等数据，预测设备故障，减少非计划停机。</p>
+                    <div class="tech-stack">
+                        技术栈: <span>时序分析</span><span>LSTM</span><span>XGBoost</span><span>边缘计算</span>
+                    </div>
+                </div>
+                <div class="scenario-card">
+                    <h4>👁️ 质量检测 (AOI)</h4>
+                    <p>基于机器视觉的表面缺陷检测，自动识别产品瑕疵，提高检测效率和准确率。</p>
+                    <div class="tech-stack">
+                        技术栈: <span>深度学习</span><span>CNN</span><span>OpenCV</span><span>Halcon</span>
+                    </div>
+                </div>
+                <div class="scenario-card">
+                    <h4>📊 工艺参数优化</h4>
+                    <p>利用历史生产数据，建立工艺参数与产品质量的关联模型，优化生产参数。</p>
+                    <div class="tech-stack">
+                        技术栈: <span>回归分析</span><span>贝叶斯优化</span><span>强化学习</span>
+                    </div>
+                </div>
+                <div class="scenario-card">
+                    <h4>⚡ 能耗管理</h4>
+                    <p>实时监控工厂能耗，识别异常用电，优化能源使用策略，降低生产成本。</p>
+                    <div class="tech-stack">
+                        技术栈: <span>时序预测</span><span>异常检测</span><span>能源模型</span>
+                    </div>
+                </div>
+                <div class="scenario-card">
+                    <h4>📦 智能排产 (APS)</h4>
+                    <p>基于订单、设备、人员约束，智能优化生产排程，提高设备利用率。</p>
+                    <div class="tech-stack">
+                        技术栈: <span>遗传算法</span><span>蚁群算法</span><span>约束求解</span>
+                    </div>
+                </div>
+                <div class="scenario-card">
+                    <h4>🔄 数字孪生</h4>
+                    <p>构建物理设备的虚拟映射，实现实时监控、仿真预测、远程运维。</p>
+                    <div class="tech-stack">
+                        技术栈: <span>3D建模</span><span>物理仿真</span><span>实时数据</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 工业通信协议 -->
+        <section class="section">
+            <h2>🔌 工业通信协议</h2>
+            <p>工厂设备互联的基础，需要掌握的核心协议：</p>
+
+            <div class="two-col">
+                <div class="col-box">
+                    <h4>数据采集层协议</h4>
+                    <ul>
+                        <li><strong>OPC UA</strong> - 工业4.0标准，跨平台、安全</li>
+                        <li><strong>Modbus TCP/RTU</strong> - 简单通用，大量存量设备</li>
+                        <li><strong>Profinet</strong> - 西门子主导，实时以太网</li>
+                        <li><strong>EtherNet/IP</strong> - 罗克韦尔主导</li>
+                        <li><strong>MQTT</strong> - 物联网轻量协议</li>
+                    </ul>
+                </div>
+                <div class="col-box">
+                    <h4>数据传输层协议</h4>
+                    <ul>
+                        <li><strong>AMQP</strong> - 消息队列协议</li>
+                        <li><strong>Apache Kafka</strong> - 高吞吐流处理</li>
+                        <li><strong>gRPC</strong> - 高性能RPC框架</li>
+                        <li><strong>REST API</strong> - 标准化接口</li>
+                        <li><strong>WebSocket</strong> - 实时数据推送</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>OPC UA 重点掌握：</strong>这是工业4.0的核心标准，支持信息建模、安全传输、发现服务，是工业系统集成的趋势方向。
+                建议学习OPC UA .NET SDK或Python opcua库。
+            </div>
+        </section>
+
+        <!-- 数据技术栈 -->
+        <section class="section">
+            <h2>🗄️ 数据技术栈</h2>
+            <p>工业数据的采集、存储、处理、分析全流程技术：</p>
+
+            <div class="two-col">
+                <div class="col-box">
+                    <h4>数据采集与边缘</h4>
+                    <ul>
+                        <li><strong>InfluxDB</strong> - 开源时序数据库</li>
+                        <li><strong>TDengine</strong> - 国产高性能时序库</li>
+                        <li><strong>Apache IoTDB</strong> - 阿里开源时序数据库</li>
+                        <li><strong>Node-RED</strong> - 边缘数据流编排</li>
+                        <li><strong>Apache NiFi</strong> - 数据 ETL</li>
+                    </ul>
+                </div>
+                <div class="col-box">
+                    <h4>数据处理与分析</h4>
+                    <ul>
+                        <li><strong>Apache Spark</strong> - 大数据处理</li>
+                        <li><strong>Flink</strong> - 实时流处理</li>
+                        <li><strong>Grafana</strong> - 可视化看板</li>
+                        <li><strong>Kibana</strong> - ELK日志分析</li>
+                        <li><strong>Prometheus</strong> - 指标监控</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI算法 -->
+        <section class="section">
+            <h2>🤖 AI算法应用</h2>
+            <p>工业场景常用的AI算法及其适用场景：</p>
+
+            <table style="width:100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em;">
+                <tr style="background: rgba(102,126,234,0.2);">
+                    <th style="padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">问题类型</th>
+                    <th style="padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">推荐算法</th>
+                    <th style="padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">典型场景</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">时序预测</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">LSTM、Transformer、N-BEATS</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">需求预测、产量预测</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">异常检测</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">Isolation Forest、AutoEncoder</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">设备故障预警</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">图像分类/检测</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">ResNet、YOLO、EfficientDet</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">缺陷检测、质量分选</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">回归预测</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">XGBoost、LightGBM、Random Forest</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">工艺参数优化</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">优化决策</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">遗传算法、强化学习、贝叶斯优化</td>
+                    <td style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);">排程优化、参数调优</td>
+                </tr>
+            </table>
+
+            <div class="highlight highlight-orange">
+                <strong>工业AI算法特点：</strong>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>数据量相对有限（与互联网相比），需要小样本学习</li>
+                    <li>可解释性要求高，黑盒模型难以直接落地</li>
+                    <li>实时性要求高，需要边缘端推理能力</li>
+                    <li>容错率低，误报/漏报代价大</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 学习资源 -->
+        <section class="section">
+            <h2>📚 学习资源推荐</h2>
+
+            <div class="resource-list">
+                <div class="resource-item">
+                    <strong>📖 书籍</strong>
+                    <p>《智能制造:AI落地之路》《工业大数据实践》《预测性维护》</p>
+                </div>
+                <div class="resource-item">
+                    <strong>🎓 在线课程</strong>
+                    <p>Coursera 工业AI专项课、阿里云工业大脑、华为云工业智能</p>
+                </div>
+                <div class="resource-item">
+                    <strong>🏢 行业平台</strong>
+                    <p>树根互联根云、研华WISE-PaaS、富士康Fii Cloud</p>
+                </div>
+                <div class="resource-item">
+                    <strong>🛠️ 开源工具</strong>
+                    <p>EdgeX Foundry、Apache NiFi、TensorFlow Industrial</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 职业建议 -->
+        <section class="section">
+            <h2>💼 职业发展建议</h2>
+
+            <div class="highlight highlight-green">
+                <strong>你的IT背景优势：</strong>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>软件开发能力（Python/C#/Java）</li>
+                    <li>数据库和API设计经验</li>
+                    <li>系统架构思维</li>
+                    <li>团队协作和项目管理能力</li>
+                </ul>
+            </div>
+
+            <h3>转型切入点建议</h3>
+            <ul class="feature-list">
+                <li><strong>预测性维护方向</strong> - 最容易切入，数据相对丰富，ROI明显</li>
+                <li><strong>工业数据平台开发</strong> - 利用你的开发能力，做数据采集和分析平台</li>
+                <li><strong>视觉缺陷检测</strong> - 需要视觉算法基础，但需求量大</li>
+                <li><strong>工业互联网平台</strong> - 平台开发+行业知识，综合要求高</li>
+            </ul>
+
+            <h3>建议考取的认证</h3>
+            <ul class="feature-list">
+                <li><strong>AWS/Azure 机器学习认证</strong> - 云厂商AI能力证明</li>
+                <li><strong>工业数据分析师认证</strong> - 行业认可</li>
+                <li><strong>西门子/罗克韦尔认证</strong> - 工业自动化领域</li>
+                <li><strong>PMP</strong> - 项目管理，提升职场竞争力</li>
+            </ul>
+
+            <div class="highlight">
+                <strong>行动建议：</strong>
+                <ol style="margin-top: 10px; padding-left: 20px;">
+                    <li>选择一个具体场景深耕（如预测性维护）</li>
+                    <li>学习OPC UA和时序数据库，用真实数据练手</li>
+                    <li>关注工业AI项目，积累实战经验</li>
+                    <li>建立行业人脉，关注智能制造展会</li>
+                </ol>
+            </div>
+        </section>
+
+        <footer>
+            <p>技术知识库 · 持续更新中</p>
+        </footer>
+    </div>
+</body>
+</html>

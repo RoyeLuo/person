@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="联系罗小添，讨论工业自动化、上位机开发、MES系统等技术话题">
+    <meta name="keywords" content="联系我,罗小添,工业自动化,上位机开发">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">罗小添</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li class="dropdown">
+                    <a href="chip.html">行业项目</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="chip.html">光模块制造</a></li>
+                        <li><a href="energy.html">能源行业(加气/加氢站)</a></li>
+                        <li><a href="transit.html">轨道交通</a></li>
+                    </ul>
+                </li>
+                <li><a href="career.html">职业经历</a></li>
+                <li><a href="about.html">关于我</a></li>
+                <li><a href="project-management.html">项目管理</a></li>
+                <li><a href="tech-knowledge.html">技术知识</a></li>
+                <li><a href="contact.html" style="color:#165DFF;font-weight:bold">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="section-title">联系我</h2>
+
+        <div class="project-category">
+            <div class="project-list">
+                <div class="project-item">
+                    <div class="project-content">
+                        <p>如果您对我的工作感兴趣，或有合作机会，欢迎通过以下方式联系我：</p>
+                        <br>
+
+                        <!-- 联系方式 -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                            <div style="text-align: center; padding: 20px; background: var(--light); border-radius: 8px;">
+                                <i class="fas fa-phone" style="font-size: 24px; color: var(--main); margin-bottom: 10px;"></i>
+                                <h4>电话</h4>
+                                <p>17830713885</p>
+                            </div>
+                            <div style="text-align: center; padding: 20px; background: var(--light); border-radius: 8px;">
+                                <i class="fab fa-weixin" style="font-size: 24px; color: var(--main); margin-bottom: 10px;"></i>
+                                <h4>微信</h4>
+                                <p>17830713885</p>
+                            </div>
+                            <div style="text-align: center; padding: 20px; background: var(--light); border-radius: 8px;">
+                                <i class="fab fa-qq" style="font-size: 24px; color: var(--main); margin-bottom: 10px;"></i>
+                                <h4>QQ</h4>
+                                <p>493190018</p>
+                            </div>
+                            <div style="text-align: center; padding: 20px; background: var(--light); border-radius: 8px;">
+                                <i class="fas fa-envelope" style="font-size: 24px; color: var(--main); margin-bottom: 10px;"></i>
+                                <h4>邮箱</h4>
+                                <p>493190018@qq.com</p>
+                            </div>
+                        </div>
+
+                        <!-- 联系表单 -->
+                        <h3 style="color: var(--dark); margin-bottom: 20px;">发送消息</h3>
+                        <form id="contact-form" action="#" method="post" style="max-width: 600px; margin: 0 auto;">
+                            <div style="margin-bottom: 15px;">
+                                <label for="name" style="display: block; margin-bottom: 5px; font-weight: 500;">姓名 *</label>
+                                <input type="text" id="name" name="name" required
+                                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label for="email" style="display: block; margin-bottom: 5px; font-weight: 500;">邮箱 *</label>
+                                <input type="email" id="email" name="email" required
+                                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label for="subject" style="display: block; margin-bottom: 5px; font-weight: 500;">主题</label>
+                                <input type="text" id="subject" name="subject"
+                                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <label for="message" style="display: block; margin-bottom: 5px; font-weight: 500;">消息内容 *</label>
+                                <textarea id="message" name="message" rows="6" required
+                                          style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; resize: vertical; box-sizing: border-box;"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn" style="width: 100%; padding: 14px;">
+                                <i class="fas fa-paper-plane"></i> 发送消息
+                            </button>
+                        </form>
+
+                        <div id="form-message" style="margin-top: 20px; padding: 15px; border-radius: 6px; display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-info">
+            <p>© 2026 罗小添 | 个人项目展示站</p>
+            <p>GitHub: <a href="https://github.com/royeLuo333" target="_blank">@royeLuo333</a></p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+
+    <!-- 联系表单处理脚本 -->
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const messageDiv = document.getElementById('form-message');
+
+            // 简单的表单验证
+            const name = formData.get('name').trim();
+            const email = formData.get('email').trim();
+            const message = formData.get('message').trim();
+
+            if (!name || !email || !message) {
+                showMessage('请填写所有必填字段', 'error');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showMessage('请输入有效的邮箱地址', 'error');
+                return;
+            }
+
+            // 模拟表单提交（实际应用中需要后端处理）
+            showMessage('消息已发送！我们会尽快回复您。', 'success');
+
+            // 清空表单
+            this.reset();
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('form-message');
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+            messageDiv.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
+            messageDiv.style.color = type === 'success' ? '#155724' : '#721c24';
+            messageDiv.style.border = `1px solid ${type === 'success' ? '#c3e6cb' : '#f5c6cb'}`;
+
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

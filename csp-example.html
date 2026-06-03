@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval';">
+    <title>CSP示例</title>
+</head>
+<body>
+    <h1>Content Security Policy 示例</h1>
+    <script>
+        // 启用unsafe-eval后，eval可以正常工作
+        const result = eval('2 + 2');
+        console.log('eval结果:', result);
+    </script>
+</body>
+</html>

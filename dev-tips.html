@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开发技巧 - 技术知识</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --main: #165DFF;
+            --light: #f5f7fa;
+            --text: #333;
+            --text-light: #666;
+            --success: #52c41a;
+            --warning: #faad14;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #165DFF 0%, #0e40e0 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .header h1 { margin: 0 0 10px; font-size: 2.5em; }
+        .header p { margin: 0; opacity: 0.9; font-size: 1.1em; }
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .nav-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .nav-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+        .nav-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(22,93,255,0.15);
+        }
+        .nav-card.active { background: var(--main); color: white; }
+        .nav-card i { font-size: 28px; margin-bottom: 10px; color: var(--main); }
+        .nav-card.active i { color: white; }
+        .nav-card h4 { margin: 0; font-size: 15px; }
+        .tip-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .tip-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+        .tip-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #165DFF 0%, #0e40e0 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        .tip-icon i { font-size: 24px; color: white; }
+        .tip-header h2 { margin: 0; font-size: 1.4em; }
+        .tip-header span { font-size: 14px; color: var(--text-light); }
+        .tip-content {
+            display: grid;
+            gap: 20px;
+        }
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        .code-block pre {
+            margin: 0;
+            color: #d4d4d4;
+            font-family: "Fira Code", "Consolas", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #569cd6; }
+        .code-string { color: #ce9178; }
+        .code-function { color: #dcdcaa; }
+        .code-class { color: #4ec9b0; }
+        .info-box {
+            background: var(--light);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--main);
+            margin: 15px 0;
+        }
+        .info-box.warning { border-left-color: var(--warning); background: #fffbe6; }
+        .info-box.success { border-left-color: var(--success); background: #f6ffed; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 14px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-lightbulb"></i> 开发技巧</h1>
+        <p>提升代码质量与系统性能的实战经验</p>
+    </div>
+
+    <div class="breadcrumb">
+        <a href="index.html">首页</a> &gt; <a href="tech-knowledge.html">技术知识</a> &gt; 开发技巧
+    </div>
+
+    <div class="container">
+        <div class="nav-cards">
+            <a href="software-principles.html" class="nav-card">
+                <i class="fas fa-gem"></i>
+                <h4>6大设计原则</h4>
+            </a>
+            <a href="design-patterns.html" class="nav-card">
+                <i class="fas fa-cubes"></i>
+                <h4>12种设计模式</h4>
+            </a>
+            <a href="security-tips.html" class="nav-card">
+                <i class="fas fa-shield-alt"></i>
+                <h4>安全防护</h4>
+            </a>
+            <a href="dev-tips.html" class="nav-card active">
+                <i class="fas fa-lightbulb"></i>
+                <h4>开发技巧</h4>
+            </a>
+            <a href="mysql-optimization.html" class="nav-card">
+                <i class="fas fa-database"></i>
+                <h4>MySQL优化</h4>
+            </a>
+        </div>
+
+        <!-- 削峰填谷 -->
+        <div class="tip-section">
+            <div class="tip-header">
+                <div class="tip-icon"><i class="fas fa-mountain"></i></div>
+                <div>
+                    <h2>削峰填谷 - 限流策略</h2>
+                    <span>Peak Shaving & Valley Filling - Rate Limiting</span>
+                </div>
+            </div>
+            <div class="tip-content">
+                <div class="info-box">
+                    <strong>核心思想：</strong>在流量高峰时限制请求，防止系统过载；在流量低谷时提前处理堆积任务。
+                </div>
+                <div class="code-block">
+<pre><span class="code-comment">// 令牌桶算法实现 - 滑动窗口限流</span>
+<span class="code-keyword">public class</span> <span class="code-class">TokenBucketRateLimiter</span> {
+    <span class="code-keyword">private readonly int</span> capacity;        <span class="code-comment">// 桶容量</span>
+    <span class="code-keyword">private readonly double</span> refillRate;     <span class="code-comment">// 每秒补充令牌数</span>
+    <span class="code-keyword">private double</span> tokens;
+    <span class="code-keyword">private long</span> lastRefillTime;
+    
+    <span class="code-keyword">public</span> <span class="code-function">TokenBucketRateLimiter</span>(<span class="code-keyword">int</span> capacity, <span class="code-keyword">double</span> refillRate) {
+        <span class="code-keyword">this</span>.capacity = capacity;
+        <span class="code-keyword">this</span>.refillRate = refillRate;
+        <span class="code-keyword">this</span>.tokens = capacity;
+        <span class="code-keyword">this</span>.lastRefillTime = <span class="code-class">DateTimeOffset</span>.UtcNow.ToUnixTimeMilliseconds();
+    }
+    
+    <span class="code-keyword">public bool</span> <span class="code-function">TryAcquire</span>() {
+        <span class="code-function">Refill</span>();
+        <span class="code-keyword">if</span> (tokens >= <span class="code-number">1</span>) {
+            tokens -= <span class="code-number">1</span>;
+            <span class="code-keyword">return true</span>;
+        }
+        <span class="code-keyword">return false</span>;
+    }
+    
+    <span class="code-keyword">private void</span> <span class="code-function">Refill</span>() {
+        <span class="code-keyword">long</span> now = <span class="code-class">DateTimeOffset</span>.UtcNow.ToUnixTimeMilliseconds();
+        <span class="code-keyword">double</span> elapsed = (now - lastRefillTime) / <span class="code-number">1000.0</span>;
+        tokens = Math.Min(capacity, tokens + elapsed * refillRate);
+        lastRefillTime = now;
+    }
+}</pre>
+                </div>
+                <div class="code-block">
+<pre><span class="code-comment">// ASP.NET Core 限流中间件</span>
+<span class="code-keyword">public class</span> <span class="code-class">RateLimitingMiddleware</span> {
+    <span class="code-keyword">private static readonly</span> <span class="code-class">ConcurrentDictionary</span>&lt;string, <span class="code-class">DateTime</span>&gt; requests = <span class="code-keyword">new</span>();
+    
+    <span class="code-keyword">public static async Task</span> <span class="code-function">Invoke</span>(<span class="code-class">HttpContext</span> context) {
+        <span class="code-keyword">string</span> clientId = context.Connection.RemoteIpAddress?.ToString();
+        <span class="code-keyword">var</span> now = <span class="code-class">DateTime</span>.UtcNow;
+        
+        <span class="code-comment">// 每秒最多100个请求</span>
+        requests[<span class="code-function">GetKey</span>(clientId, now)] = now;
+        CleanOldRequests(clientId);
+        
+        <span class="code-keyword">if</span> (requests.<span class="code-function">Count</span>(r => <span class="code-function">GetKey</span>(clientId, r.Value) == <span class="code-function">GetKey</span>(clientId, now)) > <span class="code-number">100</span>) {
+            context.Response.StatusCode = <span class="code-number">429</span>;
+            <span class="code-keyword">await</span> context.Response.<span class="code-function">WriteAsJsonAsync</span>(<span class="code-keyword">new</span> { error = <span class="code-string">"请求过于频繁"</span> });
+            <span class="code-keyword">return</span>;
+        }
+    }
+}</pre>
+                </div>
+                <div class="info-box warning">
+                    <strong>应用场景：</strong>API限流、秒杀系统、爬虫限制、恶意访问防护
+                </div>
+            </div>
+        </div>
+
+        <!-- 幂等性设计 -->
+        <div class="tip-section">
+            <div class="tip-header">
+                <div class="tip-icon"><i class="fas fa-infinity"></i></div>
+                <div>
+                    <h2>幂等性设计</h2>
+                    <span>Idempotency Design</span>
+                </div>
+            </div>
+            <div class="tip-content">
+                <div class="info-box">
+                    <strong>核心思想：</strong>相同的操作执行一次和执行多次的结果相同，确保重复请求不会产生副作用。
+                </div>
+                <div class="code-block">
+<pre><span class="code-comment">// 1. 数据库唯一索引 + 插入前检查</span>
+<span class="code-keyword">public async Task</span>&lt;<span class="code-keyword">bool</span>&gt; <span class="code-function">CreateOrder</span>(<span class="code-class">Order</span> order) {
+    <span class="code-keyword">try</span> {
+        <span class="code-keyword">await</span> _context.Orders.<span class="code-function">AddAsync</span>(order);
+        <span class="code-keyword">await</span> _context.<span class="code-function">SaveChangesAsync</span>();
+        <span class="code-keyword">return true</span>;
+    } <span class="code-keyword">catch</span> (<span class="code-class">DbUpdateException</span>) {
+        <span class="code-comment">// 唯一索引冲突，订单已存在</span>
+        <span class="code-keyword">return false</span>;
+    }
+}
+
+<span class="code-comment">// 2. 基于Token的幂等</span>
+<span class="code-keyword">public async Task</span>&lt;<span class="code-keyword">string</span>&gt; <span class="code-function">GenerateIdempotencyKey</span>() {
+    <span class="code-keyword">return</span> <span class="code-class">Guid</span>.<span class="code-function">NewGuid</span>().ToString();
+}
+
+<span class="code-keyword">public async Task</span>&lt;<span class="code-class">Result</span>&gt; <span class="code-function">ProcessPayment</span>(<span class="code-keyword">string</span> idempotencyKey, <span class="code-class">PaymentRequest</span> request) {
+    <span class="code-keyword">if</span> (<span class="code-keyword">await</span> _cache.<span class="code-function">ExistsAsync</span>(<span class="code-string">$"idempotent:</span>{idempotencyKey}<span class="code-string">"</span>)) {
+        <span class="code-keyword">return await</span> _cache.<span class="code-function">GetAsync</span>&lt;<span class="code-class">Result</span>&gt;(<span class="code-string">$"result:</span>{idempotencyKey}<span class="code-string">"</span>);
+    }
+    <span class="code-class">Result</span> result = <span class="code-keyword">await</span> <span class="code-function">DoPayment</span>(request);
+    <span class="code-keyword">await</span> _cache.<span class="code-function">SetAsync</span>(<span class="code-string">$"idempotent:</span>{idempotencyKey}<span class="code-string">"</span>, <span class="code-string">"1"</span>, TimeSpan.FromHours(<span class="code-number">24</span>));
+    <span class="code-keyword">await</span> _cache.<span class="code-function">SetAsync</span>(<span class="code-string">$"result:</span>{idempotencyKey}<span class="code-string">"</span>, result, TimeSpan.FromHours(<span class="code-number">24</span>));
+    <span class="code-keyword">return</span> result;
+}</pre>
+                </div>
+                <div class="info-box success">
+                    <strong>适用场景：</strong>支付扣款、订单创建、库存扣减、消息消费、HTTP重试
+                </div>
+            </div>
+        </div>
+
+        <!-- 缓存设计 -->
+        <div class="tip-section">
+            <div class="tip-header">
+                <div class="tip-icon"><i class="fas fa-database"></i></div>
+                <div>
+                    <h2>缓存设计策略 - 解决缓存三兄弟问题</h2>
+                    <span>Cache Design - Solving Cache Problems</span>
+                </div>
+            </div>
+            <div class="tip-content">
+                <div class="info-box">
+                    <strong>缓存三兄弟：</strong>缓存雪崩、缓存击穿、缓存穿透
+                </div>
+                <div class="code-block">
+<pre><span class="code-comment">// 1. 缓存雪崩：大量缓存同时过期 → 解决：过期时间 + 随机偏移</span>
+<span class="code-keyword">public class</span> <span class="code-class">CacheService</span> {
+    <span class="code-keyword">public async Task</span>&lt;T&gt; <span class="code-function">GetOrSetAsync</span>&lt;T&gt;(<span class="code-keyword">string</span> key, Func&lt;Task&lt;T&gt;&gt; factory, <span class="code-keyword">int</span> baseExpireMinutes = <span class="code-number">30</span>) {
+        <span class="code-class">T</span> value = <span class="code-keyword">await</span> _redis.<span class="code-function">GetAsync</span>&lt;T&gt;(key);
+        <span class="code-keyword">if</span> (value != <span class="code-keyword">null</span>) <span class="code-keyword">return</span> value;
+        
+        value = <span class="code-keyword">await</span> factory();
+        <span class="code-comment">// 添加随机偏移量，避免同时过期</span>
+        <span class="code-keyword">int</span> randomMinutes = <span class="code-keyword">new</span> <span class="code-class">Random</span>().<span class="code-function">Next</span>(<span class="code-number">1</span>, <span class="code-number">10</span>);
+        <span class="code-keyword">await</span> _redis.<span class="code-function">SetAsync</span>(key, value, TimeSpan.FromMinutes(baseExpireMinutes + randomMinutes));
+        <span class="code-keyword">return</span> value;
+    }
+}
+
+<span class="code-comment">// 2. 缓存击穿：热点key过期瞬间大量请求 → 解决：互斥锁/永不过期</span>
+<span class="code-keyword">private static readonly</span> <span class="code-class">AsyncLock</span> _lock = <span class="code-keyword">new</span> <span class="code-class">AsyncLock</span>();
+<span class="code-keyword">public async Task</span>&lt;T&gt; <span class="code-function">GetWithLock</span>&lt;T&gt;(<span class="code-keyword">string</span> key, Func&lt;Task&lt;T&gt;&gt; factory) {
+    <span class="code-class">T</span> value = <span class="code-keyword">await</span> _redis.<span class="code-function">GetAsync</span>&lt;T&gt;(key);
+    <span class="code-keyword">if</span> (value != <span class="code-keyword">null</span>) <span class="code-keyword">return</span> value;
+    
+    <span class="code-keyword">using</span> (<span class="code-keyword">await</span> _lock.<span class="code-function">LockAsync</span>(key)) {
+        value = <span class="code-keyword">await</span> _redis.<span class="code-function">GetAsync</span>&lt;T&gt;(key);
+        <span class="code-keyword">if</span> (value != <span class="code-keyword">null</span>) <span class="code-keyword">return</span> value;
+        value = <span class="code-keyword">await</span> factory();
+        <span class="code-keyword">await</span> _redis.<span class="code-function">SetAsync</span>(key, value, TimeSpan.FromMinutes(<span class="code-number">30</span>));
+    }
+    <span class="code-keyword">return</span> value;
+}
+
+<span class="code-comment">// 3. 缓存穿透：查询不存在的数据 → 解决：布隆过滤器/空值缓存</span>
+<span class="code-keyword">public async Task</span>&lt;<span class="code-class">User</span>&gt; <span class="code-function">GetUser</span>(<span class="code-keyword">int</span> id) {
+    <span class="code-keyword">if</span> (!_bloomFilter.<span class="code-function">MightContain</span>(id)) {
+        <span class="code-keyword">return null</span>;  <span class="code-comment">// 布隆过滤器判断不存在，直接返回</span>
+    }
+    <span class="code-class">User</span> user = <span class="code-keyword">await</span> _redis.<span class="code-function">GetAsync</span>&lt;<span class="code-class">User</span>&gt;(<span class="code-string">$"user:</span>{id}<span class="code-string">"</span>);
+    <span class="code-keyword">if</span> (user != <span class="code-keyword">null</span>) <span class="code-keyword">return</span> user;
+    
+    user = <span class="code-keyword">await</span> _db.Users.<span class="code-function">FindAsync</span>(id);
+    <span class="code-keyword">if</span> (user == <span class="code-keyword">null</span>) {
+        <span class="code-comment">// 缓存空值，防止穿透</span>
+        <span class="code-keyword">await</span> _redis.<span class="code-function">SetAsync</span>(<span class="code-string">$"user:</span>{id}<span class="code-string">"</span>, <span class="code-string">"NULL"</span>, TimeSpan.FromMinutes(<span class="code-number">5</span>));
+    } <span class="code-keyword">else</span> {
+        <span class="code-keyword">await</span> _redis.<span class="code-function">SetAsync</span>(<span class="code-string">$"user:</span>{id}<span class="code-string">"</span>, user, TimeSpan.FromMinutes(<span class="code-number">30</span>));
+    }
+    <span class="code-keyword">return</span> user;
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- 日志规范 -->
+        <div class="tip-section">
+            <div class="tip-header">
+                <div class="tip-icon"><i class="fas fa-file-alt"></i></div>
+                <div>
+                    <h2>日志规范与最佳实践</h2>
+                    <span>Logging Standards</span>
+                </div>
+            </div>
+            <div class="tip-content">
+                <div class="code-block">
+<pre><span class="code-comment">// 日志级别使用规范</span>
+_log.<span class="code-function">Trace</span>()   <span class="code-comment">// 跟踪：详细的调试信息，生产环境禁用</span>
+_log.<span class="code-function">Debug</span>()   <span class="code-comment">// 调试：开发调试使用，生产环境可关闭</span>
+_log.<span class="code-function">Info</span>()    <span class="code-comment">// 信息：正常业务操作记录</span>
+_log.<span class="code-function">Warning</span>() <span class="code-comment">// 警告：潜在问题但不影响功能</span>
+_log.<span class="code-function">Error</span>()   <span class="code-comment">// 错误：功能受损，需要关注</span>
+_log.<span class="code-function">Fatal</span>()   <span class="code-comment">// 致命：系统崩溃，无法继续</span>
+
+<span class="code-comment">// 结构化日志 - 使用日志上下文</span>
+<span class="code-keyword">using</span> (_log.<span class="code-function">BeginScope</span>(<span class="code-keyword">new</span> <span class="code-class">Dictionary</span>&lt;<span class="code-keyword">string, object</span>&gt; {
+    [<span class="code-string">"OrderId"</span>] = orderId,
+    [<span class="code-string">"UserId"</span>] = userId
+})) {
+    _log.<span class="code-function">Information</span>(<span class="code-string">"订单创建成功"</span>);
+}
+
+<span class="code-comment">// 输出格式：JSON（便于日志收集分析）</span>
+<span class="code-string">{"level":"INFO","time":"2026-01-01T10:00:00Z","message":"订单创建成功","OrderId":"12345","UserId":"67890"}</span></pre>
+                </div>
+                <div class="info-box">
+                    <strong>日志记录原则：</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>禁止记录敏感信息（密码、身份证、银行卡号）</li>
+                        <li>日志要包含上下文（用户ID、订单ID、追踪ID）</li>
+                        <li>异常日志必须记录堆栈信息</li>
+                        <li>关键业务操作需要记录入参和出参</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 异常处理 -->
+        <div class="tip-section">
+            <div class="tip-header">
+                <div class="tip-icon"><i class="fas fa-exclamation-circle"></i></div>
+                <div>
+                    <h2>异常处理规范</h2>
+                    <span>Exception Handling Standards</span>
+                </div>
+            </div>
+            <div class="tip-content">
+                <div class="code-block">
+<pre><span class="code-comment">// 1. 区分业务异常和技术异常</span>
+<span class="code-keyword">public class</span> <span class="code-class">BusinessException</span> : <span class="code-class">Exception</span> {
+    <span class="code-keyword">public string</span> Code { <span class="code-keyword">get;</span> }
+    <span class="code-keyword">public</span> <span class="code-function">BusinessException</span>(<span class="code-keyword">string</span> code, <span class="code-keyword">string</span> message) : <span class="code-keyword">base</span>(message) {
+        Code = code;
+    }
+}
+
+<span class="code-comment">// 2. 全局异常处理</span>
+<span class="code-keyword">public class</span> <span class="code-class">GlobalExceptionHandler</span> : <span class="code-class">ExceptionHandler</span> {
+    <span class="code-keyword">public override async Task</span> <span class="code-function">HandleAsync</span>(<span class="code-class">ExceptionHandlerContext</span> context) {
+        <span class="code-keyword">var</span> exception = context.Exception;
+        <span class="code-keyword">var</span> result = exception <span class="code-keyword">switch</span> {
+            <span class="code-class">BusinessException</span> be => <span class="code-keyword">new</span> <span class="code-class">ObjectResult</span>(<span class="code-keyword">new</span> { code = be.Code, message = be.Message }) { StatusCode = <span class="code-number">400</span> },
+            <span class="code-class">UnauthorizedAccessException</span> => <span class="code-keyword">new</span> <span class="code-class">ObjectResult</span>(<span class="code-keyword">new</span> { code = <span class="code-string">"UNAUTHORIZED"</span>, message = <span class="code-string">"未授权"</span> }) { StatusCode = <span class="code-number">401</span> },
+            _ => <span class="code-keyword">new</span> <span class="code-class">ObjectResult</span>(<span class="code-keyword">new</span> { code = <span class="code-string">"INTERNAL_ERROR"</span>, message = <span class="code-string">"系统错误"</span> }) { StatusCode = <span class="code-number">500</span> }
+        };
+        context.Result = result;
+    }
+}</pre>
+                </div>
+                <div class="info-box warning">
+                    <strong>注意事项：</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>不要捕获所有异常后静默处理</li>
+                        <li>不要在异常处理中抛出新异常</li>
+                        <li>finally块中释放资源</li>
+                        <li>异步方法使用await而非同步Wait()</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 代码审查清单 -->
+        <div class="tip-section">
+            <div class="tip-header">
+                <div class="tip-icon"><i class="fas fa-clipboard-check"></i></div>
+                <div>
+                    <h2>代码审查清单</h2>
+                    <span>Code Review Checklist</span>
+                </div>
+            </div>
+            <div class="tip-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div style="background: var(--light); padding: 20px; border-radius: 10px;">
+                        <h4 style="color: var(--main); margin-top: 0;"><i class="fas fa-shield-alt"></i> 安全检查</h4>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>用户输入是否做了验证和过滤</li>
+                            <li>SQL是否使用参数化查询</li>
+                            <li>敏感数据是否加密存储</li>
+                            <li>权限校验是否完整</li>
+                            <li>是否防止了XSS/CSRF攻击</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--light); padding: 20px; border-radius: 10px;">
+                        <h4 style="color: var(--main); margin-top: 0;"><i class="fas fa-bug"></i> 健壮性检查</h4>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>空值/边界条件是否处理</li>
+                            <li>异常是否被正确捕获</li>
+                            <li>资源是否正确释放</li>
+                            <li>并发问题是否考虑</li>
+                            <li>超时和重试机制是否完善</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--light); padding: 20px; border-radius: 10px;">
+                        <h4 style="color: var(--main); margin-top: 0;"><i class="fas fa-cogs"></i> 性能检查</h4>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>数据库查询是否加了索引</li>
+                            <li>是否存在N+1查询问题</li>
+                            <li>大对象是否及时释放</li>
+                            <li>循环中是否避免重复计算</li>
+                            <li>缓存策略是否合理</li>
+                        </ul>
+                    </div>
+                    <div style="background: var(--light); padding: 20px; border-radius: 10px;">
+                        <h4 style="color: var(--main); margin-top: 0;"><i class="fas fa-code"></i> 代码规范</h4>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li>命名是否符合规范</li>
+                            <li>方法是否过长（建议<50行）</li>
+                            <li>是否有重复代码</li>
+                            <li>注释是否清晰必要</li>
+                            <li>是否遵循SOLID原则</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 技术知识库 | <a href="tech-knowledge.html">返回技术知识总览</a></p>
+    </footer>
+</body>
+</html>

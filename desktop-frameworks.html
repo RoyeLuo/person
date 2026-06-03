@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桌面框架对比 - 技术知识</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e8e8e8;
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1.1em;
+        }
+        nav {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px 30px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 5px 15px;
+            border-radius: 6px;
+        }
+        nav a:hover {
+            background: rgba(102,126,234,0.2);
+        }
+        .back-link {
+            margin-bottom: 30px;
+        }
+        .back-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
+        .back-link a:hover {
+            color: #8fa4f0;
+            transform: translateX(-5px);
+        }
+        .section {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+        .section:hover {
+            border-color: rgba(102,126,234,0.3);
+            transform: translateY(-2px);
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h3 {
+            font-size: 1.3em;
+            color: #8fa4f0;
+            margin: 25px 0 15px;
+        }
+        p {
+            margin-bottom: 15px;
+            color: #c0c0c0;
+        }
+        .highlight {
+            background: rgba(102,126,234,0.15);
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .feature-list li:before {
+            content: "▸";
+            color: #667eea;
+            font-weight: bold;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        code {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #f8f8f2;
+            font-size: 0.9em;
+        }
+        .code-block {
+            background: rgba(0,0,0,0.4);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .code-block code {
+            background: none;
+            padding: 0;
+            display: block;
+            white-space: pre;
+            color: #e6db74;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.95em;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .comparison-table th {
+            background: rgba(102,126,234,0.2);
+            color: #667eea;
+            font-weight: 600;
+        }
+        .comparison-table tr:hover {
+            background: rgba(102,126,234,0.1);
+        }
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .tag-win { background: rgba(0,120,215,0.2); color: #60a5fa; }
+        .tag-mfc { background: rgba(0,150,136,0.2); color: #4db6ac; }
+        .tag-wpf { background: rgba(156,39,176,0.2); color: #ce93d8; }
+        .tag-recommended { background: rgba(102,126,234,0.3); color: #a5b4fc; }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            margin-left: 8px;
+        }
+        .badge-new { background: #27ae60; color: white; }
+        .badge-legacy { background: #7f8c8d; color: white; }
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 25px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -35px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 2px solid #1a1a2e;
+        }
+        .timeline-item h4 {
+            color: #8fa4f0;
+            margin-bottom: 5px;
+        }
+        .pro-con {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .pro-box, .con-box {
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .pro-box {
+            background: rgba(39,174,96,0.1);
+            border: 1px solid rgba(39,174,96,0.3);
+        }
+        .con-box {
+            background: rgba(231,76,60,0.1);
+            border: 1px solid rgba(231,76,60,0.3);
+        }
+        .pro-box h4, .con-box h4 {
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        .pro-box h4 { color: #2ecc71; }
+        .con-box h4 { color: #e74c3c; }
+        .pro-box ul, .con-box ul {
+            list-style: none;
+            font-size: 0.9em;
+        }
+        .pro-box li, .con-box li {
+            padding: 5px 0;
+        }
+        .pro-box li::before { content: "✓ "; color: #2ecc71; }
+        .con-box li::before { content: "✗ "; color: #e74c3c; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        @media (max-width: 768px) {
+            .pro-con {
+                grid-template-columns: 1fr;
+            }
+            .comparison-table {
+                font-size: 0.85em;
+            }
+            .comparison-table th, .comparison-table td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>桌面开发框架对比</h1>
+            <p class="subtitle">WPF · WinForm · MFC</p>
+        </header>
+        
+        <nav>
+            <a href="tech-knowledge.html">← 返回技术知识</a>
+            <a href="qt-development.html">Qt开发指南</a>
+        </nav>
+
+        <div class="back-link">
+            <a href="tech-knowledge.html">← 返回技术知识总览</a>
+        </div>
+
+        <!-- WPF框架 -->
+        <section class="section">
+            <h2>✨ WPF 框架 (Windows Presentation Foundation) <span class="badge badge-new">推荐</span></h2>
+            <p>WPF 是 Microsoft 于 2006 年推出的 UI 框架，使用 <strong>XAML</strong> 声明式语言定义界面，配合 C# 代码后端，实现界面与逻辑的完全分离。</p>
+            
+            <div class="highlight">
+                <strong>核心理念：</strong>使用 XAML 实现 UI 与逻辑的分离，引入数据绑定、样式、模板等现代概念，大幅提升开发效率和可维护性。
+            </div>
+
+            <h3>核心技术</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>技术</th>
+                    <th>说明</th>
+                    <th>优势</th>
+                </tr>
+                <tr>
+                    <td><strong>XAML</strong></td>
+                    <td>声明式 UI 标记语言</td>
+                    <td>设计器支持、MVVM 模式</td>
+                </tr>
+                <tr>
+                    <td><strong>数据绑定</strong></td>
+                    <td>UI 与数据自动同步</td>
+                    <td>减少样板代码</td>
+                </tr>
+                <tr>
+                    <td><strong>样式/模板</strong></td>
+                    <td>统一视觉风格</td>
+                    <td>高度可定制</td>
+                </tr>
+                <tr>
+                    <td><strong>向量图形</strong></td>
+                    <td>D2D 硬件加速渲染</td>
+                    <td>高清屏适配、动画流畅</td>
+                </tr>
+            </table>
+
+            <h3>XAML 示例</h3>
+            <div class="code-block">
+                <code>&lt;Window x:Class="WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPF 应用"&gt;
+    &lt;StackPanel&gt;
+        &lt;TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/&gt;
+        &lt;Button Content="提交" Command="{Binding SubmitCommand}"/&gt;
+    &lt;/StackPanel&gt;
+&lt;/Window&gt;</code>
+            </div>
+
+            <h3>MVVM 架构</h3>
+            <ul class="feature-list">
+                <li><strong>Model</strong> - 数据模型、业务逻辑、数据访问</li>
+                <li><strong>View</strong> - XAML 界面，完全被动，不知道 ViewModel 细节</li>
+                <li><strong>ViewModel</strong> - 数据绑定源，实现 INotifyPropertyChanged，命令模式</li>
+            </ul>
+
+            <div class="code-block">
+                <code>// ViewModel 示例
+public class MainViewModel : INotifyPropertyChanged
+{
+    private string _userName;
+    public string UserName
+    {
+        get => _userName;
+        set { _userName = value; OnPropertyChanged(); }
+    }
+    
+    public ICommand SubmitCommand { get; }
+    
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string name = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+}</code>
+            </div>
+
+            <div class="pro-con">
+                <div class="pro-box">
+                    <h4>✓ 优势</h4>
+                    <ul>
+                        <li>声明式 UI，开发效率高</li>
+                        <li>强大的数据绑定机制</li>
+                        <li>硬件加速，渲染性能优秀</li>
+                        <li>样式和模板高度可定制</li>
+                        <li>MVVM 架构，易于测试和维护</li>
+                        <li>丰富的动画支持</li>
+                    </ul>
+                </div>
+                <div class="con-box">
+                    <h4>✗ 劣势</h4>
+                    <ul>
+                        <li>学习曲线较陡</li>
+                        <li>Windows Only</li>
+                        <li>初学者容易滥用数据绑定</li>
+                        <li>需要 .NET 环境</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- WinForm框架 -->
+        <section class="section">
+            <h2>🪟 WinForm 框架 <span class="badge badge-legacy">传统</span></h2>
+            <p>Windows Forms 是 Microsoft 2002 年推出的 GUI 框架，基于 .NET 的事件驱动开发模式，使用 C# 或 VB.NET。</p>
+
+            <h3>技术特点</h3>
+            <ul class="feature-list">
+                <li><strong>拖拽式开发</strong> - Visual Studio 设计器快速构建</li>
+                <li><strong>事件驱动</strong> - 基于委托的事件处理</li>
+                <li><strong>丰富控件</strong> - 内置 Windows 风格控件</li>
+                <li><strong>RAD 开发</strong> - 快速应用开发理念</li>
+            </ul>
+
+            <h3>代码示例</h3>
+            <div class="code-block">
+                <code>// WinForm 事件驱动模式
+public partial class MainForm : Form
+{
+    public MainForm()
+    {
+        InitializeComponent();
+        this.btnClick.Click += BtnClick_Click;
+    }
+
+    private void BtnClick_Click(object sender, EventArgs e)
+    {
+        MessageBox.Show("按钮被点击!");
+    }
+}</code>
+            </div>
+
+            <div class="pro-con">
+                <div class="pro-box">
+                    <h4>✓ 优势</h4>
+                    <ul>
+                        <li>上手简单，开发效率高</li>
+                        <li>VS 设计器支持完善</li>
+                        <li>学习资源丰富</li>
+                        <li>适合快速原型</li>
+                    </ul>
+                </div>
+                <div class="con-box">
+                    <h4>✗ 劣势</h4>
+                    <ul>
+                        <li>界面定制能力有限</li>
+                        <li>无 MVVM/MVP 支持</li>
+                        <li>代码与 UI 混杂</li>
+                        <li>无硬件加速</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- MFC框架 -->
+        <section class="section">
+            <h2>🔧 MFC 框架 (Microsoft Foundation Classes) <span class="badge badge-legacy">传统</span></h2>
+            <p>MFC 是 Microsoft 1992 年推出的 C++ 类库，对 Win32 API 的面向对象封装，支持文档/视图架构。</p>
+
+            <h3>技术特点</h3>
+            <ul class="feature-list">
+                <li><strong>C++封装</strong> - 对 Win32 API 的 OOP 封装</li>
+                <li><strong>消息映射</strong> - DECLARE_MESSAGE_MAP 宏驱动</li>
+                <li><strong>文档/视图</strong> - 内置 MDI/SDI 架构</li>
+                <li><strong>高性能</strong> - 编译型语言，接近底层</li>
+            </ul>
+
+            <h3>消息映射示例</h3>
+            <div class="code-block">
+                <code>// MFC 消息映射
+class CMainFrame : public CFrameWnd
+{
+protected:
+    afx_msg void OnBnClickedButton();
+    DECLARE_MESSAGE_MAP()
+};
+
+BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
+    ON_BN_CLICKED(IDC_MYBUTTON, &CMainFrame::OnBnClickedButton)
+END_MESSAGE_MAP()</code>
+            </div>
+
+            <div class="pro-con">
+                <div class="pro-box">
+                    <h4>✓ 优势</h4>
+                    <ul>
+                        <li>性能优秀</li>
+                        <li>可直接操作 Win32 API</li>
+                        <li>单文件 exe 部署</li>
+                        <li>成熟稳定</li>
+                    </ul>
+                </div>
+                <div class="con-box">
+                    <h4>✗ 劣势</h4>
+                    <ul>
+                        <li>学习曲线陡峭</li>
+                        <li>代码复杂，宏多</li>
+                        <li>Windows Only</li>
+                        <li>现代 UI 支持有限</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 框架对比 -->
+        <section class="section">
+            <h2>📊 三框架全面对比</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>对比维度</th>
+                    <th><span class="tag tag-wpf">WPF</span></th>
+                    <th><span class="tag tag-win">WinForm</span></th>
+                    <th><span class="tag tag-mfc">MFC</span></th>
+                </tr>
+                <tr>
+                    <td><strong>发布年份</strong></td>
+                    <td>2006</td>
+                    <td>2002</td>
+                    <td>1992</td>
+                </tr>
+                <tr>
+                    <td><strong>语言</strong></td>
+                    <td>C# / VB.NET</td>
+                    <td>C# / VB.NET</td>
+                    <td>C++</td>
+                </tr>
+                <tr>
+                    <td><strong>UI 定义</strong></td>
+                    <td>XAML 声明式</td>
+                    <td>拖拽+代码</td>
+                    <td>资源文件+代码</td>
+                </tr>
+                <tr>
+                    <td><strong>架构模式</strong></td>
+                    <td>MVVM</td>
+                    <td>无强制</td>
+                    <td>文档/视图</td>
+                </tr>
+                <tr>
+                    <td><strong>学习曲线</strong></td>
+                    <td>⭐⭐⭐⭐ 中高</td>
+                    <td>⭐⭐ 简单</td>
+                    <td>⭐⭐⭐⭐⭐ 较陡</td>
+                </tr>
+                <tr>
+                    <td><strong>开发效率</strong></td>
+                    <td>⭐⭐⭐⭐⭐ 高</td>
+                    <td>⭐⭐⭐⭐ 高</td>
+                    <td>⭐⭐ 中</td>
+                </tr>
+                <tr>
+                    <td><strong>渲染性能</strong></td>
+                    <td>⭐⭐⭐⭐⭐ 硬件加速</td>
+                    <td>⭐⭐ GDI</td>
+                    <td>⭐⭐⭐ GDI/GDI+</td>
+                </tr>
+                <tr>
+                    <td><strong>UI定制</strong></td>
+                    <td>⭐⭐⭐⭐⭐ 高度自由</td>
+                    <td>⭐⭐ 受限</td>
+                    <td>⭐⭐⭐ 良好</td>
+                </tr>
+                <tr>
+                    <td><strong>可测试性</strong></td>
+                    <td>⭐⭐⭐⭐⭐ MVVM</td>
+                    <td>⭐⭐⭐ 一般</td>
+                    <td>⭐⭐ 困难</td>
+                </tr>
+                <tr>
+                    <td><strong>维护性</strong></td>
+                    <td>⭐⭐⭐⭐⭐ 优秀</td>
+                    <td>⭐⭐⭐ 一般</td>
+                    <td>⭐⭐ 困难</td>
+                </tr>
+                <tr>
+                    <td><strong>平台</strong></td>
+                    <td>Windows</td>
+                    <td>Windows</td>
+                    <td>Windows</td>
+                </tr>
+                <tr>
+                    <td><strong>推荐场景</strong></td>
+                    <td>企业应用、现代 UI</td>
+                    <td>内部工具、简单应用</td>
+                    <td>高性能、游戏</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 演进历史 -->
+        <section class="section">
+            <h2>📅 技术演进时间线</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>1992年</h4>
+                    <p>MFC 1.0 发布，Win32 API 的 C++ 封装层</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2002年</h4>
+                    <p>.NET Framework 1.0 发布，WinForms 成为新选择</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2006年</h4>
+                    <p>.NET 3.0 发布，WPF 正式登场，引入 XAML 和 MVVM</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2008年</h4>
+                    <p>Prism 框架发布，MVVM 得到广泛采用</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2019年</h4>
+                    <p>.NET Core 3.0 支持 WPF，跨平台成为可能</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2022年</h4>
+                    <p>.NET 7/8 发布，WPF 持续更新</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 选择建议 -->
+        <section class="section">
+            <h2>🎯 框架选择建议</h2>
+
+            <h3>选择 WPF 当：</h3>
+            <ul class="feature-list">
+                <li>开发企业级桌面应用</li>
+                <li>需要现代化 UI 和流畅动画</li>
+                <li>重视代码可维护性和可测试性</li>
+                <li>团队熟悉 MVVM 架构</li>
+                <li>需要复杂的数据绑定场景</li>
+            </ul>
+
+            <h3>选择 WinForm 当：</h3>
+            <ul class="feature-list">
+                <li>快速开发内部工具</li>
+                <li>项目周期短，需快速交付</li>
+                <li>维护现有 WinForm 系统</li>
+                <li>团队 .NET 基础较弱</li>
+            </ul>
+
+            <h3>选择 MFC 当：</h3>
+            <ul class="feature-list">
+                <li>对性能有极高要求</li>
+                <li>需要直接操作 Win32 API</li>
+                <li>维护大型 MFC 遗留系统</li>
+                <li>需要单文件 exe 部署</li>
+            </ul>
+
+            <div class="highlight">
+                <strong>总结：</strong>WPF 是 Windows 桌面开发的现代主流选择，
+                结合 MVVM 模式能够构建可维护、可测试的企业级应用。
+                新项目建议优先选择 WPF。
+            </div>
+        </section>
+
+        <footer>
+            <p>技术知识库 · 持续更新中</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>罗小添 - 芯片制造行业项目 | 半导体设备上位机 | MES系统</title>
+    <meta name="description" content="罗小添芯片制造行业项目经验：S&K打线机专用上位机系统、半导体设备上位机、半导体光模块MES系统">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-code"></i> 罗小添
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" style="color: var(--main); font-weight: bold;">首页</a></li>
+                <li class="dropdown">
+                    <a href="index.html">行业项目</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="chip.html">光模块制造</a></li>
+                        <li><a href="energy.html">能源行业(加气/加氢站)</a></li>
+                        <li><a href="transit.html">轨道交通</a></li>
+                    </ul>
+                </li>
+                <li><a href="career.html">职业经历</a></li>
+                <li><a href="about.html">关于我</a></li>
+                <li><a href="project-management.html">项目管理</a></li>
+                <li><a href="tech-knowledge.html">技术知识</a></li>
+                <li><a href="contact.html">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 行业导航标签 -->
+        <div class="job-nav-tabs">
+            <a href="chip.html" class="job-tab active">
+                <i class="fas fa-microchip"></i>
+                <span>芯片制造</span>
+            </a>
+            <a href="energy.html" class="job-tab">
+                <i class="fas fa-bolt"></i>
+                <span>能源行业</span>
+            </a>
+            <a href="transit.html" class="job-tab">
+                <i class="fas fa-train"></i>
+                <span>轨道交通</span>
+            </a>
+        </div>
+
+        <!-- 项目介绍 -->
+        <h2 class="section-title">芯片制造行业项目</h2>
+
+        <!-- 技术栈总览 -->
+        <div style="background: var(--light); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+            <h4 style="margin-bottom: 15px; color: var(--main);"><i class="fas fa-laptop-code" style="margin-right: 8px;"></i>技术栈 · 发展历程</h4>
+            
+            <!-- 过去 -->
+            <div style="margin-bottom: 15px;">
+                <span style="background: #6c757d; color: white; padding: 2px 10px; border-radius: 10px; font-size: 11px; margin-right: 8px;">过去</span>
+                <span style="color: #6c757d; font-size: 13px;">Delphi、C#、WinForm</span>
+            </div>
+            
+            <!-- 现在 -->
+            <div>
+                <span style="background: #165DFF; color: white; padding: 2px 10px; border-radius: 10px; font-size: 11px; margin-right: 8px;">现在</span>
+                <span style="color: #165DFF; font-size: 13px;">.NET 8/.NET Core、WPF、MVVM、C++、Qt/QML、SECS/GEM、OPC UA、Modbus TCP、InfluxDB、Redis</span>
+            </div>
+        </div>
+        
+        <div class="project-item">
+            <div class="project-header">
+                <h4>S&K打线机专用上位机数据采集系统（SECS协议版）</h4>
+                <div class="project-period">2024 - 至今</div>
+            </div>
+            <div class="project-tech">技术栈：.NET 8、WPF、MVVM、SECS/GEM 协议、InfluxDB、Modbus TCP</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>开发适配 S&K 绑线机的智能化上位机控制系统，满足半导体生产高精度、高稳定性要求，实现设备与工厂系统标准化对接。</p>
+                <p>
+                    <strong>个人职责：</strong>
+                    <br>1. 独立完成上位机系统架构设计与开发：包括 UI 界面（设备状态、参数曲线、报警信息展示）、SECS/GEM 协议通信模块、数据采集与存储模块；
+                    <br>2. 实现 PLC 与设备的双向交互，完成工艺参数配置、设备启停控制、异常停机等功能；
+                    <br>3. 优化多线程并发处理能力，解决数据采集延迟问题，保障系统实时性；
+                    <br>4. 编写完整的软件文档与技术说明，配合测试团队完成系统调试。
+                </p>
+                <div class="project-achieve"><strong>项目进展：</strong>系统已完成核心功能开发，进入测试阶段，数据采集延迟≤500ms，满足半导体生产高精度要求。</div>
+
+                <!-- 系统界面展示 -->
+                <div style="margin-top: 20px;">
+                    <h5 style="margin-bottom: 12px; color: #333; font-size: 14px;">
+                        <i class="fas fa-images" style="color: #667eea; margin-right: 8px;"></i>
+                        S&K打线机上位机系统界面
+                    </h5>
+                    <div class="project-image-gallery">
+                        <div class="gallery-item">
+                            <img src="./images/opticalmodule/skbinding/rapid-front.png" alt="S&K打线机上位机主界面">
+                            <div class="gallery-caption">系统主界面</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="./images/opticalmodule/skbinding/rapid-left.png" alt="S&K打线机上位机侧边界面">
+                            <div class="gallery-caption">运行状态详情</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="./images/opticalmodule/skbinding/898c0f08-5fa3-42b5-9c3c-e81b7d90a297.png" alt="S&K打线机参数配置界面">
+                            <div class="gallery-caption">参数配置界面</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="./images/opticalmodule/skbinding/a77d6f15-23fd-4403-985e-a34df50f5695.png" alt="S&K打线机数据监控界面">
+                            <div class="gallery-caption">数据监控界面</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-header">
+                <h4>半导体设备上位机系统</h4>
+                <div class="project-period">2018 - 2020</div>
+            </div>
+            <div class="project-tech">技术栈：C#、WPF、SECS/GEM协议、Modbus、数据库</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>为半导体生产设备开发上位机控制系统，实现设备自动化控制和生产数据管理。</p>
+                <p>
+                    <strong>技术职责：</strong>
+                    <br>1. 协议实现：开发SECS/GEM协议通信模块，实现与半导体设备的标准化通信；
+                    <br>2. 界面开发：使用WPF开发设备控制界面，包括参数设置、状态监控、报警显示；
+                    <br>3. 数据采集：实现生产数据的实时采集、存储和分析功能；
+                    <br>4. 系统集成：集成Modbus协议，实现与外围设备的通信；
+                    <br>5. 测试优化：进行系统性能测试和优化，确保高可靠性运行。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>系统数据采集延迟≤500ms，满足半导体生产高精度要求，设备运行效率提升25%。</div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-header">
+                <h4>半导体光模块MES在制品工序管控模块</h4>
+                <div class="project-period">2022 - 2023</div>
+            </div>
+            <div class="project-tech">技术栈：.NET Core / C#、WPF、ASP.NET Web API、SQL Server、Redis、PLC Modbus/TCP、OPC UA、SECS/GEM 协议、SAP 对接</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>解决多型号混线生产流程不规范、工序漏检、设备数据孤岛问题，实现光模块生产全工序标准化管控与数据追溯。</p>
+                <p>
+                    <strong>个人职责（上位机核心关联）：</strong>
+                    <br>1. 主导工艺建模与流程设计：梳理光模块全系列加工流程，设计工序节点与流转规则，支撑上位机系统逻辑流程开发；
+                    <br>2. 搭建多设备数据接口体系：开发 Modbus/TCP、OPC UA 等多协议接口，对接 15+ 类设备，实现数据自动采集与上传；
+                    <br>3. 上位机功能开发：参与 WPF 车间客户端 UI 设计与逻辑实现，完成设备状态监控、工艺参数展示、工序合格判定等功能；
+                    <br>4. 测试与优化：对系统进行全面测试，分析并修复 BUG，优化数据采集与交互性能；
+                    <br>5. 文档编写：撰写技术设计文档、接口说明书与操作手册。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>工序漏检率从 4% 降至 0，流转错误率降至 0.2%，设备数据自动采集率达 95%；系统稳定运行率 > 99.6%，覆盖 3 条生产线，支撑日产 1.2k + 光模块。</div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-header">
+                <h4>新工厂10条产线光模块MES工序管控模块</h4>
+                <div class="project-period">2023 - 2024</div>
+            </div>
+            <div class="project-tech">技术栈：.NET Core、WPF、SQL Server、OPC UA、Modbus TCP、ERP 对接</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>支撑新工厂产能扩张，实现 10 条光模块生产线的标准化管控，对接 ERP 与客户系统，满足大规模生产数据交互需求。</p>
+                <p>
+                    <strong>核心职责：</strong>
+                    <br>1. 主导 10 条产线 MES 上位机对接落地，设计多产线并行生产的 UI 界面与逻辑流程；
+                    <br>2. 开发多协议数据采集接口，对接 80+ 台套设备，实现实时数据采集与上传；
+                    <br>3. 定制化开发客户导向功能模块，完成上位机与 ERP、客户系统的数据交互；
+                    <br>4. 编写技术文档与用户培训手册，协助团队完成系统上线。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>支撑日产 5k + 光模块，客户审计通过率 100%，系统稳定运行率 > 99.7%，大幅提升生产效率与管理水平。</div>
+            </div>
+        </div>
+
+        <!-- GIF展示 -->
+        <div class="project-category">
+            <h3>系统运行演示</h3>
+            <div class="project-image-gallery">
+                <div class="gallery-item">
+                    <img src="./images/Gas(Hydrogen)StationSCADAMonitoringSystem/scanda_station4.gif" alt="工业自动化系统演示" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <!-- 图片展示区域 -->
+        <div class="project-category">
+            <h3>项目界面展示</h3>
+            <div class="project-image-gallery">
+                <div class="gallery-item placeholder">
+                    <div class="image-placeholder">
+                        <i class="fas fa-industry"></i>
+                        <span>MES工序管控界面</span>
+                        <small>生产流程监控与管理</small>
+                    </div>
+                </div>
+                <div class="gallery-item placeholder">
+                    <div class="image-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <span>数据采集与监控</span>
+                        <small>实时生产数据展示</small>
+                    </div>
+                </div>
+                <div class="gallery-item placeholder">
+                    <div class="image-placeholder">
+                        <i class="fas fa-cogs"></i>
+                        <span>设备状态监控</span>
+                        <small>多设备并行管理</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 相关项目推荐 -->
+        <div class="project-category">
+            <h3>相关行业项目</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <a href="energy.html" style="text-decoration: none;">
+                    <div style="padding: 25px; background: var(--light); border-radius: 12px; text-align: center; transition: all 0.3s ease;">
+                        <i class="fas fa-bolt" style="font-size: 36px; color: var(--main); margin-bottom: 10px;"></i>
+                        <h4 style="margin-bottom: 8px;">能源行业</h4>
+                        <p style="color: #666; font-size: 14px;">加气机/SCADA系统</p>
+                    </div>
+                </a>
+                <a href="transit.html" style="text-decoration: none;">
+                    <div style="padding: 25px; background: var(--light); border-radius: 12px; text-align: center; transition: all 0.3s ease;">
+                        <i class="fas fa-train" style="font-size: 36px; color: var(--main); margin-bottom: 10px;"></i>
+                        <h4 style="margin-bottom: 8px;">轨道交通</h4>
+                        <p style="color: #666; font-size: 14px;">供电安全管理系统</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-info">
+            <p>© 2026 罗小添 | 个人项目展示站</p>
+            <p>GitHub: <a href="https://github.com/royeLuo333" target="_blank">@royeLuo333</a></p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>

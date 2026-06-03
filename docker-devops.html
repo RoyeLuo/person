@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker与DevOps - 技术知识</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%); color: white; padding: 2rem; text-align: center; }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.9; }
+        nav { background: #2d2d2d; padding: 0.5rem 2rem; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1rem; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #ccc; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background: #249ad4; color: white; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card h2 { color: #249ad4; border-bottom: 2px solid #249ad4; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.3rem; }
+        .card h3 { color: #333; margin: 1rem 0 0.5rem; font-size: 1.1rem; }
+        .card p { margin-bottom: 0.8rem; color: #555; }
+        .tag { display: inline-block; background: #e3f2fd; color: #1976d2; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; margin: 0.2rem; }
+        .tag.blue { background: #e3f2fd; color: #1976d2; }
+        .tag.green { background: #e8f5e9; color: #388e3c; }
+        .tag.orange { background: #fff3e0; color: #f57c00; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 1rem 0; font-size: 0.9rem; }
+        code { font-family: "Fira Code", "Consolas", monospace; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .cmd { color: #dcdcaa; }
+        ul { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .highlight-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .warning-box { background: #ffebee; border-left: 4px solid #d32f2f; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .success-box { background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        footer { background: #2d2d2d; color: #888; text-align: center; padding: 2rem; margin-top: 3rem; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: #249ad4; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .grid-item { background: #fafafa; padding: 1rem; border-radius: 6px; border: 1px solid #eee; }
+        .grid-item h4 { color: #249ad4; margin-bottom: 0.5rem; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.75rem; text-align: left; }
+        th { background: #249ad4; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Docker与DevOps</h1>
+        <p>容器化、编排与持续部署实践</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我</a></li>
+            <li><a href="tech-knowledge.html">技术知识</a></li>
+            <li><a href="contact.html">联系我</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <a href="tech-knowledge.html" class="back-link">← 返回技术知识总览</a>
+
+        <div class="card">
+            <h2>Docker基础</h2>
+            <p>Docker是一个开源的容器化平台，让应用打包、分发、运行变得简单高效。</p>
+
+            <h3>核心概念</h3>
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>Image 镜像</h4>
+                    <p>只读模板，包含应用和依赖</p>
+                    <span class="tag">可层层构建</span><span class="tag">版本化</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Container 容器</h4>
+                    <p>镜像的运行实例，相互隔离</p>
+                    <span class="tag">轻量快速</span><span class="tag">可写层</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Volume 卷</h4>
+                    <p>持久化数据，容器间共享</p>
+                    <span class="tag">数据持久</span><span class="tag">挂载</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Registry 仓库</h4>
+                    <p>存储和分发镜像</p>
+                    <span class="tag">Docker Hub</span><span class="tag">私有仓库</span>
+                </div>
+            </div>
+
+            <h3>常用命令</h3>
+<pre><code><span class="comment"># 镜像操作</span>
+docker images                          <span class="comment"># 列出本地镜像</span>
+docker pull nginx:latest               <span class="comment"># 拉取镜像</span>
+docker rmi nginx:latest                <span class="comment"># 删除镜像</span>
+docker build -t myapp:1.0 .            <span class="comment"># 构建镜像</span>
+docker tag myapp:1.0 registry.com/myapp <span class="comment"># 打标签</span>
+docker push registry.com/myapp         <span class="comment"># 推送镜像</span>
+
+<span class="comment"># 容器操作</span>
+docker ps -a                           <span class="comment"># 列出所有容器</span>
+docker run -d -p 8080:80 --name web nginx  <span class="comment"># 运行容器</span>
+docker start/stop/restart web          <span class="comment"># 启停容器</span>
+docker exec -it web /bin/bash          <span class="comment"># 进入容器</span>
+docker logs -f web                      <span class="comment"># 查看日志</span>
+docker rm -f web                        <span class="comment"># 删除容器</span>
+
+<span class="comment"># 清理</span>
+docker system prune -f                 <span class="comment"># 清理无用资源</span></code></pre>
+
+            <h3>run 参数详解</h3>
+<pre><code>docker run [OPTIONS] IMAGE [COMMAND]
+
+<span class="comment"># 核心参数</span>
+-d                    <span class="comment"># 后台运行</span>
+-p 8080:80            <span class="comment"># 端口映射（主机:容器）</span>
+-v /host/path:/container/path  <span class="comment"># 目录挂载</span>
+-e KEY=VALUE          <span class="comment"># 环境变量</span>
+--name myapp          <span class="comment"># 容器名称</span>
+--network mynet       <span class="comment"># 加入网络</span>
+--restart unless-stopped  <span class="comment"># 自动重启策略</span>
+--memory 512m         <span class="comment"># 内存限制</span>
+--cpus 1.0            <span class="comment"># CPU限制</span>
+--rm                  <span class="comment"># 停止后自动删除</span>
+-w /app               <span class="comment"># 工作目录</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>Dockerfile最佳实践</h2>
+
+<pre><code><span class="comment"># 多阶段构建示例</span>
+<span class="comment"># 阶段1：构建</span>
+<span class="keyword">FROM</span> maven:3.8-openjdk-17 <span class="keyword">AS</span> builder
+<span class="keyword">WORKDIR</span> /app
+<span class="keyword">COPY</span> pom.xml .
+<span class="keyword">RUN</span> mvn dependency:go-offline    <span class="comment"># 缓存依赖层</span>
+<span class="keyword">COPY</span> src ./src
+<span class="keyword">RUN</span> mvn package -DskipTests
+
+<span class="comment"># 阶段2：运行（精简镜像）</span>
+<span class="keyword">FROM</span> eclipse-temurin:17-jre-alpine
+<span class="keyword">WORKDIR</span> /app
+<span class="keyword">COPY</span> --from=builder /app/target/myapp.jar ./app.jar
+
+<span class="comment"># 安全配置</span>
+<span class="keyword">RUN</span> addgroup -S appgroup && adduser -S appuser -G appgroup
+<span class="keyword">USER</span> appuser
+
+<span class="comment"># 健康检查</span>
+<span class="keyword">HEALTHCHECK</span> --interval=30s --timeout=3s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+<span class="comment"># 使用非root用户</span>
+<span class="keyword">EXPOSE</span> 8080
+<span class="keyword">ENTRYPOINT</span> [<span class="string">"java"</span>, <span class="string">"-jar"</span>, <span class="string">"app.jar"</span>]</code></pre>
+
+            <div class="highlight-box">
+                <strong>优化建议：</strong>
+                <ul>
+                    <li>合理利用层缓存：频繁变化的内容放最后</li>
+                    <li>.dockerignore：排除不需要的文件</li>
+                    <li>最小化基础镜像：alpine、distroless</li>
+                    <li>合并RUN指令：减少镜像层数</li>
+                    <li>多阶段构建：分离构建和运行环境</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Docker Compose</h2>
+            <p>定义和运行多容器Docker应用的工具。</p>
+
+<pre><code><span class="comment"># docker-compose.yml</span>
+<span class="keyword">version</span>: <span class="string">"3.8"</span>
+
+<span class="keyword">services</span>:
+  <span class="comment"># Web应用</span>
+  webapp:
+    build: .
+    ports:
+      - <span class="string">"8080:8080"</span>
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_HOST=postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  <span class="comment"># 数据库</span>
+  postgres:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: myapp
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: [<span class="string">"CMD-SHELL"</span>, <span class="string">"pg_isready -U admin"</span>]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  <span class="comment"># Redis缓存</span>
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
+
+  <span class="comment"># Nginx反向代理</span>
+  nginx:
+    image: nginx:alpine
+    ports:
+      - <span class="string">"80:80"</span>
+      - <span class="string">"443:443"</span>
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - webapp
+    networks:
+      - backend
+
+<span class="keyword">volumes</span>:
+  postgres_data:
+  redis_data:
+
+<span class="keyword">networks</span>:
+  backend:</code></pre>
+
+<pre><code><span class="comment"># 常用命令</span>
+docker-compose up -d                  <span class="comment"># 启动所有服务</span>
+docker-compose down -v                <span class="comment"># 停止并删除</span>
+docker-compose ps                      <span class="comment"># 查看状态</span>
+docker-compose logs -f webapp          <span class="comment"># 查看日志</span>
+docker-compose exec webapp bash        <span class="comment"># 进入容器</span>
+docker-compose restart webapp          <span class="comment"># 重启服务</span>
+docker-compose build --no-cache        <span class="comment"># 重新构建</span>
+docker-compose scale webapp=3          <span class="comment"># 扩容</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>Kubernetes基础</h2>
+            <p>K8s是容器编排平台，提供自动化部署、扩缩容、服务发现等功能。</p>
+
+            <h3>核心概念</h3>
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>Pod</h4>
+                    <p>最小调度单元，包含一个或多个容器</p>
+                    <span class="tag">共享网络</span><span class="tag">共享存储</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Deployment</h4>
+                    <p>管理Pod副本，支持滚动更新</p>
+                    <span class="tag">声明式</span><span class="tag">回滚</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Service</h4>
+                    <p>Pod的负载均衡和网络抽象</p>
+                    <span class="tag">ClusterIP</span><span class="tag">NodePort</span><span class="tag">LoadBalancer</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Ingress</h4>
+                    <p>HTTP/HTTPS路由，外部访问入口</p>
+                    <span class="tag">域名</span><span class="tag">SSL</span>
+                </div>
+                <div class="grid-item">
+                    <h4>ConfigMap/Secret</h4>
+                    <p>配置数据和敏感信息</p>
+                    <span class="tag">环境变量</span><span class="tag">挂载</span>
+                </div>
+                <div class="grid-item">
+                    <h4>PersistentVolume</h4>
+                    <p>持久化存储抽象</p>
+                    <span class="tag">持久化</span>
+                </div>
+            </div>
+
+            <h3>Deployment示例</h3>
+<pre><code><span class="keyword">apiVersion</span>: apps/v1
+<span class="keyword">kind</span>: Deployment
+<span class="keyword">metadata</span>:
+  <span class="keyword">name</span>: myapp
+<span class="keyword">spec</span>:
+  <span class="keyword">replicas</span>: 3
+  <span class="keyword">selector</span>:
+    <span class="keyword">matchLabels</span>:
+      <span class="keyword">app</span>: myapp
+  <span class="keyword">template</span>:
+    <span class="keyword">metadata</span>:
+      <span class="keyword">labels</span>:
+        <span class="keyword">app</span>: myapp
+    <span class="keyword">spec</span>:
+      <span class="keyword">containers</span>:
+      - <span class="keyword">name</span>: myapp
+        <span class="keyword">image</span>: myapp:1.0
+        <span class="keyword">ports</span>:
+        - <span class="keyword">containerPort</span>: 8080
+        <span class="keyword">resources</span>:
+          <span class="keyword">limits</span>:
+            memory: <span class="string">"256Mi"</span>
+            cpu: <span class="string">"500m"</span>
+          <span class="keyword">requests</span>:
+            memory: <span class="string">"128Mi"</span>
+            cpu: <span class="string">"250m"</span>
+        <span class="keyword">livenessProbe</span>:
+          <span class="keyword">httpGet</span>:
+            <span class="keyword">path</span>: /health
+            <span class="keyword">port</span>: 8080
+          <span class="keyword">initialDelaySeconds</span>: 30
+          <span class="keyword">periodSeconds</span>: 10
+        <span class="keyword">readinessProbe</span>:
+          <span class="keyword">httpGet</span>:
+            <span class="keyword">path</span>: /ready
+            <span class="keyword">port</span>: 8080
+          <span class="keyword">initialDelaySeconds</span>: 5
+          <span class="keyword">periodSeconds</span>: 5</code></pre>
+
+            <h3>常用命令</h3>
+<pre><code>kubectl get pods                         <span class="comment"># 查看Pod</span>
+kubectl get svc                           <span class="comment"># 查看Service</span>
+kubectl get all                           <span class="comment"># 查看所有资源</span>
+kubectl describe pod myapp-xxx           <span class="comment"># 查看详情</span>
+kubectl logs -f pod/myapp-xxx             <span class="comment"># 查看日志</span>
+kubectl exec -it myapp-xxx -- /bin/bash   <span class="comment"># 进入容器</span>
+kubectl apply -f deployment.yaml          <span class="comment"># 部署</span>
+kubectl scale deployment myapp --replicas=5  <span class="comment"># 扩缩容</span>
+kubectl rollout status deployment/myapp   <span class="comment"># 查看滚动更新</span>
+kubectl rollout undo deployment/myapp      <span class="comment"># 回滚</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>CI/CD流水线</h2>
+            <p>持续集成/持续部署自动化软件交付流程。</p>
+
+            <h3>典型流水线阶段</h3>
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>1. Code Checkout</h4>
+                    <p>拉取代码、切换分支</p>
+                </div>
+                <div class="grid-item">
+                    <h4>2. Build</h4>
+                    <p>编译构建（mvn/gradle/npm）</p>
+                </div>
+                <div class="grid-item">
+                    <h4>3. Test</h4>
+                    <p>单元测试、集成测试</p>
+                </div>
+                <div class="grid-item">
+                    <h4>4. Security Scan</h4>
+                    <p>代码扫描、依赖漏洞检测</p>
+                </div>
+                <div class="grid-item">
+                    <h4>5. Docker Build</h4>
+                    <p>构建镜像、打标签</p>
+                </div>
+                <div class="grid-item">
+                    <h4>6. Push</h4>
+                    <p>推送到镜像仓库</p>
+                </div>
+                <div class="grid-item">
+                    <h4>7. Deploy</h4>
+                    <p>部署到测试/生产环境</p>
+                </div>
+                <div class="grid-item">
+                    <h4>8. Verify</h4>
+                    <p>健康检查、烟雾测试</p>
+                </div>
+            </div>
+
+            <h3>Jenkinsfile示例</h3>
+<pre><code>pipeline {
+    <span class="keyword">agent</span> { label <span class="string">'docker'</span> }
+    
+    <span class="keyword">environment</span> {
+        REGISTRY = <span class="string">'registry.com'</span>
+        IMAGE_NAME = <span class="string">"myapp/${BRANCH_NAME}"</span>
+    }
+    
+    <span class="keyword">stages</span> {
+        <span class="keyword">stage</span>(<span class="string">'Checkout'</span>) {
+            <span class="keyword">steps</span> {
+                checkout scm
+            }
+        }
+        
+        <span class="keyword">stage</span>(<span class="string">'Build'</span>) {
+            <span class="keyword">steps</span> {
+                <span class="keyword">sh</span> <span class="string">'mvn clean package -DskipTests'</span>
+            }
+        }
+        
+        <span class="keyword">stage</span>(<span class="string">'Test'</span>) {
+            <span class="keyword">steps</span> {
+                <span class="keyword">sh</span> <span class="string">'mvn test'</span>
+            }
+            <span class="keyword">post</span> {
+                <span class="keyword">always</span> {
+                    junit <span class="string">'target/surefire-reports/*.xml'</span>
+                }
+            }
+        }
+        
+        <span class="keyword">stage</span>(<span class="string">'Docker Build & Push'</span>) {
+            <span class="keyword">when</span> { branch <span class="string">'main'</span> }
+            <span class="keyword">steps</span> {
+                <span class="keyword">sh</span> <span class="string">"""
+                    docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} .
+                    docker push ${IMAGE_NAME}:${BUILD_NUMBER}
+                """</span>
+            }
+        }
+        
+        <span class="keyword">stage</span>(<span class="string">'Deploy to K8s'</span>) {
+            <span class="keyword">when</span> { branch <span class="string">'main'</span> }
+            <span class="keyword">steps</span> {
+                <span class="keyword">sh</span> <span class="string">"kubectl set image deployment/myapp myapp=${IMAGE_NAME}:${BUILD_NUMBER}"</span>
+            }
+        }
+    }
+}</code></pre>
+
+            <div class="success-box">
+                <strong>工具选择：</strong>
+                <span class="tag blue">Jenkins</span> 灵活强大，插件丰富
+                <span class="tag green">GitLab CI</span> 与GitLab深度集成
+                <span class="tag orange">GitHub Actions</span> 与GitHub无缝衔接
+                <span class="tag">ArgoCD</span> GitOps原生的K8s部署工具
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>监控与日志</h2>
+
+            <h3>Prometheus + Grafana</h3>
+<pre><code><span class="comment"># Prometheus 监控指标</span>
+<span class="comment"># 四大黄金指标：延迟、流量、错误、饱和度</span>
+
+<span class="comment"># 应用暴露指标示例（Spring Boot Actuator）</span>
+http_server_requests_seconds_sum{uri="/api/users",status="200"}
+http_server_requests_seconds_count{uri="/api/users",status="200"}
+jvm_memory_used_bytes{area="heap"}
+jvm_gc_pause_seconds_max</code></pre>
+
+            <h3>日志收集架构</h3>
+            <p><strong>ELK Stack:</strong> Elasticsearch + Logstash + Kibana</p>
+            <p><strong>EFK Stack:</strong> Elasticsearch + Fluentd + Kibana（K8s常用）</p>
+
+<pre><code><span class="comment"># Fluentd 配置示例</span>
+&lt;source&gt;
+  @type tail
+  path /var/log/myapp/*.log
+  pos_file /var/log/fluentd/myapp.log.pos
+  tag myapp.*
+  &lt;parse&gt;
+    @type json
+  &lt;/parse&gt;
+&lt;/source&gt;
+
+&lt;match myapp.*&gt;
+  @type elasticsearch
+  host elasticsearch
+  port 9200
+  logstash_format true
+  logstash_prefix myapp
+&lt;/match&gt;</code></pre>
+
+            <div class="highlight-box">
+                <strong>可观测性三支柱：</strong>
+                <ul>
+                    <li><strong>Metrics</strong> - 量化指标（Prometheus）</li>
+                    <li><strong>Logs</strong> - 事件日志（ELK）</li>
+                    <li><strong>Traces</strong> - 请求链路（Jaeger/Zipkin）</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 技术知识库 | 由 Hexo 驱动</p>
+    </footer>
+</body>
+</html>

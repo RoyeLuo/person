@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>罗小添 - MES系统项目 | 制造执行系统</title>
+    <meta name="description" content="罗小添MES系统项目经验：半导体光模块MES、新工厂10条产线MES、智能制造MES系统、WIP工序管控系统">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-code"></i> 罗小添
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" style="color: var(--main); font-weight: bold;">首页</a></li>
+                <li class="dropdown">
+                    <a href="hmi.html">岗位项目</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="hmi.html">上位机开发</a></li>
+                        <li><a href="mes.html">MES系统</a></li>
+                        <li><a href="scada.html">SCADA监控</a></li>
+                        <li><a href="gas.html">加气机</a></li>
+                    </ul>
+                </li>
+                <li><a href="career.html">职业经历</a></li>
+                <li><a href="about.html">关于我</a></li>
+                <li><a href="project-management.html">项目管理</a></li>
+                <li><a href="contact.html">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 岗位导航标签 -->
+        <div class="job-nav-tabs">
+            <a href="hmi.html" class="job-tab">
+                <i class="fas fa-desktop"></i>
+                <span>上位机开发</span>
+            </a>
+            <a href="mes.html" class="job-tab active">
+                <i class="fas fa-industry"></i>
+                <span>MES系统</span>
+            </a>
+            <a href="scada.html" class="job-tab">
+                <i class="fas fa-chart-line"></i>
+                <span>SCADA监控</span>
+            </a>
+            <a href="gas.html" class="job-tab">
+                <i class="fas fa-gas-pump"></i>
+                <span>加气机</span>
+            </a>
+        </div>
+
+        <!-- 项目介绍 -->
+        <h2 class="section-title">MES系统项目</h2>
+        
+        <div class="project-item">
+            <div class="project-header">
+                <h4>半导体光模块MES在制品工序管控模块</h4>
+                <div class="project-period">2022 - 2023</div>
+            </div>
+            <div class="project-tech">技术栈：.NET Core / C#、WPF、ASP.NET Web API、SQL Server、Redis、PLC Modbus/TCP、OPC UA、SECS/GEM 协议、SAP 对接</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>解决多型号混线生产流程不规范、工序漏检、设备数据孤岛问题，实现光模块生产全工序标准化管控与数据追溯。</p>
+                <p>
+                    <strong>个人职责（上位机核心关联）：</strong>
+                    <br>1. 主导工艺建模与流程设计：梳理光模块全系列加工流程，设计工序节点与流转规则，支撑上位机系统逻辑流程开发；
+                    <br>2. 搭建多设备数据接口体系：开发 Modbus/TCP、OPC UA 等多协议接口，对接 15+ 类设备，实现数据自动采集与上传；
+                    <br>3. 上位机功能开发：参与 WPF 车间客户端 UI 设计与逻辑实现，完成设备状态监控、工艺参数展示、工序合格判定等功能；
+                    <br>4. 测试与优化：对系统进行全面测试，分析并修复 BUG，优化数据采集与交互性能；
+                    <br>5. 文档编写：撰写技术设计文档、接口说明书与操作手册。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>工序漏检率从 4% 降至 0，流转错误率降至 0.2%，设备数据自动采集率达 95%；系统稳定运行率 > 99.6%，覆盖 3 条生产线，支撑日产 1.2k + 光模块。</div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-header">
+                <h4>新工厂10条产线光模块MES工序管控模块</h4>
+                <div class="project-period">2023 - 2024</div>
+            </div>
+            <div class="project-tech">技术栈：.NET Core、WPF、SQL Server、OPC UA、Modbus TCP、ERP 对接</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>支撑新工厂产能扩张，实现 10 条光模块生产线的标准化管控，对接 ERP 与客户系统，满足大规模生产数据交互需求。</p>
+                <p>
+                    <strong>核心职责：</strong>
+                    <br>1. 主导 10 条产线 MES 上位机对接落地，设计多产线并行生产的 UI 界面与逻辑流程；
+                    <br>2. 开发多协议数据采集接口，对接 80+ 台套设备，实现实时数据采集与上传；
+                    <br>3. 定制化开发客户导向功能模块，完成上位机与 ERP、客户系统的数据交互；
+                    <br>4. 编写技术文档与用户培训手册，协助团队完成系统上线。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>支撑日产 5k + 光模块，客户审计通过率 100%，系统稳定运行率 > 99.7%，大幅提升生产效率与管理水平。</div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-header">
+                <h4>智能制造MES系统</h4>
+                <div class="project-period">2021 - 2023</div>
+            </div>
+            <div class="project-tech">技术栈：C#/.NET、WPF、SQL Server、OPC UA、Web API、ERP集成</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>开发智能制造MES系统，实现生产过程全流程管控、质量追溯和数据分析。</p>
+                <p>
+                    <strong>技术职责：</strong>
+                    <br>1. 系统架构：设计MES系统整体架构，包括生产计划、工序管控、质量管理等模块；
+                    <br>2. 数据库设计：设计生产数据模型，支持大数据量存储和快速查询；
+                    <br>3. 接口开发：开发OPC UA和Web API接口，实现与设备和ERP系统的集成；
+                    <br>4. 业务逻辑：实现生产流程控制、质量检验、物料追溯等核心业务逻辑；
+                    <br>5. 报表分析：开发生产报表和数据分析功能，支持管理决策。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>实现生产数据实时监控，质量追溯覆盖率100%，生产效率提升35%，为企业数字化转型提供了有力支撑。</div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-header">
+                <h4>WIP工序管控系统</h4>
+                <div class="project-period">2019 - 2021</div>
+            </div>
+            <div class="project-tech">技术栈：C#、WPF、SQL Server、工业通信协议、条码识别</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>开发WIP（Work In Progress）工序管控系统，实现生产工序的实时监控和过程控制。</p>
+                <p>
+                    <strong>技术职责：</strong>
+                    <br>1. 工序建模：分析生产流程，设计工序节点和流转规则；
+                    <br>2. 界面开发：开发车间操作界面，支持工序扫描、参数录入、质量检查；
+                    <br>3. 数据采集：集成条码识别和工业通信，实现生产数据的自动采集；
+                    <br>4. 流程控制：实现工序流转控制，确保生产过程符合工艺要求；
+                    <br>5. 异常处理：开发异常报警和处理机制，提升生产过程稳定性。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>工序管控准确率>99%，生产过程透明化，质量问题发现率提升50%，显著改善了生产管理水平。</div>
+            </div>
+        </div>
+
+        <!-- 预留图片位置 -->
+        <div class="project-category">
+            <h3>图片展示</h3>
+            <div class="project-image-gallery">
+                <div class="gallery-item placeholder">
+                    <div class="image-placeholder">
+                        <i class="fas fa-image"></i>
+                        <span>预留图片位置</span>
+                        <small>可放置MES系统界面</small>
+                    </div>
+                </div>
+                <div class="gallery-item placeholder">
+                    <div class="image-placeholder">
+                        <i class="fas fa-image"></i>
+                        <span>预留图片位置</span>
+                        <small>可放置工序管控界面</small>
+                    </div>
+                </div>
+                <div class="gallery-item placeholder">
+                    <div class="image-placeholder">
+                        <i class="fas fa-image"></i>
+                        <span>预留图片位置</span>
+                        <small>可放置生产报表界面</small>
+                    </div>
+                </div>
+                <div class="gallery-item placeholder">
+                    <div class="image-placeholder">
+                        <i class="fas fa-image"></i>
+                        <span>预留图片位置</span>
+                        <small>可放置数据可视化界面</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-info">
+            <p>© 2026 罗小添 | 个人项目展示站</p>
+            <p>GitHub: <a href="https://github.com/royeLuo333" target="_blank">@royeLuo333</a></p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>

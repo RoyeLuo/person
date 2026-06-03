@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12种设计模式 - 技术知识</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --main: #165DFF;
+            --main-dark: #0e40e0;
+            --light: #f5f7fa;
+            --text: #333;
+            --text-light: #666;
+            --border: #e8e8e8;
+            --success: #52c41a;
+            --warning: #faad14;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #165DFF 0%, #0e40e0 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .header h1 { margin: 0 0 10px; font-size: 2.5em; }
+        .header p { margin: 0; opacity: 0.9; font-size: 1.1em; }
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .breadcrumb a { color: var(--main); text-decoration: none; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .nav-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .nav-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+        .nav-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(22,93,255,0.15);
+        }
+        .nav-card.active { background: var(--main); color: white; }
+        .nav-card i { font-size: 28px; margin-bottom: 10px; color: var(--main); }
+        .nav-card.active i { color: white; }
+        .nav-card h4 { margin: 0; font-size: 15px; }
+        .category {
+            margin-bottom: 40px;
+        }
+        .category-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--main);
+        }
+        .category-title h2 {
+            margin: 0;
+            font-size: 1.6em;
+            color: var(--main);
+        }
+        .category-title span {
+            margin-left: 10px;
+            padding: 4px 12px;
+            background: var(--light);
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .pattern-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+        .pattern-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(22,93,255,0.12);
+        }
+        .pattern-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .pattern-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #165DFF 0%, #0e40e0 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .pattern-icon i { font-size: 22px; color: white; }
+        .pattern-header h3 {
+            margin: 0;
+            font-size: 1.1em;
+        }
+        .pattern-type {
+            font-size: 12px;
+            color: var(--main);
+            font-weight: 600;
+        }
+        .pattern-desc {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .pattern-scenario {
+            background: var(--light);
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+        .pattern-scenario strong {
+            color: var(--main);
+        }
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            overflow-x: auto;
+            font-size: 13px;
+        }
+        .code-block pre {
+            margin: 0;
+            color: #d4d4d4;
+            font-family: "Fira Code", "Consolas", monospace;
+            line-height: 1.5;
+        }
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #569cd6; }
+        .code-string { color: #ce9178; }
+        .code-class { color: #4ec9b0; }
+        .code-function { color: #dcdcaa; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 14px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-cubes"></i> 12种设计模式</h1>
+        <p>面向对象编程中解决常见问题的最佳实践</p>
+    </div>
+
+    <div class="breadcrumb">
+        <a href="index.html">首页</a> &gt; <a href="tech-knowledge.html">技术知识</a> &gt; 12种设计模式
+    </div>
+
+    <div class="container">
+        <div class="nav-cards">
+            <a href="software-principles.html" class="nav-card">
+                <i class="fas fa-gem"></i>
+                <h4>6大设计原则</h4>
+            </a>
+            <a href="design-patterns.html" class="nav-card active">
+                <i class="fas fa-cubes"></i>
+                <h4>12种设计模式</h4>
+            </a>
+            <a href="security-tips.html" class="nav-card">
+                <i class="fas fa-shield-alt"></i>
+                <h4>安全防护</h4>
+            </a>
+            <a href="dev-tips.html" class="nav-card">
+                <i class="fas fa-lightbulb"></i>
+                <h4>开发技巧</h4>
+            </a>
+            <a href="mysql-optimization.html" class="nav-card">
+                <i class="fas fa-database"></i>
+                <h4>MySQL优化</h4>
+            </a>
+        </div>
+
+        <!-- 创建型模式 -->
+        <div class="category">
+            <div class="category-title">
+                <h2><i class="fas fa-palette"></i> 创建型模式</h2>
+                <span>5种</span>
+            </div>
+            <div class="pattern-grid">
+                <!-- 单例模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-fingerprint"></i></div>
+                        <div>
+                            <h3>单例模式 Singleton</h3>
+                            <span class="pattern-type">创建型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">保证一个类只有一个实例，并提供一个全局访问点。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>数据库连接池、配置文件管理、日志记录器、全局唯一ID生成器
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">public class</span> <span class="code-class">Singleton</span> {
+    <span class="code-keyword">private static</span> <span class="code-keyword">volatile</span> <span class="code-class">Singleton</span> instance;
+    
+    <span class="code-keyword">private</span> <span class="code-function">Singleton</span>() {}
+    
+    <span class="code-keyword">public static</span> <span class="code-class">Singleton</span> <span class="code-function">getInstance</span>() {
+        <span class="code-keyword">if</span> (instance == <span class="code-keyword">null</span>) {
+            <span class="code-keyword">synchronized</span>(<span class="code-class">Singleton</span>.<span class="code-keyword">class</span>) {
+                <span class="code-keyword">if</span> (instance == <span class="code-keyword">null</span>) {
+                    instance = <span class="code-keyword">new</span> <span class="code-class">Singleton</span>();
+                }
+            }
+        }
+        <span class="code-keyword">return</span> instance;
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- 工厂方法模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-industry"></i></div>
+                        <div>
+                            <h3>工厂方法 Factory Method</h3>
+                            <span class="pattern-type">创建型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">定义创建对象的接口，让子类决定实例化哪个类。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>日志记录器（文件/数据库/云存储）、支付网关（支付宝/微信/银联）
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">LoggerFactory</span> {
+    <span class="code-class">Logger</span> <span class="code-function">createLogger</span>();
+}
+<span class="code-keyword">class</span> <span class="code-class">FileLoggerFactory</span> <span class="code-keyword">implements</span> <span class="code-class">LoggerFactory</span> {
+    <span class="code-keyword">public</span> <span class="code-class">Logger</span> <span class="code-function">createLogger</span>() {
+        <span class="code-keyword">return new</span> <span class="code-class">FileLogger</span>();
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- 抽象工厂模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-cubes"></i></div>
+                        <div>
+                            <h3>抽象工厂 Abstract Factory</h3>
+                            <span class="pattern-type">创建型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">创建一系列相关对象的家族，而无需指定具体类。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>UI主题（Windows/Mac/Linux组件）、数据库访问（MySQL/Oracle/PostgreSQL）
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">AbstractFactory</span> {
+    <span class="code-class">Button</span> <span class="code-function">createButton</span>();
+    <span class="code-class">TextBox</span> <span class="code-function">createTextBox</span>();
+}
+<span class="code-keyword">class</span> <span class="code-class">WindowsFactory</span> <span class="code-keyword">implements</span> <span class="code-class">AbstractFactory</span> {
+    <span class="code-keyword">public</span> <span class="code-class">Button</span> <span class="code-function">createButton</span>() { <span class="code-keyword">return new</span> <span class="code-class">WindowsButton</span>(); }
+    <span class="code-keyword">public</span> <span class="code-class">TextBox</span> <span class="code-function">createTextBox</span>() { <span class="code-keyword">return new</span> <span class="code-class">WindowsTextBox</span>(); }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- 建造者模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-building"></i></div>
+                        <div>
+                            <h3>建造者 Builder</h3>
+                            <span class="pattern-type">创建型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">将一个复杂对象的构建与表示分离，允许分步构建。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>SQL查询构建器、HTTP请求构建、复杂配置文件创建、DTO转换
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-class">User</span>.<span class="code-class">Builder</span> builder = <span class="code-keyword">new</span> <span class="code-class">User</span>.<span class="code-class">Builder</span>();
+<span class="code-class">User</span> user = builder
+    .<span class="code-function">name</span>(<span class="code-string">"张三"</span>)
+    .<span class="code-function">age</span>(25)
+    .<span class="code-function">email</span>(<span class="code-string">"zhang@example.com"</span>)
+    .<span class="code-function">phone</span>(<span class="code-string">"13800138000"</span>)
+    .<span class="code-function">build</span>();</pre>
+                    </div>
+                </div>
+
+                <!-- 原型模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-copy"></i></div>
+                        <div>
+                            <h3>原型模式 Prototype</h3>
+                            <span class="pattern-type">创建型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">通过复制现有对象来创建新对象，无需知道具体类型。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>对象克隆、缓存对象恢复、避免重复创建复杂对象
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">class</span> <span class="code-class">Resume</span> <span class="code-keyword">implements</span> <span class="code-class">Cloneable</span> {
+    <span class="code-keyword">private</span> String name;
+    <span class="code-keyword">public</span> <span class="code-class">Resume</span> <span class="code-function">clone</span>() {
+        <span class="code-keyword">try</span> {
+            <span class="code-keyword">return</span> (<span class="code-class">Resume</span>) <span class="code-keyword">super</span>.clone();
+        } <span class="code-keyword">catch</span> (CloneNotSupportedException e) {
+            <span class="code-keyword">return null</span>;
+        }
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 结构型模式 -->
+        <div class="category">
+            <div class="category-title">
+                <h2><i class="fas fa-project-diagram"></i> 结构型模式</h2>
+                <span>4种</span>
+            </div>
+            <div class="pattern-grid">
+                <!-- 适配器模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-plug"></i></div>
+                        <div>
+                            <h3>适配器 Adapter</h3>
+                            <span class="pattern-type">结构型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">将一个类的接口转换成客户期望的另一个接口。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>第三方SDK集成、接口版本兼容、遗留系统对接
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">Target</span> {
+    <span class="code-keyword">void</span> <span class="code-function">request</span>();
+}
+<span class="code-keyword">class</span> <span class="code-class">Adaptee</span> {
+    <span class="code-keyword">public void</span> <span class="code-function">specificRequest</span>() {}
+}
+<span class="code-keyword">class</span> <span class="code-class">Adapter</span> <span class="code-keyword">implements</span> <span class="code-class">Target</span> {
+    <span class="code-keyword">private</span> <span class="code-class">Adaptee</span> adaptee;
+    <span class="code-keyword">public void</span> <span class="code-function">request</span>() {
+        adaptee.<span class="code-function">specificRequest</span>();
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- 装饰器模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-magic"></i></div>
+                        <div>
+                            <h3>装饰器 Decorator</h3>
+                            <span class="pattern-type">结构型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">动态给对象添加额外职责，比继承更灵活。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>IO流包装、日志增强、缓存层、权限校验
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">DataSource</span> {
+    <span class="code-keyword">void</span> <span class="code-function">write</span>(String data);
+    String <span class="code-function">read</span>();
+}
+<span class="code-keyword">class</span> <span class="code-class">EncryptionDecorator</span> <span class="code-keyword">extends</span> <span class="code-class">DataSourceDecorator</span> {
+    <span class="code-keyword">public void</span> <span class="code-function">write</span>(String data) {
+        <span class="code-keyword">super</span>.<span class="code-function">write</span>(<span class="code-function">encrypt</span>(data));
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- 代理模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-user-shield"></i></div>
+                        <div>
+                            <h3>代理模式 Proxy</h3>
+                            <span class="pattern-type">结构型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">为其他对象提供一种代理以控制对这个对象的访问。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>延迟加载、远程代理、安全代理、缓存代理、事务管理
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">Image</span> {
+    <span class="code-keyword">void</span> <span class="code-function">display</span>();
+}
+<span class="code-keyword">class</span> <span class="code-class">ProxyImage</span> <span class="code-keyword">implements</span> <span class="code-class">Image</span> {
+    <span class="code-keyword">private</span> <span class="code-class">RealImage</span> realImage;
+    <span class="code-keyword">public void</span> <span class="code-function">display</span>() {
+        <span class="code-keyword">if</span> (realImage == <span class="code-keyword">null</span>) {
+            realImage = <span class="code-keyword">new</span> <span class="code-class">RealImage</span>(<span class="code-keyword">this</span>.fileName);
+        }
+        realImage.<span class="code-function">display</span>();
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- 外观模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-door-open"></i></div>
+                        <div>
+                            <h3>外观模式 Facade</h3>
+                            <span class="pattern-type">结构型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">为复杂的子系统提供一个统一的高层接口。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>微服务网关、系统集成、简化第三方库调用
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">class</span> <span class="code-class">ComputerFacade</span> {
+    <span class="code-keyword">private</span> <span class="code-class">CPU</span> cpu;
+    <span class="code-keyword">private</span> <span class="code-class">Memory</span> memory;
+    <span class="code-keyword">private</span> <span class="code-class">Disk</span> disk;
+    
+    <span class="code-keyword">public void</span> <span class="code-function">start</span>() {
+        cpu.<span class="code-function">start</span>();
+        memory.<span class="code-function">load</span>();
+        disk.<span class="code-function">read</span>();
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 行为型模式 -->
+        <div class="category">
+            <div class="category-title">
+                <h2><i class="fas fa-random"></i> 行为型模式</h2>
+                <span>3种</span>
+            </div>
+            <div class="pattern-grid">
+                <!-- 策略模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-chess"></i></div>
+                        <div>
+                            <h3>策略模式 Strategy</h3>
+                            <span class="pattern-type">行为型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">定义一系列算法，将每个算法封装起来，使它们可以互换。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>支付方式选择、排序算法切换、促销计算、压缩策略
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">SortStrategy</span> {
+    <span class="code-keyword">int[]</span> <span class="code-function">sort</span>(<span class="code-keyword">int[]</span> array);
+}
+<span class="code-keyword">class</span> <span class="code-class">QuickSort</span> <span class="code-keyword">implements</span> <span class="code-class">SortStrategy</span> { ... }
+<span class="code-keyword">class</span> <span class="code-class">MergeSort</span> <span class="code-keyword">implements</span> <span class="code-class">SortStrategy</span> { ... }
+<span class="code-keyword">class</span> <span class="code-class">Sorter</span> {
+    <span class="code-keyword">private</span> <span class="code-class">SortStrategy</span> strategy;
+    <span class="code-keyword">public void</span> <span class="code-function">setStrategy</span>(<span class="code-class">SortStrategy</span> s) { <span class="code-keyword">this</span>.strategy = s; }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- 观察者模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-eye"></i></div>
+                        <div>
+                            <h3>观察者模式 Observer</h3>
+                            <span class="pattern-type">行为型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">定义对象间的一对多依赖关系，当对象变化时通知所有依赖者。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>事件监听、消息推送、GUI交互、数据绑定、订单状态变更通知
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">Observer</span> {
+    <span class="code-keyword">void</span> <span class="code-function">update</span>(String message);
+}
+<span class="code-keyword">class</span> <span class="code-class">Subject</span> {
+    <span class="code-keyword">private</span> List<Observer> observers = <span class="code-keyword">new</span> ArrayList<>();
+    <span class="code-keyword">public void</span> <span class="code-function">attach</span>(Observer o) { observers.<span class="code-function">add</span>(o); }
+    <span class="code-keyword">public void</span> <span class="code-function">notify</span>() {
+        observers.<span class="code-function">forEach</span>(o -> o.<span class="code-function">update</span>(message));
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- 模板方法模式 -->
+                <div class="pattern-card">
+                    <div class="pattern-header">
+                        <div class="pattern-icon"><i class="fas fa-list"></i></div>
+                        <div>
+                            <h3>模板方法 Template Method</h3>
+                            <span class="pattern-type">行为型</span>
+                        </div>
+                    </div>
+                    <div class="pattern-desc">定义算法骨架，将某些步骤延迟到子类中实现。</div>
+                    <div class="pattern-scenario">
+                        <strong>应用场景：</strong>框架初始化流程、数据处理 pipeline、单元测试基类
+                    </div>
+                    <div class="code-block">
+<pre><span class="code-keyword">abstract class</span> <span class="code-class">DataMiner</span> {
+    <span class="code-comment">// 模板方法</span>
+    <span class="code-keyword">public final void</span> <span class="code-function">mine</span>(String path) {
+        String file = <span class="code-function">openFile</span>(path);
+        String data = <span class="code-function">extractData</span>(file);
+        String parsed = <span class="code-function">parseData</span>(data);
+        <span class="code-function">sendReport</span>(parsed);
+    }
+    <span class="code-keyword">abstract</span> String <span class="code-function">openFile</span>(String path);
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 技术知识库 | <a href="tech-knowledge.html">返回技术知识总览</a></p>
+    </footer>
+</body>
+</html>

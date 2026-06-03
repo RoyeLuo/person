@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术知识 - 个人网站</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3rem 2rem; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.9; font-size: 1.1rem; }
+        nav { background: #2d2d2d; padding: 0.5rem 2rem; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1rem; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #ccc; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background: #667eea; color: white; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .card h2 { font-size: 1.3rem; margin-bottom: 0.5rem; color: #333; }
+        .card p { color: #666; font-size: 0.95rem; }
+        .card .tags { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag { background: #f0f0f0; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; color: #666; }
+        .card-principles { border-top: 4px solid #ff9800; }
+        .card-principles h2 { color: #ff9800; }
+        .card-patterns { border-top: 4px solid #4caf50; }
+        .card-patterns h2 { color: #4caf50; }
+        .card-security { border-top: 4px solid #f44336; }
+        .card-security h2 { color: #f44336; }
+        .card-dev { border-top: 4px solid #2196f3; }
+        .card-dev h2 { color: #2196f3; }
+        .card-mysql { border-top: 4px solid #00bcd4; }
+        .card-mysql h2 { color: #00bcd4; }
+        .card-redis { border-top: 4px solid #dc382d; }
+        .card-redis h2 { color: #dc382d; }
+        .card-api { border-top: 4px solid #1976d2; }
+        .card-api h2 { color: #1976d2; }
+        .card-docker { border-top: 4px solid #249ad4; }
+        .card-docker h2 { color: #249ad4; }
+        footer { background: #2d2d2d; color: #888; text-align: center; padding: 2rem; margin-top: 3rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>技术知识库</h1>
+        <p>涵盖软件设计、安全、开发技巧、数据库、缓存、API、DevOps等核心技术领域</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我</a></li>
+            <li><a href="tech-knowledge.html" class="active">技术知识</a></li>
+            <li><a href="contact.html">联系我</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- 技术发展历程入口 -->
+        <a href="tech-journey.html" style="display:block; background: linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(118,75,162,0.15) 100%); border: 2px solid #667eea; border-radius: 16px; padding: 25px 30px; margin-bottom: 30px; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 30px rgba(102,126,234,0.2)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span style="font-size: 3rem;">🚀</span>
+                <div>
+                    <h2 style="font-size: 1.4rem; color: #667eea; margin-bottom: 5px;">技术发展历程</h2>
+                    <p style="color: #666; margin: 0; font-size: 0.95rem;">从软件开发 → 上位机开发 → 工业AI · 看我如何转型成长</p>
+                </div>
+                <div style="margin-left: auto; color: #667eea; font-size: 0.9em;">点击查看 →</div>
+            </div>
+        </a>
+
+        <div class="grid">
+            <a href="software-principles.html" class="card card-principles">
+                <div class="card-icon">📐</div>
+                <h2>6大设计原则</h2>
+                <p>SOLID原则：单一职责、开闭原则、里氏替换、依赖倒置、接口隔离、最小知识</p>
+                <div class="tags">
+                    <span class="tag">设计原则</span>
+                    <span class="tag">架构基础</span>
+                </div>
+            </a>
+
+            <a href="design-patterns.html" class="card card-patterns">
+                <div class="card-icon">🧩</div>
+                <h2>12种设计模式</h2>
+                <p>创建型5种：单例、工厂、抽象工厂、建造者、原型<br>结构型4种：适配器、装饰器、代理、组合<br>行为型3种：观察者、策略、模板方法</p>
+                <div class="tags">
+                    <span class="tag">设计模式</span>
+                    <span class="tag">最佳实践</span>
+                </div>
+            </a>
+
+            <a href="security-tips.html" class="card card-security">
+                <div class="card-icon">🔒</div>
+                <h2>安全防护技巧</h2>
+                <p>SQL注入防护、XSS跨站脚本、CSRF跨站请求伪造、密码安全存储、HTTPS与TLS</p>
+                <div class="tags">
+                    <span class="tag">Web安全</span>
+                    <span class="tag">防护策略</span>
+                </div>
+            </a>
+
+            <a href="dev-tips.html" class="card card-dev">
+                <div class="card-icon">💡</div>
+                <h2>开发技巧</h2>
+                <p>限流算法、幂等性设计、缓存策略、日志规范、异常处理规范、参数校验</p>
+                <div class="tags">
+                    <span class="tag">工程实践</span>
+                    <span class="tag">实用技巧</span>
+                </div>
+            </a>
+
+            <a href="mysql-optimization.html" class="card card-mysql">
+                <div class="card-icon">🗄️</div>
+                <h2>MySQL优化与集群</h2>
+                <p>SQL优化、索引设计、主从复制、读写分离、集群方案（Group Replication、InnoDB Cluster）</p>
+                <div class="tags">
+                    <span class="tag">数据库</span>
+                    <span class="tag">性能优化</span>
+                    <span class="tag">高可用</span>
+                </div>
+            </a>
+
+            <a href="redis-caching.html" class="card card-redis">
+                <div class="card-icon">⚡</div>
+                <h2>Redis缓存指南</h2>
+                <p>数据类型与命令、缓存策略（穿透/击穿/雪崩）、分布式锁、消息队列、集群模式</p>
+                <div class="tags">
+                    <span class="tag">缓存</span>
+                    <span class="tag">NoSQL</span>
+                    <span class="tag">分布式</span>
+                </div>
+            </a>
+
+            <a href="api-design.html" class="card card-api">
+                <div class="card-icon">🔌</div>
+                <h2>API设计指南</h2>
+                <p>RESTful规范、请求响应设计、版本控制、GraphQL、认证授权（JWT/OAuth）、安全防护</p>
+                <div class="tags">
+                    <span class="tag">API</span>
+                    <span class="tag">REST</span>
+                    <span class="tag">GraphQL</span>
+                </div>
+            </a>
+
+            <a href="docker-devops.html" class="card card-docker">
+                <div class="card-icon">🐳</div>
+                <h2>Docker与DevOps</h2>
+                <p>Docker基础、Dockerfile最佳实践、Docker Compose、Kubernetes核心概念、CI/CD流水线</p>
+                <div class="tags">
+                    <span class="tag">容器化</span>
+                    <span class="tag">K8s</span>
+                    <span class="tag">CI/CD</span>
+                </div>
+            </a>
+
+            <a href="linux-commands.html" class="card" style="border-top: 4px solid #27ae60;">
+                <div class="card-icon">🐧</div>
+                <h2>Linux常用命令</h2>
+                <p>文件操作、文本处理（grep/awk/sed）、系统管理、网络命令、磁盘管理、定时任务</p>
+                <div class="tags">
+                    <span class="tag">Linux</span>
+                    <span class="tag">Shell</span>
+                    <span class="tag">运维</span>
+                </div>
+            </a>
+
+            <a href="git-commands.html" class="card" style="border-top: 4px solid #f05032;">
+                <div class="card-icon">🔀</div>
+                <h2>Git命令详解</h2>
+                <p>版本控制、分支管理、远程操作、GitFlow工作流、Rebase、Cherry-pick、Hooks</p>
+                <div class="tags">
+                    <span class="tag">Git</span>
+                    <span class="tag">版本控制</span>
+                    <span class="tag">协作</span>
+                </div>
+            </a>
+
+            <a href="qt-development.html" class="card card-qt">
+                <div class="card-icon">⚙️</div>
+                <h2>Qt开发指南</h2>
+                <p>信号槽机制、布局管理、主窗口结构、对话框、文件操作、数据库、多线程、网络编程、QML</p>
+                <div class="tags">
+                    <span class="tag">Qt</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">GUI</span>
+                </div>
+            </a>
+
+            <a href="desktop-frameworks.html" class="card" style="border-top: 4px solid #9b59b6;">
+                <div class="card-icon">🪟</div>
+                <h2>WPF框架对比</h2>
+                <p>WPF、WinForm、MFC三框架对比，XAML、MVVM架构，渲染性能、开发效率对比</p>
+                <div class="tags">
+                    <span class="tag">WPF</span>
+                    <span class="tag">WinForm</span>
+                    <span class="tag">MFC</span>
+                </div>
+            </a>
+
+            <a href="ai-fundamentals.html" class="card" style="border-top: 4px solid #e74c3c;">
+                <div class="card-icon">🤖</div>
+                <h2>AI基础</h2>
+                <p>机器学习、深度学习基础，常用算法(XGBoost/LSTM/CNN)，模型部署与MLOps</p>
+                <div class="tags">
+                    <span class="tag">机器学习</span>
+                    <span class="tag">深度学习</span>
+                    <span class="tag">PyTorch</span>
+                </div>
+            </a>
+
+            <a href="industrial-ai.html" class="card" style="border-top: 4px solid #f39c12;">
+                <div class="card-icon">🏭</div>
+                <h2>工业AI</h2>
+                <p>智能制造知识体系，预测性维护、缺陷检测、工艺优化，学习路径与职业建议</p>
+                <div class="tags">
+                    <span class="tag">工业AI</span>
+                    <span class="tag">智能制造</span>
+                    <span class="tag">转型</span>
+                </div>
+            </a>
+
+            <a href="iot-industry.html" class="card" style="border-top: 4px solid #2ecc71;">
+                <div class="card-icon">📡</div>
+                <h2>工业物联网</h2>
+                <p>OPC UA/Modbus协议，数据采集，边缘计算，时序数据库，工业互联网平台</p>
+                <div class="tags">
+                    <span class="tag">IIoT</span>
+                    <span class="tag">边缘计算</span>
+                    <span class="tag">数据采集</span>
+                </div>
+            </a>
+
+            <a href="optical-module-knowledge.html" class="card" style="border-top: 4px solid #667eea;">
+                <div class="card-icon">🔬</div>
+                <h2>光模块制造知识</h2>
+                <p>光模块制造全流程工艺、核心设备（耦合机/贴片机/打线机）、MES工序管控、SECS/GEM协议</p>
+                <div class="tags">
+                    <span class="tag">光模块</span>
+                    <span class="tag">制造工艺</span>
+                    <span class="tag">半导体设备</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 技术知识库 | 由 Hexo 驱动</p>
+    </footer>
+</body>
+</html>

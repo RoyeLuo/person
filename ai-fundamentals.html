@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI基础 - 技术知识</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 100vh; color: #e8e8e8; line-height: 1.8; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        header { text-align: center; margin-bottom: 50px; }
+        h1 { font-size: 2.5em; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }
+        .subtitle { color: #a0a0a0; font-size: 1.1em; }
+        nav { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px 30px; margin-bottom: 40px; display: flex; justify-content: center; gap: 30px; }
+        nav a { color: #667eea; text-decoration: none; transition: all 0.3s; padding: 5px 15px; border-radius: 6px; }
+        nav a:hover { background: rgba(102,126,234,0.2); }
+        .back-link a { color: #667eea; text-decoration: none; font-size: 0.95em; }
+        .back-link a:hover { color: #8fa4f0; }
+        .section { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 35px; margin-bottom: 30px; }
+        h2 { font-size: 1.8em; color: #667eea; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
+        h3 { font-size: 1.3em; color: #8fa4f0; margin: 25px 0 15px; }
+        p { margin-bottom: 15px; color: #c0c0c0; }
+        .highlight { background: rgba(102,126,234,0.15); border-left: 4px solid #667eea; padding: 15px 20px; border-radius: 0 8px 8px 0; margin: 20px 0; }
+        .tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; margin: 2px; }
+        .tag-sup { background: rgba(156,39,176,0.2); color: #ce93d8; }
+        .tag-ml { background: rgba(52,152,219,0.2); color: #60a5fa; }
+        .tag-dl { background: rgba(230,126,34,0.2); color: #f39c12; }
+        .tag-cv { background: rgba(39,174,96,0.2); color: #2ecc71; }
+        .tag-nlp { background: rgba(231,76,60,0.2); color: #e74c3c; }
+        code { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; font-family: 'Consolas', monospace; color: #e6db74; }
+        .code-block { background: rgba(0,0,0,0.4); border-radius: 8px; padding: 20px; margin: 15px 0; overflow-x: auto; }
+        .code-block code { background: none; padding: 0; display: block; white-space: pre; color: #e6db74; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .card { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 20px; }
+        .card h4 { color: #8fa4f0; margin-bottom: 10px; }
+        .card ul { list-style: none; font-size: 0.9em; }
+        .card li { padding: 5px 0; color: #c0c0c0; }
+        .card li::before { content: "• "; color: #667eea; }
+        .chart { background: rgba(0,0,0,0.2); border-radius: 8px; padding: 20px; margin: 15px 0; }
+        .chart-item { display: flex; align-items: center; margin: 10px 0; }
+        .chart-label { width: 120px; font-size: 0.9em; }
+        .chart-bar { height: 20px; background: linear-gradient(90deg, #667eea, #764ba2); border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: rgba(102,126,234,0.2); padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); color: #667eea; }
+        td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        footer { text-align: center; padding: 30px; color: #666; font-size: 0.9em; margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.05); }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI基础知识</h1>
+            <p class="subtitle">机器学习 · 深度学习 · 计算机视觉</p>
+        </header>
+        
+        <nav>
+            <a href="tech-knowledge.html">← 返回技术知识</a>
+            <a href="industrial-ai.html">工业AI</a>
+        </nav>
+
+        <div class="back-link">
+            <a href="tech-knowledge.html">← 返回技术知识总览</a>
+        </div>
+
+        <!-- AI地图 -->
+        <section class="section">
+            <h2>🗺️ AI知识图谱</h2>
+            <div class="highlight">
+                <strong>人工智能 (AI)</strong> > <strong>机器学习 (ML)</strong> > <strong>深度学习 (DL)</strong><br>
+                <span class="tag tag-sup">监督学习</span>
+                <span class="tag tag-sup">无监督学习</span>
+                <span class="tag tag-sup">强化学习</span>
+                <span class="tag tag-ml">回归</span>
+                <span class="tag tag-ml">分类</span>
+                <span class="tag tag-ml">聚类</span>
+                <span class="tag tag-dl">CNN</span>
+                <span class="tag tag-dl">RNN/LSTM</span>
+                <span class="tag tag-dl">Transformer</span>
+            </div>
+            <p>从传统IT转向工业AI，需要掌握的AI知识体系：</p>
+            <table>
+                <tr><th>层次</th><th>内容</th><th>工业应用</th></tr>
+                <tr><td>基础</td><td>统计学、线性代数、Python</td><td>数据分析、特征工程</td></tr>
+                <tr><td>机器学习</td><td>回归、分类、聚类、降维</td><td>预测性维护、工艺优化</td></tr>
+                <tr><td>深度学习</td><td>神经网络、CNN、RNN</td><td>图像检测、时序预测</td></tr>
+                <tr><td>工程化</td><td>模型部署、边缘计算、MLOps</td><td>生产环境落地</td></tr>
+            </table>
+        </section>
+
+        <!-- 机器学习 -->
+        <section class="section">
+            <h2>📊 机器学习基础</h2>
+            <p>工业场景最常用的ML算法：</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>📈 回归算法</h4>
+                    <ul>
+                        <li><strong>线性回归</strong> - 简单、易解释</li>
+                        <li><strong>XGBoost</strong> - 工业首选，准确率高</li>
+                        <li><strong>LightGBM</strong> - 大数据快速训练</li>
+                        <li><strong>随机森林</strong> - 抗过拟合</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🏷️ 分类算法</h4>
+                    <ul>
+                        <li><strong>逻辑回归</strong> - 二分类基准</li>
+                        <li><strong>SVM</strong> - 小样本高维数据</li>
+                        <li><strong>朴素贝叶斯</strong> - 文本分类</li>
+                        <li><strong>神经网络</strong> - 复杂模式识别</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>📍 聚类算法</h4>
+                    <ul>
+                        <li><strong>K-Means</strong> - 快速分群</li>
+                        <li><strong>DBSCAN</strong> - 异常检测</li>
+                        <li><strong>层次聚类</strong> - 层次结构分析</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>⚠️ 异常检测</h4>
+                    <ul>
+                        <li><strong>Isolation Forest</strong> - 工业常用</li>
+                        <li><strong>One-Class SVM</strong> - 单类分类</li>
+                        <li><strong>LOF</strong> - 局部异常因子</li>
+                        <li><strong>AutoEncoder</strong> - 深度学习方法</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>工业AI推荐学习路径</h3>
+            <div class="chart">
+                <div class="chart-item">
+                    <span class="chart-label">XGBoost/LightGBM</span>
+                    <div class="chart-bar" style="width: 90%;"></div>
+                    <span style="margin-left: 10px; color: #2ecc71;">⭐⭐⭐ 必学</span>
+                </div>
+                <div class="chart-item">
+                    <span class="chart-label">时序分析</span>
+                    <div class="chart-bar" style="width: 85%;"></div>
+                    <span style="margin-left: 10px; color: #2ecc71;">⭐⭐⭐ 必学</span>
+                </div>
+                <div class="chart-item">
+                    <span class="chart-label">特征工程</span>
+                    <div class="chart-bar" style="width: 80%;"></div>
+                    <span style="margin-left: 10px; color: #f39c12;">⭐⭐ 重要</span>
+                </div>
+                <div class="chart-item">
+                    <span class="chart-label">CNN/图像处理</span>
+                    <div class="chart-bar" style="width: 70%;"></div>
+                    <span style="margin-left: 10px; color: #f39c12;">⭐⭐ 重要</span>
+                </div>
+                <div class="chart-item">
+                    <span class="chart-label">强化学习</span>
+                    <div class="chart-bar" style="width: 40%;"></div>
+                    <span style="margin-left: 10px; color: #7f8c8d;">进阶</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 深度学习 -->
+        <section class="section">
+            <h2>🧠 深度学习基础</h2>
+            <p>深度学习框架和核心概念：</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4>框架选择</h4>
+                    <ul>
+                        <li><strong>PyTorch</strong> - 工业研究首选，灵活性高</li>
+                        <li><strong>TensorFlow</strong> - 部署生态完善</li>
+                        <li><strong>ONNX</strong> - 模型格式互通</li>
+                        <li><strong>scikit-learn</strong> - ML基础库</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>时序网络</h4>
+                    <ul>
+                        <li><strong>LSTM/GRU</strong> - 长序列依赖</li>
+                        <li><strong>1D-CNN</strong> - 局部特征提取</li>
+                        <li><strong>Transformer</strong> - 注意力机制</li>
+                        <li><strong>TCN</strong> - 时序卷积网络</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>PyTorch 快速上手</h3>
+            <div class="code-block">
+                <code>import torch
+import torch.nn as nn
+from torch.utils.data import DataLoader
+
+# 数据准备
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+
+# 定义模型
+class SimpleNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layers = nn.Sequential(
+            nn.Linear(64, 128),
+            nn.ReLU(),
+            nn.Linear(128, 1)
+        )
+    
+    def forward(self, x):
+        return self.layers(x)
+
+# 训练
+model = SimpleNN()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+criterion = nn.MSELoss()
+
+for epoch in range(100):
+    for batch_x, batch_y in train_loader:
+        optimizer.zero_grad()
+        outputs = model(batch_x)
+        loss = criterion(outputs, batch_y)
+        loss.backward()
+        optimizer.step()</code>
+            </div>
+        </section>
+
+        <!-- 工业AI实践 -->
+        <section class="section">
+            <h2>🏭 工业AI实战要点</h2>
+
+            <div class="highlight">
+                <strong>与互联网AI的区别：</strong>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>数据量小：工厂数据有限，需要小样本学习方法</li>
+                    <li>实时性高：需要边缘推理能力，毫秒级响应</li>
+                    <li>可解释性：决策需可解释，工程师需要理解原因</li>
+                    <li>容错率低：误报漏报代价大，需要人工复核机制</li>
+                </ul>
+            </div>
+
+            <h3>工业AI项目流程</h3>
+            <ul style="list-style: decimal; padding-left: 25px; color: #c0c0c0;">
+                <li style="padding: 8px 0;"><strong>需求分析</strong> - 明确业务痛点和ROI</li>
+                <li style="padding: 8px 0;"><strong>数据采集</strong> - OPC UA/Modbus采集设备数据</li>
+                <li style="padding: 8px 0;"><strong>数据清洗</strong> - 处理缺失值、异常值、噪声</li>
+                <li style="padding: 8px 0;"><strong>特征工程</strong> - 提取有意义的工业特征</li>
+                <li style="padding: 8px 0;"><strong>模型训练</strong> - 选择算法、调参、验证</li>
+                <li style="padding: 8px 0;"><strong>边缘部署</strong> - ONNX导出、TensorRT优化</li>
+                <li style="padding: 8px 0;"><strong>运维监控</strong> - 模型漂移检测、在线学习</li>
+            </ul>
+
+            <h3>推荐工具链</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>数据处理</h4>
+                    <ul>
+                        <li>Pandas / NumPy</li>
+                        <li>scikit-learn</li>
+                        <li>PyTorch / TensorFlow</li>
+                        <li>tsfresh (时序特征)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>模型部署</h4>
+                    <ul>
+                        <li>ONNX Runtime</li>
+                        <li>TensorRT</li>
+                        <li>Docker</li>
+                        <li>Azure ML / Sagemaker</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>技术知识库 · 持续更新中</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光模块制造知识 - 罗小添 | 光模块生产工艺 | 半导体设备</title>
+    <meta name="description" content="光模块制造全流程知识：生产工艺、关键设备（耦合机、贴片机、打线机）、MES工序管控、SECS/GEM协议">
+    <meta name="keywords" content="光模块制造,光模块工艺,耦合机,贴片机,打线机,半导体设备,SECS/GEM,MES">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-code"></i> 罗小添
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li class="dropdown">
+                    <a href="chip.html">行业项目</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="chip.html">光模块制造</a></li>
+                        <li><a href="energy.html">能源行业(加气/加氢站)</a></li>
+                        <li><a href="transit.html">轨道交通</a></li>
+                    </ul>
+                </li>
+                <li><a href="career.html">职业经历</a></li>
+                <li><a href="about.html">关于我</a></li>
+                <li><a href="project-management.html">项目管理</a></li>
+                <li><a href="tech-knowledge.html">技术知识</a></li>
+                <li><a href="contact.html">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="section-title">光模块制造知识</h2>
+
+        <!-- 光模块概述 -->
+        <div class="project-category">
+            <h3>光模块概述</h3>
+            <div class="project-list">
+                <div class="project-item">
+                    <div class="project-content">
+                        <p style="font-size: 16px; line-height: 2; color: #444;">
+                            光模块（Optical Transceiver）是光通信系统中的核心器件，用于实现<strong>光电信号转换</strong>。
+                            它由光发射组件（TOSA）、光接收组件（ROSA）、电路板（PCBA）、外壳等部分组成。
+                            光模块广泛应用于<strong>数据中心、5G基站、光纤接入网</strong>等场景，是支撑现代高速通信的关键基础器件。
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 20px;">
+                            <div style="background: var(--light); padding: 20px; border-radius: 10px; text-align: center;">
+                                <i class="fas fa-server" style="font-size: 36px; color: #165DFF; margin-bottom: 10px;"></i>
+                                <h4 style="margin-bottom: 6px;">数据中心</h4>
+                                <p style="color: #666; font-size: 13px;">100G/400G/800G高速光模块</p>
+                            </div>
+                            <div style="background: var(--light); padding: 20px; border-radius: 10px; text-align: center;">
+                                <i class="fas fa-broadcast-tower" style="font-size: 36px; color: #10B981; margin-bottom: 10px;"></i>
+                                <h4 style="margin-bottom: 6px;">5G通信</h4>
+                                <p style="color: #666; font-size: 13px;">25G/50G前传光模块</p>
+                            </div>
+                            <div style="background: var(--light); padding: 20px; border-radius: 10px; text-align: center;">
+                                <i class="fas fa-network-wired" style="font-size: 36px; color: #F59E0B; margin-bottom: 10px;"></i>
+                                <h4 style="margin-bottom: 6px;">光纤接入</h4>
+                                <p style="color: #666; font-size: 13px;">GPON/XG-PON接入网光模块</p>
+                            </div>
+                            <div style="background: var(--light); padding: 20px; border-radius: 10px; text-align: center;">
+                                <i class="fas fa-microchip" style="font-size: 36px; color: #8B5CF6; margin-bottom: 10px;"></i>
+                                <h4 style="margin-bottom: 6px;">工业互联</h4>
+                                <p style="color: #666; font-size: 13px;">工业级光模块（-40~85℃）</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 光模块制造工艺流程 -->
+        <div class="project-category">
+            <h3>光模块制造工艺流程</h3>
+            <div class="project-list">
+                <div class="project-item">
+                    <div class="project-content">
+                        <p style="font-size: 16px; line-height: 2; color: #444; margin-bottom: 20px;">
+                            光模块制造是一个<strong>精密光电集成</strong>过程，涉及芯片贴装、光纤耦合、引线键合、封帽密封、测试老化等
+                            数十道工序。每道工序都有严格的工艺参数和质量标准，MES系统在此过程中起到<strong>全流程管控与数据追溯</strong>的核心作用。
+                        </p>
+
+                        <!-- 工艺流程步骤 -->
+                        <div style="display: grid; gap: 15px;">
+                            <!-- 步骤1：来料检验 -->
+                            <div style="display: flex; gap: 15px; align-items: flex-start; background: var(--light); padding: 20px; border-radius: 10px; border-left: 4px solid #165DFF;">
+                                <div style="min-width: 50px; height: 50px; background: #165DFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">1</div>
+                                <div>
+                                    <h4 style="margin-bottom: 8px; color: #165DFF;">来料检验（IQC）</h4>
+                                    <p style="color: #666; line-height: 1.8; font-size: 14px;">
+                                        对芯片（LD激光器芯片、PD探测器芯片）、基板、管壳等原材料进行<strong>外观检查、尺寸测量、光电性能测试</strong>。
+                                        关键设备：显微镜、自动光学检测（AOI）、光谱分析仪。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 步骤2：贴片 -->
+                            <div style="display: flex; gap: 15px; align-items: flex-start; background: var(--light); padding: 20px; border-radius: 10px; border-left: 4px solid #10B981;">
+                                <div style="min-width: 50px; height: 50px; background: #10B981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">2</div>
+                                <div>
+                                    <h4 style="margin-bottom: 8px; color: #10B981;">贴片（Die Bonding）</h4>
+                                    <p style="color: #666; line-height: 1.8; font-size: 14px;">
+                                        使用<strong>贴片机</strong>将激光器芯片（LD Chip）、探测器芯片（PD Chip）精确贴装到基板或管壳上。
+                                        精度要求：<strong>±5μm以内</strong>。贴片后需进行推力测试验证结合强度。使用银浆或金锡焊料进行固化。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 步骤3：打线 -->
+                            <div style="display: flex; gap: 15px; align-items: flex-start; background: var(--light); padding: 20px; border-radius: 10px; border-left: 4px solid #F59E0B;">
+                                <div style="min-width: 50px; height: 50px; background: #F59E0B; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">3</div>
+                                <div>
+                                    <h4 style="margin-bottom: 8px; color: #F59E0B;">打线（Wire Bonding）</h4>
+                                    <p style="color: #666; line-height: 1.8; font-size: 14px;">
+                                        使用<strong>打线机（绑线机）</strong>通过金线/铝线将芯片电极与基板引脚进行电气连接。
+                                        常用工艺：<strong>超声热压焊</strong>。关键参数：超声功率、焊接压力、焊接时间、线弧高度。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 步骤4：耦合 -->
+                            <div style="display: flex; gap: 15px; align-items: flex-start; background: var(--light); padding: 20px; border-radius: 10px; border-left: 4px solid #EF4444;">
+                                <div style="min-width: 50px; height: 50px; background: #EF4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">4</div>
+                                <div>
+                                    <h4 style="margin-bottom: 8px; color: #EF4444;">光耦合（Optical Coupling）</h4>
+                                    <p style="color: #666; line-height: 1.8; font-size: 14px;">
+                                        使用<strong>耦合机</strong>将光纤/透镜与激光器芯片进行精密对准，实现最大光功率输出。
+                                        耦合精度要求极高（<strong>亚微米级</strong>），通常采用<strong>有源耦合</strong>方式：边调节边监测光功率，找到最佳耦合位置后点胶固化。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 步骤5：封帽 -->
+                            <div style="display: flex; gap: 15px; align-items: flex-start; background: var(--light); padding: 20px; border-radius: 10px; border-left: 4px solid #8B5CF6;">
+                                <div style="min-width: 50px; height: 50px; background: #8B5CF6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">5</div>
+                                <div>
+                                    <h4 style="margin-bottom: 8px; color: #8B5CF6;">封帽密封（Seam Sealing）</h4>
+                                    <p style="color: #666; line-height: 1.8; font-size: 14px;">
+                                        在<strong>氮气保护</strong>环境下对管壳进行密封焊接，防止水汽和杂质进入影响器件寿命。
+                                        需进行<strong>气密性检测</strong>（氦检漏），确保漏率符合标准（通常 < 5×10⁻⁸ Pa·m³/s）。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 步骤6：PCBA组装 -->
+                            <div style="display: flex; gap: 15px; align-items: flex-start; background: var(--light); padding: 20px; border-radius: 10px; border-left: 4px solid #EC4899;">
+                                <div style="min-width: 50px; height: 50px; background: #EC4899; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">6</div>
+                                <div>
+                                    <h4 style="margin-bottom: 8px; color: #EC4899;">PCBA组装与模块装配</h4>
+                                    <p style="color: #666; line-height: 1.8; font-size: 14px;">
+                                        将光组件（OSA）与电路板（PCBA）进行<strong>软板焊接/插接</strong>，组装外壳、拉环等结构件。
+                                        完成整体光模块装配，准备进入测试环节。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 步骤7：测试 -->
+                            <div style="display: flex; gap: 15px; align-items: flex-start; background: var(--light); padding: 20px; border-radius: 10px; border-left: 4px solid #06B6D4;">
+                                <div style="min-width: 50px; height: 50px; background: #06B6D4; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">7</div>
+                                <div>
+                                    <h4 style="margin-bottom: 8px; color: #06B6D4;">测试与老化（Testing & Burn-in）</h4>
+                                    <p style="color: #666; line-height: 1.8; font-size: 14px;">
+                                        <strong>光电性能测试</strong>：发射光功率、消光比、眼图、接收灵敏度、误码率等。<br>
+                                        <strong>老化测试</strong>：高温（85℃）带电运行48-96小时，筛选早期失效器件。<br>
+                                        关键设备：<strong>光模块测试机</strong>、误码仪、光衰减器、高低温箱。
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 步骤8：终检出货 -->
+                            <div style="display: flex; gap: 15px; align-items: flex-start; background: var(--light); padding: 20px; border-radius: 10px; border-left: 4px solid #84CC16;">
+                                <div style="min-width: 50px; height: 50px; background: #84CC16; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">8</div>
+                                <div>
+                                    <h4 style="margin-bottom: 8px; color: #84CC16;">终检、包装与出货（OQC）</h4>
+                                    <p style="color: #666; line-height: 1.8; font-size: 14px;">
+                                        外观终检、标签打印粘贴、序列号绑定、包装入库。<strong>MES系统记录全流程追溯数据</strong>，
+                                        确保每个光模块从芯片到成品的生产过程可查可溯。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心设备介绍 -->
+        <div class="project-category">
+            <h3>光模块制造核心设备</h3>
+            <div class="project-list">
+
+                <!-- 耦合机 -->
+                <div class="project-item">
+                    <div class="project-header">
+                        <h4>耦合机（Optical Coupling Machine）</h4>
+                        <div class="project-period">光模块制造最核心设备</div>
+                    </div>
+                    <div class="project-content">
+                        <p style="font-size: 15px; line-height: 2; color: #444; margin-bottom: 15px;">
+                            耦合机是光模块制造中<strong>技术含量最高、价值最昂贵</strong>的设备之一。其核心任务是将光纤/透镜
+                            与激光器芯片（LD）进行亚微米级精密对准，确保光信号能最大效率地耦合进光纤。
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #EF4444;">
+                                <h4 style="margin-bottom: 12px; color: #EF4444;">
+                                    <i class="fas fa-crosshairs" style="margin-right: 8px;"></i>工作原理
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li><strong>有源耦合</strong>：给LD通电发光，通过精密位移台（六轴）调节光纤位置</li>
+                                    <li>实时监测光功率计读数，寻找<strong>最大耦合效率点</strong></li>
+                                    <li>定位完成后通过<strong>UV胶/热固化胶</strong>将光纤固定</li>
+                                    <li>耦合精度：<strong>0.1μm ~ 0.5μm</strong>（亚微米级）</li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #F59E0B;">
+                                <h4 style="margin-bottom: 12px; color: #F59E0B;">
+                                    <i class="fas fa-cog" style="margin-right: 8px;"></i>关键组件
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li><strong>六轴精密位移台</strong>：X/Y/Z平移 + θx/θy/θz旋转</li>
+                                    <li><strong>光功率计</strong>：实时监测耦合输出光功率</li>
+                                    <li><strong>视觉系统</strong>：双摄像头（俯视+侧视）观察对准情况</li>
+                                    <li><strong>点胶系统</strong>：精确控制胶量、点胶位置和固化时间</li>
+                                    <li><strong>上位机控制系统</strong>：自动耦合算法、数据记录与追溯</li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #165DFF;">
+                                <h4 style="margin-bottom: 12px; color: #165DFF;">
+                                    <i class="fas fa-chart-bar" style="margin-right: 8px;"></i>上位机数据交互
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li>采集实时耦合功率曲线、位移坐标、胶量参数</li>
+                                    <li>通过<strong>SECS/GEM协议</strong>与工厂MES系统对接</li>
+                                    <li>记录每颗光模块的耦合参数，实现<strong>全流程追溯</strong></li>
+                                    <li>耦合良率统计与SPC分析</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 贴片机 -->
+                <div class="project-item">
+                    <div class="project-header">
+                        <h4>贴片机（Die Bonder）</h4>
+                        <div class="project-period">芯片精密贴装设备</div>
+                    </div>
+                    <div class="project-content">
+                        <p style="font-size: 15px; line-height: 2; color: #444; margin-bottom: 15px;">
+                            贴片机用于将微小的半导体芯片（LD芯片尺寸通常为<strong>200μm × 300μm</strong>左右）精确贴装到基板指定位置，
+                            是光模块封装的第一道关键工序。
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #10B981;">
+                                <h4 style="margin-bottom: 12px; color: #10B981;">
+                                    <i class="fas fa-microscope" style="margin-right: 8px;"></i>工作原理
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li>吸嘴从晶圆盘（Wafer Tray）拾取芯片</li>
+                                    <li>视觉系统识别芯片位置和角度，进行<strong>自动校准</strong></li>
+                                    <li>精密运动平台将芯片移动到基板目标位置</li>
+                                    <li>通过<strong>银浆/焊料</strong>将芯片固定，加热固化</li>
+                                    <li>贴装精度：<strong>±3μm ~ ±5μm</strong></li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #8B5CF6;">
+                                <h4 style="margin-bottom: 12px; color: #8B5CF6;">
+                                    <i class="fas fa-sliders-h" style="margin-right: 8px;"></i>关键工艺参数
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li><strong>贴装压力</strong>：过大损伤芯片，过小结合不牢</li>
+                                    <li><strong>温度曲线</strong>：银浆固化需精确控温（150-200℃）</li>
+                                    <li><strong>贴装高度</strong>：影响后续打线和耦合工序</li>
+                                    <li><strong>吸嘴状态</strong>：定期清洁，避免芯片污染</li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #F59E0B;">
+                                <h4 style="margin-bottom: 12px; color: #F59E0B;">
+                                    <i class="fas fa-plug" style="margin-right: 8px;"></i>上位机数据交互
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li>通过<strong>Modbus TCP / SECS/GEM</strong>协议采集贴装参数</li>
+                                    <li>记录每颗芯片的贴装位置、压力、温度曲线</li>
+                                    <li>与MES系统交互：获取工单信息、上传工序结果</li>
+                                    <li>设备状态监控：吸嘴寿命、温度异常、精度漂移预警</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 打线机 -->
+                <div class="project-item">
+                    <div class="project-header">
+                        <h4>打线机 / 绑线机（Wire Bonder）</h4>
+                        <div class="project-period">芯片电气连接设备</div>
+                    </div>
+                    <div class="project-content">
+                        <p style="font-size: 15px; line-height: 2; color: #444; margin-bottom: 15px;">
+                            打线机通过<strong>超声热压焊</strong>工艺将金线/铝线连接芯片电极与基板引脚，实现电气互联。
+                            打线质量直接影响光模块的<strong>高频性能和可靠性</strong>。
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #F59E0B;">
+                                <h4 style="margin-bottom: 12px; color: #F59E0B;">
+                                    <i class="fas fa-bolt" style="margin-right: 8px;"></i>工作原理
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li><strong>超声能量</strong> + <strong>压力</strong> + <strong>温度</strong> 三者结合形成焊点</li>
+                                    <li>劈刀（Capillary）引导金线，先焊芯片端（第一焊点），再焊基板端（第二焊点）</li>
+                                    <li>金线直径通常 <strong>18μm ~ 25μm</strong></li>
+                                    <li>焊接速度：<strong>每秒8-15根线</strong></li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #165DFF;">
+                                <h4 style="margin-bottom: 12px; color: #165DFF;">
+                                    <i class="fas fa-grip-lines" style="margin-right: 8px;"></i>关键参数
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li><strong>超声功率</strong>：影响焊接强度和焊点形貌</li>
+                                    <li><strong>焊接压力</strong>：过大会压碎芯片</li>
+                                    <li><strong>焊接时间</strong>：通常10-30ms</li>
+                                    <li><strong>线弧高度</strong>：影响高频信号完整性和后续耦合</li>
+                                    <li><strong>EFO打火</strong>：形成金球（Free Air Ball）</li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #10B981;">
+                                <h4 style="margin-bottom: 12px; color: #10B981;">
+                                    <i class="fas fa-desktop" style="margin-right: 8px;"></i>上位机系统对接
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li><strong>SECS/GEM协议</strong>实现与MES系统标准化通信</li>
+                                    <li>实时采集：焊接参数、线弧参数、产量统计、报警信息</li>
+                                    <li>工艺参数远程配置和配方管理</li>
+                                    <li>焊接质量SPC监控，异常自动预警停机</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 光模块测试机 -->
+                <div class="project-item">
+                    <div class="project-header">
+                        <h4>光模块测试机（Optical Transceiver Tester）</h4>
+                        <div class="project-period">光电性能测试设备</div>
+                    </div>
+                    <div class="project-content">
+                        <p style="font-size: 15px; line-height: 2; color: #444; margin-bottom: 15px;">
+                            光模块测试机是<strong>出厂前最后一道质量关卡</strong>，对每只光模块进行全面的光电性能测试，
+                            确保产品符合IEEE、MSA等国际标准。
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #06B6D4;">
+                                <h4 style="margin-bottom: 12px; color: #06B6D4;">
+                                    <i class="fas fa-wave-square" style="margin-right: 8px;"></i>测试项目
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li><strong>发射端</strong>：光功率、消光比、眼图、中心波长、边模抑制比</li>
+                                    <li><strong>接收端</strong>：接收灵敏度、饱和光功率、误码率</li>
+                                    <li><strong>电接口</strong>：输入/输出电信号质量、功耗</li>
+                                    <li><strong>数字诊断</strong>：DDM/DOM监控功能验证</li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #8B5CF6;">
+                                <h4 style="margin-bottom: 12px; color: #8B5CF6;">
+                                    <i class="fas fa-tools" style="margin-right: 8px;"></i>配套仪器
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li>误码仪（BERT）：测试信号传输误码率</li>
+                                    <li>光谱分析仪（OSA）：测量光波长和光谱特性</li>
+                                    <li>可调光衰减器（VOA）：模拟不同距离的光衰减</li>
+                                    <li>高速示波器：眼图测试和分析</li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-left: 4px solid #EC4899;">
+                                <h4 style="margin-bottom: 12px; color: #EC4899;">
+                                    <i class="fas fa-database" style="margin-right: 8px;"></i>上位机数据采集
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li>通过<strong>自定义协议/SECS/GEM</strong>采集测试数据</li>
+                                    <li>每只光模块绑定唯一序列号，关联全量测试数据</li>
+                                    <li>测试数据存入<strong>InfluxDB时序数据库</strong>，支持历史查询</li>
+                                    <li>自动判定Pass/Fail，合格品打印标签入库</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MES在光模块制造中的作用 -->
+        <div class="project-category">
+            <h3>MES系统在光模块制造中的核心作用</h3>
+            <div class="project-list">
+                <div class="project-item">
+                    <div class="project-content">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-top: 3px solid #165DFF;">
+                                <h4 style="margin-bottom: 12px; color: #165DFF;">
+                                    <i class="fas fa-route" style="margin-right: 8px;"></i>工序流转管控
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li>定义工艺路线，确保产品按正确工序顺序流转</li>
+                                    <li>工序防错防漏：未完成前序工序不允许进入下一站</li>
+                                    <li>支持多型号混线生产，自动匹配对应工艺路线</li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-top: 3px solid #10B981;">
+                                <h4 style="margin-bottom: 12px; color: #10B981;">
+                                    <i class="fas fa-qrcode" style="margin-right: 8px;"></i>全流程追溯
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li>每个光模块绑定唯一SN，从芯片批次到成品全程可追溯</li>
+                                    <li>记录每道工序的操作员、设备、时间、工艺参数</li>
+                                    <li>正向追溯（芯片→成品）和反向追溯（成品→芯片）双向支持</li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-top: 3px solid #F59E0B;">
+                                <h4 style="margin-bottom: 12px; color: #F59E0B;">
+                                    <i class="fas fa-chart-pie" style="margin-right: 8px;"></i>良率与质量分析
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li>实时统计各工序良率、设备利用率（OEE）</li>
+                                    <li>SPC统计过程控制：监控关键工艺参数是否受控</li>
+                                    <li>异常自动预警：良率低于阈值自动通知管理人员</li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--light); padding: 22px; border-radius: 10px; border-top: 3px solid #8B5CF6;">
+                                <h4 style="margin-bottom: 12px; color: #8B5CF6;">
+                                    <i class="fas fa-plug" style="margin-right: 8px;"></i>设备数据集成
+                                </h4>
+                                <ul style="color: #555; line-height: 2; padding-left: 20px; font-size: 14px;">
+                                    <li>通过SECS/GEM、Modbus TCP、OPC UA等协议对接设备</li>
+                                    <li>设备状态实时监控：运行/待机/报警/维护</li>
+                                    <li>工艺参数自动下发，减少人工设置错误</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 上位机在光模块制造中的价值 -->
+        <div class="project-category">
+            <h3>上位机系统在光模块制造中的价值</h3>
+            <div class="project-list">
+                <div class="project-item">
+                    <div class="project-content">
+                        <p style="font-size: 16px; line-height: 2; color: #444; margin-bottom: 20px;">
+                            作为光模块制造设备的上位机开发者，我深知上位机系统是<strong>连接设备层与管理层的桥梁</strong>，
+                            在智能制造中扮演着不可替代的角色。
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; text-align: center;">
+                            <div style="padding: 25px; background: linear-gradient(135deg, #165DFF 0%, #4080FF 100%); border-radius: 12px; color: white;">
+                                <i class="fas fa-tachometer-alt" style="font-size: 32px; margin-bottom: 12px;"></i>
+                                <h4 style="margin-bottom: 8px;">实时监控</h4>
+                                <p style="font-size: 13px; opacity: 0.9;">设备状态、工艺参数、报警信息一目了然</p>
+                            </div>
+                            <div style="padding: 25px; background: linear-gradient(135deg, #10B981 0%, #34D399 100%); border-radius: 12px; color: white;">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 32px; margin-bottom: 12px;"></i>
+                                <h4 style="margin-bottom: 8px;">数据采集</h4>
+                                <p style="font-size: 13px; opacity: 0.9;">毫秒级数据采集，时序数据库存储</p>
+                            </div>
+                            <div style="padding: 25px; background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%); border-radius: 12px; color: white;">
+                                <i class="fas fa-cogs" style="font-size: 32px; margin-bottom: 12px;"></i>
+                                <h4 style="margin-bottom: 8px;">工艺管理</h4>
+                                <p style="font-size: 13px; opacity: 0.9;">配方下发、参数配置、远程调控</p>
+                            </div>
+                            <div style="padding: 25px; background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 100%); border-radius: 12px; color: white;">
+                                <i class="fas fa-project-diagram" style="font-size: 32px; margin-bottom: 12px;"></i>
+                                <h4 style="margin-bottom: 8px;">系统集成</h4>
+                                <p style="font-size: 13px; opacity: 0.9;">SECS/GEM对接MES，打通信息孤岛</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-info">
+            <p>© 2026 罗小添 | 个人项目展示站</p>
+            <p>GitHub: <a href="https://github.com/royeLuo333" target="_blank">@royeLuo333</a></p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>

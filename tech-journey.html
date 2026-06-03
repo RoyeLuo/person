@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术发展历程 - 个人能力展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e8e8e8;
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        h1 {
+            font-size: 2.8em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1.2em;
+        }
+        nav {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px 30px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 5px 15px;
+            border-radius: 6px;
+        }
+        nav a:hover {
+            background: rgba(102,126,234,0.2);
+        }
+
+        /* 时间轴主轴 */
+        .timeline-container {
+            position: relative;
+            padding: 20px 0;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        .timeline-line::before,
+        .timeline-line::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid #1a1a2e;
+        }
+        .timeline-line::before { top: -8px; }
+        .timeline-line::after { bottom: -8px; background: #764ba2; }
+
+        /* 时间节点卡片 */
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* 左右交替布局 */
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        /* 连接点 */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 40px;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            border: 4px solid #1a1a2e;
+        }
+
+        .timeline-content {
+            width: calc(50% - 60px);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+        .timeline-content:hover {
+            border-color: rgba(102,126,234,0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(102,126,234,0.1);
+        }
+
+        .timeline-period {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .period-past { background: rgba(52,152,219,0.2); color: #60a5fa; }
+        .period-present { background: rgba(156,39,176,0.2); color: #ce93d8; }
+        .period-future { background: rgba(39,174,96,0.2); color: #2ecc71; }
+
+        .timeline-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .timeline-desc {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        /* 技术标签 */
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .tech-tag {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            background: rgba(102,126,234,0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(102,126,234,0.2);
+        }
+
+        /* 能力亮点 */
+        .highlight-list {
+            list-style: none;
+        }
+        .highlight-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #c0c0c0;
+            font-size: 0.9em;
+        }
+        .highlight-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* 项目展示 */
+        .project-card {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .project-card h4 {
+            color: #8fa4f0;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+        .project-card p {
+            font-size: 0.85em;
+            color: #a0a0a0;
+            margin-bottom: 0;
+        }
+
+        /* 技能雷达/进度条 */
+        .skill-bar {
+            margin: 12px 0;
+        }
+        .skill-bar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.85em;
+        }
+        .skill-bar-track {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .skill-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        /* 底部总结 */
+        .summary-section {
+            background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%);
+            border: 1px solid rgba(102,126,234,0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 60px;
+            text-align: center;
+        }
+        .summary-section h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: left;
+        }
+        .summary-box {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 25px;
+        }
+        .summary-box h3 {
+            color: #8fa4f0;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .summary-box ul {
+            list-style: none;
+        }
+        .summary-box li {
+            padding: 6px 0;
+            color: #c0c0c0;
+            font-size: 0.9em;
+        }
+        .summary-box li::before {
+            content: "→ ";
+            color: #667eea;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @media (max-width: 900px) {
+            .timeline-line {
+                left: 30px;
+            }
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                flex-direction: column;
+                padding-left: 70px;
+            }
+            .timeline-content {
+                width: 100%;
+            }
+            .timeline-item::before {
+                left: 30px;
+            }
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>技术发展历程</h1>
+            <p class="subtitle">从软件开发 → 上位机开发 → 工业AI</p>
+        </header>
+        
+        <nav>
+            <a href="tech-knowledge.html">← 技术知识库</a>
+            <a href="industrial-ai.html">工业AI</a>
+            <a href="project-management.html">项目管理</a>
+            <a href="career.html">职业经历</a>
+        </nav>
+
+        <!-- 过去：软件开发 -->
+        <section class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-period period-past">过去 · 夯实基础</span>
+                    <h2 class="timeline-title">软件开发工程师</h2>
+                    <p class="timeline-desc">扎实的软件开发基础，熟练掌握多种编程语言和开发框架，为后续工控领域打下坚实的技术功底。</p>
+                    
+                    <div class="tech-grid">
+                        <span class="tech-tag">Delphi</span>
+                        <span class="tech-tag">VB / VB.NET</span>
+                        <span class="tech-tag">ASP.NET</span>
+                        <span class="tech-tag">C++</span>
+                        <span class="tech-tag">Access</span>
+                        <span class="tech-tag">SQL Server</span>
+                        <span class="tech-tag">ERP系统</span>
+                    </div>
+
+                    <h4 style="color: #8fa4f0; margin: 15px 0 10px; font-size: 0.95em;">核心能力</h4>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>Delphi / VB开发</span><span>精通</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 90%; background: linear-gradient(90deg, #3498db, #2980b9);"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>数据库设计</span><span>精通</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 85%; background: linear-gradient(90deg, #3498db, #2980b9);"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>面向对象设计</span><span>精通</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 88%; background: linear-gradient(90deg, #3498db, #2980b9);"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>ERP系统开发</span><span>熟练</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 80%; background: linear-gradient(90deg, #3498db, #2980b9);"></div>
+                        </div>
+                    </div>
+
+                    <ul class="highlight-list">
+                        <li>气瓶电子标签监管系统开发</li>
+                        <li>ERP系统技术支持</li>
+                        <li>数据库建模与管理系统开发</li>
+                        <li>为工控领域转型奠定基础</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 现在：上位机开发 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-period period-present">现在 · 工控深耕</span>
+                    <h2 class="timeline-title">上位机开发工程师</h2>
+                    <p class="timeline-desc">专注于工业自动化领域，打通IT与OT的边界，实现设备数据采集、系统集成与智能控制。</p>
+                    
+                    <div class="tech-grid">
+                        <span class="tech-tag">WPF</span>
+                        <span class="tech-tag">WinForm</span>
+                        <span class="tech-tag">Qt</span>
+                        <span class="tech-tag">OPC UA</span>
+                        <span class="tech-tag">Modbus</span>
+                        <span class="tech-tag">PLC</span>
+                        <span class="tech-tag">SCADA</span>
+                        <span class="tech-tag">工业通讯</span>
+                    </div>
+
+                    <h4 style="color: #8fa4f0; margin: 15px 0 10px; font-size: 0.95em;">核心能力</h4>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>上位机开发 (WPF/WinForm/Qt)</span><span>精通</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 95%; background: linear-gradient(90deg, #9b59b6, #8e44ad);"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>工业通讯协议 (OPC UA/Modbus)</span><span>精通</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 90%; background: linear-gradient(90deg, #9b59b6, #8e44ad);"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>设备数据采集</span><span>精通</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 92%; background: linear-gradient(90deg, #9b59b6, #8e44ad);"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>PLC编程与调试</span><span>熟练</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 80%; background: linear-gradient(90deg, #9b59b6, #8e44ad);"></div>
+                        </div>
+                    </div>
+
+                    <ul class="highlight-list">
+                        <li>工业设备数据采集与监控系统开发</li>
+                        <li>OPC UA/Modbus多协议通讯实现</li>
+                        <li>设备层到管理层的数据贯通</li>
+                        <li>实时数据处理与可视化展示</li>
+                    </ul>
+
+                    <div class="project-card">
+                        <h4>🏭 典型项目经验</h4>
+                        <p>设备监控系统 · 产线MES集成 · 数据采集平台</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 未来：工业AI -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <span class="timeline-period period-future">未来 · 智能转型</span>
+                    <h2 class="timeline-title">工业AI应用工程师</h2>
+                    <p class="timeline-desc">拥抱AI技术，赋能智能制造，推动工厂向智能化、数字化转型，成为IT与OT+AI融合的复合型人才。</p>
+                    
+                    <div class="tech-grid">
+                        <span class="tech-tag">机器学习</span>
+                        <span class="tech-tag">深度学习</span>
+                        <span class="tech-tag">时序分析</span>
+                        <span class="tech-tag">边缘计算</span>
+                        <span class="tech-tag">TensorRT</span>
+                        <span class="tech-tag">工业物联网</span>
+                        <span class="tech-tag">数字孪生</span>
+                    </div>
+
+                    <h4 style="color: #8fa4f0; margin: 15px 0 10px; font-size: 0.95em;">学习规划</h4>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>AI算法 (XGBoost/LSTM/CNN)</span><span>学习中</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 60%; background: linear-gradient(90deg, #27ae60, #2ecc71);"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>时序数据库 (InfluxDB/TDengine)</span><span>学习中</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 55%; background: linear-gradient(90deg, #27ae60, #2ecc71);"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>边缘AI部署 (ONNX/TensorRT)</span><span>规划中</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 30%; background: linear-gradient(90deg, #27ae60, #2ecc71);"></div>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-header">
+                            <span>数字孪生技术</span><span>规划中</span>
+                        </div>
+                        <div class="skill-bar-track">
+                            <div class="skill-bar-fill" style="width: 25%; background: linear-gradient(90deg, #27ae60, #2ecc71);"></div>
+                        </div>
+                    </div>
+
+                    <ul class="highlight-list">
+                        <li>预测性维护 - 设备故障预警</li>
+                        <li>质量检测 - 视觉缺陷识别</li>
+                        <li>工艺优化 - 参数智能调优</li>
+                        <li>能耗管理 - 智能节能降耗</li>
+                    </ul>
+
+                    <div class="project-card">
+                        <h4>🎯 发展方向</h4>
+                        <p>成为「IT + OT + AI」复合型智能制造专家</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 能力矩阵总结 -->
+        <section class="summary-section">
+            <h2>🎯 核心优势</h2>
+            <div class="summary-grid">
+                <div class="summary-box">
+                    <h3>📐 软件开发能力</h3>
+                    <ul>
+                        <li>C#/.NET 精通</li>
+                        <li>面向对象设计与架构</li>
+                        <li>数据库设计与优化</li>
+                        <li>API 接口开发</li>
+                        <li>设计模式应用</li>
+                    </ul>
+                </div>
+                <div class="summary-box">
+                    <h3>⚙️ 工业自动化能力</h3>
+                    <ul>
+                        <li>上位机应用开发</li>
+                        <li>OPC UA/Modbus通讯</li>
+                        <li>PLC设备集成</li>
+                        <li>SCADA系统对接</li>
+                        <li>设备数据采集</li>
+                    </ul>
+                </div>
+                <div class="summary-box">
+                    <h3>🤖 AI智能化能力</h3>
+                    <ul>
+                        <li>机器学习基础</li>
+                        <li>时序数据分析</li>
+                        <li>工业数据处理</li>
+                        <li>边缘计算部署</li>
+                        <li>智能应用落地</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 转型优势 -->
+        <section style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 35px; margin-top: 40px;">
+            <h2 style="color: #667eea; margin-bottom: 20px;">💡 为什么选择我</h2>
+            <p style="color: #c0c0c0; margin-bottom: 20px;">作为从软件开发转型到工业自动化的工程师，我具备独特的复合型优势：</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+                    <h4 style="color: #8fa4f0; margin-bottom: 10px;">🔗 IT与OT融合</h4>
+                    <p style="font-size: 0.9em; color: #a0a0a0; margin: 0;">既懂软件开发，又懂工业协议，打通信息层与设备层的壁垒。</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+                    <h4 style="color: #8fa4f0; margin-bottom: 10px;">📊 数据思维</h4>
+                    <p style="font-size: 0.9em; color: #a0a0a0; margin: 0;">丰富的数据库和API开发经验，理解数据全生命周期管理。</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+                    <h4 style="color: #8fa4f0; margin-bottom: 10px;">🚀 持续进化</h4>
+                    <p style="font-size: 0.9em; color: #a0a0a0; margin: 0;">保持学习热情，主动拥抱工业AI，为企业创造更大价值。</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>技术发展历程 · 从传统开发到智能制造</p>
+        </footer>
+    </div>
+</body>
+</html>

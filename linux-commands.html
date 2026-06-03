@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux常用命令 - 技术知识</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 2rem; text-align: center; }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.9; }
+        nav { background: #2d2d2d; padding: 0.5rem 2rem; position: sticky; top: 0; z-index: 100; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1rem; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #ccc; text-decoration: none; padding: 0.5rem 1rem; border-radius: 4px; transition: all 0.3s; }
+        nav a:hover, nav a.active { background: #27ae60; color: white; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .card h2 { color: #27ae60; border-bottom: 2px solid #27ae60; padding-bottom: 0.5rem; margin-bottom: 1rem; font-size: 1.3rem; }
+        .card h3 { color: #333; margin: 1rem 0 0.5rem; font-size: 1.1rem; }
+        .card p { margin-bottom: 0.8rem; color: #555; }
+        .tag { display: inline-block; background: #e8f5e9; color: #27ae60; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; margin: 0.2rem; }
+        .tag.blue { background: #e3f2fd; color: #1976d2; }
+        .tag.orange { background: #fff3e0; color: #f57c00; }
+        .tag.red { background: #ffebee; color: #d32f2f; }
+        pre { background: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 6px; overflow-x: auto; margin: 1rem 0; font-size: 0.9rem; line-height: 1.5; }
+        code { font-family: "Fira Code", "Consolas", monospace; }
+        .comment { color: #6a9955; }
+        .cmd { color: #4ec9b0; }
+        .flag { color: #9cdcfe; }
+        .string { color: #ce9178; }
+        ul { padding-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .highlight-box { background: #fff8e1; border-left: 4px solid #ffc107; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        .warning-box { background: #ffebee; border-left: 4px solid #d32f2f; padding: 1rem; margin: 1rem 0; border-radius: 0 6px 6px 0; }
+        footer { background: #2d2d2d; color: #888; text-align: center; padding: 2rem; margin-top: 3rem; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: #27ae60; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .grid-item { background: #fafafa; padding: 1rem; border-radius: 6px; border: 1px solid #eee; }
+        .grid-item h4 { color: #27ae60; margin-bottom: 0.5rem; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { border: 1px solid #ddd; padding: 0.75rem; text-align: left; }
+        th { background: #27ae60; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Linux常用命令</h1>
+        <p>文件操作、文本处理、系统管理、网络命令详解</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我</a></li>
+            <li><a href="tech-knowledge.html">技术知识</a></li>
+            <li><a href="contact.html">联系我</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <a href="tech-knowledge.html" class="back-link">← 返回技术知识总览</a>
+
+        <div class="card">
+            <h2>文件与目录操作</h2>
+<pre><code><span class="comment"># 目录切换</span>
+<span class="cmd">cd</span> /home/user              <span class="comment"># 切换到指定目录</span>
+<span class="cmd">cd</span> ..                     <span class="comment"># 返回上一级目录</span>
+<span class="cmd">cd</span> ~                      <span class="comment"># 返回用户主目录</span>
+<span class="cmd">cd</span> -                      <span class="comment"># 返回上次所在目录</span>
+<span class="cmd">pwd</span>                       <span class="comment"># 显示当前目录</span>
+
+<span class="comment"># 目录查看</span>
+<span class="cmd">ls</span> -la                     <span class="comment"># 列出所有文件（含隐藏）</span>
+<span class="cmd">ls</span> -lh                     <span class="comment"># 人性化显示文件大小</span>
+<span class="cmd">ls</span> -lt                     <span class="comment"># 按修改时间排序</span>
+<span class="cmd">tree</span>                      <span class="comment"># 树形显示目录结构</span>
+
+<span class="comment"># 文件操作</span>
+<span class="cmd">cp</span> src.txt dst.txt         <span class="comment"># 复制文件</span>
+<span class="cmd">cp</span> -r dir/ newdir/        <span class="comment"># 递归复制目录</span>
+<span class="cmd">mv</span> old.txt new.txt         <span class="comment"># 移动/重命名</span>
+<span class="cmd">rm</span> file.txt                <span class="comment"># 删除文件</span>
+<span class="cmd">rm</span> -rf dir/               <span class="comment"># 强制删除目录</span>
+<span class="cmd">mkdir</span> -p a/b/c            <span class="comment"># 创建多级目录</span>
+<span class="cmd">touch</span> file.txt             <span class="comment"># 创建空文件或更新时间</span>
+
+<span class="comment"># 文件权限</span>
+<span class="cmd">chmod</span> 755 script.sh        <span class="comment"># 设置权限</span>
+<span class="cmd">chmod</span> +x script.sh        <span class="comment"># 添加执行权限</span>
+<span class="cmd">chown</span> user:group file      <span class="comment"># 修改所有者</span>
+<span class="cmd">chown</span> -R user:group dir/  <span class="comment"># 递归修改</span>
+
+<span class="comment"># 链接</span>
+<span class="cmd">ln</span> -s target link         <span class="comment"># 创建软链接</span>
+<span class="cmd">ln</span> target hardlink         <span class="comment"># 创建硬链接</span></code></pre>
+
+            <h3>权限数字对照</h3>
+            <table>
+                <tr><th>数字</th><th>权限</th><th>含义</th></tr>
+                <tr><td>4</td><td>r--</td><td>读</td></tr>
+                <tr><td>2</td><td>-w-</td><td>写</td></tr>
+                <tr><td>1</td><td>--x</td><td>执行</td></tr>
+                <tr><td>7</td><td>rwx</td><td>读写执行</td></tr>
+                <tr><td>6</td><td>rw-</td><td>读写</td></tr>
+                <tr><td>5</td><td>r-x</td><td>读执行</td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>文本处理</h2>
+<pre><code><span class="comment"># 查看文件</span>
+<span class="cmd">cat</span> file.txt                <span class="comment"># 查看全部内容</span>
+<span class="cmd">head</span> -n 20 file.txt        <span class="comment"># 查看前20行</span>
+<span class="cmd">tail</span> -n 50 file.txt        <span class="comment"># 查看后50行</span>
+<span class="cmd">tail</span> -f log.txt            <span class="comment"># 实时追踪日志</span>
+<span class="cmd">less</span> file.txt              <span class="comment"># 分页查看（q退出，/搜索）</span>
+<span class="cmd">wc</span> -l file.txt             <span class="comment"># 统计行数</span>
+
+<span class="comment"># 文本搜索</span>
+<span class="cmd">grep</span> <span class="string">"error"</span> log.txt         <span class="comment"># 搜索关键词</span>
+<span class="cmd">grep</span> -r <span class="string">"pattern"</span> dir/       <span class="comment"># 递归搜索</span>
+<span class="cmd">grep</span> -i <span class="string">"error"</span> log.txt     <span class="comment"># 忽略大小写</span>
+<span class="cmd">grep</span> -n <span class="string">"error"</span> log.txt      <span class="comment"># 显示行号</span>
+<span class="cmd">grep</span> -v <span class="string">"debug"</span> log.txt      <span class="comment"># 反向匹配</span>
+<span class="cmd">grep</span> -E <span class="string">"error|warning"</span>     <span class="comment"># 扩展正则</span>
+
+<span class="comment"># 文本处理</span>
+<span class="cmd">awk</span> <span class="string">'{print $1, $3}'</span> file.txt    <span class="comment"># 提取列（$1第一列，$NF最后一列）</span>
+<span class="cmd">awk</span> <span class="string">'/pattern/ {print $0}'</span> file.txt   <span class="comment"># 模式匹配</span>
+<span class="cmd">sed</span> <span class="string">'s/old/new/g'</span> file.txt     <span class="comment"># 全局替换</span>
+<span class="cmd">sed</span> -i <span class="string">'s/old/new/g'</span> file.txt   <span class="comment"># 直接修改文件</span>
+<span class="cmd">cut</span> -d<span class="string">','</span> -f1,3 file.csv    <span class="comment"># 按分隔符提取列</span>
+<span class="cmd">sort</span> file.txt              <span class="comment"># 排序</span>
+<span class="cmd">uniq</span> file.txt              <span class="comment"># 去重（需先排序）</span>
+<span class="cmd">wc</span> -l file.txt             <span class="comment"># 统计行数</span>
+
+<span class="comment"># 管道组合</span>
+cat log.txt | grep <span class="string">"error"</span> | awk <span class="string">'{print $1}'</span> | sort | uniq -c | sort -rn</code></pre>
+
+            <div class="highlight-box">
+                <strong>awk 常用变量：</strong>
+                NF（字段数）、NR（行号）、$0（整行）、$1-$n（各字段）、FS（字段分隔符）
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>系统管理</h2>
+<pre><code><span class="comment"># 进程管理</span>
+<span class="cmd">ps</span> aux                       <span class="comment"># 查看所有进程</span>
+<span class="cmd">ps</span> -ef                       <span class="comment"># 详细进程信息</span>
+<span class="cmd">top</span>                          <span class="comment"># 动态进程监控（q退出）</span>
+<span class="cmd">htop</span>                         <span class="comment"># 更友好的进程监控</span>
+<span class="cmd">kill</span> PID                     <span class="comment"># 终止进程</span>
+<span class="cmd">kill</span> -9 PID                  <span class="comment"># 强制终止</span>
+<span class="cmd">pkill</span> -f nginx               <span class="comment"># 按名称终止进程</span>
+<span class="cmd">nohup</span> ./script.sh &          <span class="comment"># 后台运行（忽略挂断）</span>
+
+<span class="comment"># 系统监控</span>
+<span class="cmd">top</span>                          <span class="comment"># CPU/内存监控</span>
+<span class="cmd">free</span> -h                       <span class="comment"># 内存使用情况</span>
+<span class="cmd">df</span> -h                         <span class="comment"># 磁盘使用情况</span>
+<span class="cmd">du</span> -sh *                      <span class="comment"># 目录大小</span>
+<span class="cmd">uptime</span>                        <span class="comment"># 系统运行时间</span>
+<span class="cmd">who</span>                           <span class="comment"># 当前登录用户</span>
+<span class="cmd">w</span>                             <span class="comment"># 详细登录信息</span>
+
+<span class="comment"># 系统信息</span>
+<span class="cmd">uname</span> -a                     <span class="comment"># 系统信息</span>
+<span class="cmd">cat</span> /etc/os-release           <span class="comment"># 操作系统版本</span>
+<span class="cmd">hostname</span>                      <span class="comment"># 主机名</span>
+<span class="cmd">lscpu</span>                         <span class="comment"># CPU信息</span>
+<span class="cmd">lsblk</span>                         <span class="comment"># 块设备（磁盘）</span>
+
+<span class="comment"># 服务管理（systemd）</span>
+<span class="cmd">systemctl</span> start nginx         <span class="comment"># 启动服务</span>
+<span class="cmd">systemctl</span> stop nginx          <span class="comment"># 停止服务</span>
+<span class="cmd">systemctl</span> restart nginx       <span class="comment"># 重启服务</span>
+<span class="cmd">systemctl</span> status nginx        <span class="comment"># 查看状态</span>
+<span class="cmd">systemctl</span> enable nginx        <span class="comment"># 开机自启</span>
+<span class="cmd">systemctl</span> disable nginx       <span class="comment"># 取消自启</span>
+<span class="cmd">systemctl</span> list-unit-files     <span class="comment"># 列出所有服务</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>网络命令</h2>
+<pre><code><span class="comment"># 网络配置</span>
+<span class="cmd">ifconfig</span>                      <span class="comment"># 查看网络接口（旧）</span>
+<span class="cmd">ip</span> addr                        <span class="comment"># 查看IP（新）</span>
+<span class="cmd">ip</span> link set eth0 up            <span class="comment"># 启用网卡</span>
+<span class="cmd">ip</span> addr add 192.168.1.100/24 dev eth0   <span class="comment"># 添加IP</span>
+
+<span class="comment"># 网络测试</span>
+<span class="cmd">ping</span> -c 4 google.com           <span class="comment"># Ping测试（4次）</span>
+<span class="cmd">traceroute</span> google.com          <span class="comment"># 路由追踪</span>
+<span class="cmd">mtr</span> google.com                 <span class="comment"># 实时路由追踪</span>
+
+<span class="comment"># 端口与连接</span>
+<span class="cmd">netstat</span> -tuln                  <span class="comment"># 监听端口</span>
+<span class="cmd">ss</span> -tuln                      <span class="comment"># 更快的端口查看</span>
+<span class="cmd">netstat</span> -anp                   <span class="comment"># 所有连接</span>
+<span class="cmd">lsof</span> -i :8080                  <span class="comment"># 端口占用进程</span>
+
+<span class="comment"># 远程操作</span>
+<span class="cmd">ssh</span> user@host                  <span class="comment"># SSH连接</span>
+<span class="cmd">scp</span> file.txt user@host:/path/  <span class="comment"># 远程复制</span>
+<span class="cmd">rsync</span> -avz src/ user@host:/path/  <span class="comment"># 增量同步</span>
+
+<span class="comment"># 下载</span>
+<span class="cmd">wget</span> https://example.com/file.zip     <span class="comment"># 下载文件</span>
+<span class="cmd">curl</span> -O https://example.com/file.zip   <span class="comment"># 下载</span>
+<span class="cmd">curl</span> -X POST -d <span class="string">'{"key":"value"}'</span> url   <span class="comment"># POST请求</span>
+<span class="cmd">curl</span> -H <span class="string">"Authorization: Bearer xxx"</span> url  <span class="comment"># 带Header</span></code></pre>
+
+            <div class="highlight-box">
+                <strong>ss vs netstat：</strong>
+                <ul>
+                    <li><code>ss -tuln</code> 比 <code>netstat -tuln</code> 更快</li>
+                    <li><code>ss -tp</code> 显示进程信息</li>
+                    <li><code>ss -s</code> 显示统计摘要</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>压缩与归档</h2>
+<pre><code><span class="comment"># tar 归档</span>
+<span class="cmd">tar</span> -cvf archive.tar dir/       <span class="comment"># 创建归档</span>
+<span class="cmd">tar</span> -xvf archive.tar           <span class="comment"># 解压归档</span>
+<span class="cmd">tar</span> -cvzf archive.tar.gz dir/  <span class="comment"># gzip压缩</span>
+<span class="cmd">tar</span> -xvzf archive.tar.gz      <span class="comment"># 解压gzip</span>
+<span class="cmd">tar</span> -cvjf archive.tar.bz2 dir/ <span class="comment"># bzip2压缩</span>
+<span class="cmd">tar</span> -xvjf archive.tar.bz2     <span class="comment"># 解压bzip2</span>
+
+<span class="comment"># zip</span>
+<span class="cmd">zip</span> -r archive.zip dir/        <span class="comment"># 压缩</span>
+<span class="cmd">unzip</span> archive.zip              <span class="comment"># 解压</span>
+<span class="cmd">unzip</span> -l archive.zip          <span class="comment"># 查看内容</span>
+
+<span class="comment"># 其他</span>
+<span class="cmd">gzip</span> file.txt                  <span class="comment"># gzip压缩（删除原文件）</span>
+<span class="cmd">gunzip</span> file.txt.gz             <span class="comment"># 解压</span>
+<span class="cmd">xz</span> -z file.txt                <span class="comment"># xz压缩（高压缩比）</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>用户与权限管理</h2>
+<pre><code><span class="comment"># 用户管理</span>
+<span class="cmd">useradd</span> -m -s /bin/bash username   <span class="comment"># 创建用户</span>
+<span class="cmd">userdel</span> -r username                <span class="comment"># 删除用户</span>
+<span class="cmd">usermod</span> -aG sudo username          <span class="comment"># 加入sudo组</span>
+<span class="cmd">passwd</span> username                     <span class="comment"># 设置密码</span>
+<span class="cmd">id</span> username                          <span class="comment"># 查看用户信息</span>
+
+<span class="comment"># 组管理</span>
+<span class="cmd">groupadd</span> groupname                  <span class="comment"># 创建组</span>
+<span class="cmd">groups</span> username                      <span class="comment"># 查看用户组</span>
+
+<span class="comment"># sudo权限</span>
+<span class="cmd">visudo</span>                               <span class="comment"># 编辑sudoers（安全方式）</span>
+<span class="comment"># username ALL=(ALL:ALL) ALL  # 添加这行</span>
+
+<span class="comment"># su切换</span>
+<span class="cmd">su</span> username                        <span class="comment"># 切换用户</span>
+<span class="cmd">sudo</span> command                       <span class="comment"># 以root执行</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>磁盘与文件系统</h2>
+<pre><code><span class="comment"># 分区与格式化</span>
+<span class="cmd">fdisk</span> -l                           <span class="comment"># 查看磁盘分区</span>
+<span class="cmd">parted</span> /dev/sdb                   <span class="comment"># 交互式分区工具</span>
+<span class="cmd">mkfs.ext4</span> /dev/sdb1               <span class="comment"># 格式化ext4</span>
+<span class="cmd">mkfs.xfs</span> /dev/sdb1                <span class="comment"># 格式化xfs</span>
+
+<span class="comment"># 挂载</span>
+<span class="cmd">mount</span> /dev/sdb1 /mnt/data         <span class="comment"># 挂载</span>
+<span class="cmd">umount</span> /mnt/data                   <span class="comment"># 卸载</span>
+<span class="cmd">mount</span> -o remount,rw /               <span class="comment"># 重新挂载</span>
+<span class="cmd">df</span> -hT                              <span class="comment"># 查看挂载和文件系统</span>
+
+<span class="comment"># 逻辑卷管理（LVM）</span>
+<span class="cmd">pvcreate</span> /dev/sdb1                 <span class="comment"># 创建物理卷</span>
+<span class="cmd">vgcreate</span> vg01 /dev/sdb1           <span class="comment"># 创建卷组</span>
+<span class="cmd">lvcreate</span> -L 100G -n lv01 vg01     <span class="comment"># 创建逻辑卷</span>
+<span class="cmd">lvextend</span> -L +50G /dev/vg01/lv01   <span class="comment"># 扩展逻辑卷</span>
+<span class="cmd">resize2fs</span> /dev/vg01/lv01          <span class="comment"># 扩展文件系统</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>定时任务与日志</h2>
+<pre><code><span class="comment"># crontab 定时任务</span>
+<span class="cmd">crontab</span> -e                        <span class="comment"># 编辑定时任务</span>
+<span class="cmd">crontab</span> -l                        <span class="comment"># 查看定时任务</span>
+<span class="cmd">crontab</span> -r                        <span class="comment"># 删除所有任务</span>
+
+<span class="comment"># 格式：分 时 日 月 周 命令</span>
+<span class="comment"># * * * * * /path/to/command</span>
+<span class="comment"># 0 2 * * * /backup.sh          # 每天凌晨2点</span>
+<span class="comment"># */5 * * * * /check.sh         # 每5分钟</span>
+<span class="comment"># 0 0 1 * * /monthly.sh         # 每月1号</span>
+<span class="comment"># 0 2 * * 0 /weekly.sh          # 每周日凌晨2点</span>
+
+<span class="comment"># systemd 定时器（推荐）</span>
+<span class="comment"># /etc/systemd/system/backup.timer</span>
+<span class="comment">[Timer]</span>
+<span class="comment">OnCalendar=*-*-02:00:00</span>
+<span class="comment">Persistent=true</span>
+
+<span class="comment"># 日志查看</span>
+<span class="cmd">journalctl</span>                          <span class="comment"># systemd日志</span>
+<span class="cmd">journalctl</span> -u nginx.service        <span class="comment"># 服务日志</span>
+<span class="cmd">journalctl</span> -f                      <span class="comment"># 实时追踪</span>
+<span class="cmd">journalctl</span> --since <span class="string">"1 hour ago"</span>  <span class="comment"># 最近1小时</span>
+
+<span class="comment"># 日志文件</span>
+<span class="cmd">tail</span> -f /var/log/syslog           <span class="comment"># 系统日志</span>
+<span class="cmd">tail</span> -f /var/log/nginx/access.log <span class="comment"># Nginx访问日志</span></code></pre>
+
+            <div class="warning-box">
+                <strong>注意：</strong>定时任务中的路径最好使用绝对路径，避免环境变量问题
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>查找与搜索</h2>
+<pre><code><span class="comment"># 文件查找</span>
+<span class="cmd">find</span> / -name <span class="string">"*.log"</span>               <span class="comment"># 按名称查找</span>
+<span class="cmd">find</span> / -type f -size +100M         <span class="comment"># 查找大文件</span>
+<span class="cmd">find</span> / -type d -name <span class="string">"node_modules"</span> <span class="comment"># 查找目录</span>
+<span class="cmd">find</span> / -mtime -7                  <span class="comment"># 7天内修改的文件</span>
+<span class="cmd">find</span> / -user www-data             <span class="comment"># 按所有者查找</span>
+<span class="cmd">find</span> / -perm 755                 <span class="comment"># 按权限查找</span>
+
+<span class="comment"># 快速查找（数据库索引）</span>
+<span class="cmd">locate</span> filename                   <span class="comment"># 需要updatedb更新数据库</span>
+<span class="cmd">which</span> python3                     <span class="comment"># 命令路径</span>
+<span class="cmd">whereis</span> python3                   <span class="comment"># 二进制、源码、man位置</span>
+<span class="cmd">type</span> python3                       <span class="comment"># 命令类型</span>
+
+<span class="comment"># locate 示例</span>
+<span class="cmd">updatedb</span>                           <span class="comment"># 更新文件数据库</span>
+<span class="cmd">locate</span> <span class="string">"*.conf"</span>                  <span class="comment"># 查找配置文件</span></code></pre>
+        </div>
+
+        <div class="card">
+            <h2>实用技巧</h2>
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>命令历史</h4>
+<pre><code><span class="cmd">history</span>                   <span class="comment"># 查看历史</span>
+<span class="cmd">!</span>123                       <span class="comment"># 执行第123条</span>
+<span class="cmd">!!</span>                         <span class="comment"># 执行上一条</span>
+<span class="cmd">!grep</span>                     <span class="comment"># 执行最近grep</span>
+Ctrl+R                     <span class="comment"># 搜索历史</span></code></pre>
+                </div>
+                <div class="grid-item">
+                    <h4>别名</h4>
+<pre><code><span class="cmd">alias</span> ll=<span class="string">'ls -la'</span>
+<span class="cmd">alias</span> gs=<span class="string">'git status'</span>
+<span class="comment"># 永久保存到 ~/.bashrc</span></code></pre>
+                </div>
+                <div class="grid-item">
+                    <h4>环境变量</h4>
+<pre><code><span class="cmd">echo</span> $PATH              <span class="comment"># 查看</span>
+<span class="cmd">export</span> VAR=value         <span class="comment"># 设置</span>
+<span class="cmd">env</span>                      <span class="comment"># 列出所有</span></code></pre>
+                </div>
+                <div class="grid-item">
+                    <h4>管道与重定向</h4>
+<pre><code>cmd > file.txt          <span class="comment"># 输出到文件</span>
+cmd >> file.txt         <span class="comment"># 追加</span>
+cmd 2> err.txt          <span class="comment"># 错误重定向</span>
+cmd &> all.txt          <span class="comment"># 所有输出</span>
+cmd1 | cmd2             <span class="comment"># 管道</span></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 技术知识库 | 由 Hexo 驱动</p>
+    </footer>
+</body>
+</html>

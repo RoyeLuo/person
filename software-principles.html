@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6大设计原则 - 技术知识</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --main: #165DFF;
+            --main-dark: #0e40e0;
+            --light: #f5f7fa;
+            --text: #333;
+            --text-light: #666;
+            --border: #e8e8e8;
+            --success: #52c41a;
+            --warning: #faad14;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #165DFF 0%, #0e40e0 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0 0 10px;
+            font-size: 2.5em;
+        }
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        .breadcrumb a {
+            color: var(--main);
+            text-decoration: none;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .nav-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .nav-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+        .nav-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(22,93,255,0.15);
+        }
+        .nav-card.active {
+            background: var(--main);
+            color: white;
+        }
+        .nav-card i {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--main);
+        }
+        .nav-card.active i {
+            color: white;
+        }
+        .nav-card h4 {
+            margin: 0;
+            font-size: 15px;
+        }
+        .principle-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .principle-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+        .principle-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #165DFF 0%, #0e40e0 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        .principle-icon i {
+            font-size: 28px;
+            color: white;
+        }
+        .principle-title h2 {
+            margin: 0 0 5px;
+            font-size: 1.4em;
+        }
+        .principle-title .letter {
+            color: var(--main);
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .principle-desc {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 8px;
+            border-left: 4px solid var(--main);
+        }
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .code-block pre {
+            margin: 0;
+            color: #d4d4d4;
+            font-family: "Fira Code", "Consolas", monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #569cd6; }
+        .code-string { color: #ce9178; }
+        .code-class { color: #4ec9b0; }
+        .code-function { color: #dcdcaa; }
+        .good-bad {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .good, .bad {
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .good {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+        }
+        .bad {
+            background: #fff2f0;
+            border: 1px solid #ffccc7;
+        }
+        .good h4 {
+            color: var(--success);
+            margin: 0 0 10px;
+        }
+        .bad h4 {
+            color: #ff4d4f;
+            margin: 0 0 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+            font-size: 14px;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .good-bad {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><i class="fas fa-gem"></i> 6大设计原则</h1>
+        <p>编写可维护、可扩展、可复用代码的核心理论基础</p>
+    </div>
+
+    <div class="breadcrumb">
+        <a href="index.html">首页</a> &gt; <a href="tech-knowledge.html">技术知识</a> &gt; 6大设计原则
+    </div>
+
+    <div class="container">
+        <div class="nav-cards">
+            <a href="software-principles.html" class="nav-card active">
+                <i class="fas fa-gem"></i>
+                <h4>6大设计原则</h4>
+            </a>
+            <a href="design-patterns.html" class="nav-card">
+                <i class="fas fa-cubes"></i>
+                <h4>12种设计模式</h4>
+            </a>
+            <a href="security-tips.html" class="nav-card">
+                <i class="fas fa-shield-alt"></i>
+                <h4>安全防护</h4>
+            </a>
+            <a href="dev-tips.html" class="nav-card">
+                <i class="fas fa-lightbulb"></i>
+                <h4>开发技巧</h4>
+            </a>
+            <a href="mysql-optimization.html" class="nav-card">
+                <i class="fas fa-database"></i>
+                <h4>MySQL优化</h4>
+            </a>
+        </div>
+
+        <!-- 单一职责原则 -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-icon"><i class="fas fa-bullseye"></i></div>
+                <div class="principle-title">
+                    <span class="letter">S - 单一职责原则 (SRP)</span>
+                    <h2>Single Responsibility Principle</h2>
+                </div>
+            </div>
+            <div class="principle-desc">
+                <strong>核心思想：</strong>一个类只负责一项职责，只有一个引起它变化的原因。
+                <br><strong>好处：</strong>类的复杂度降低、可读性提高、可维护性提高、变更引起的风险降低。
+            </div>
+            <div class="good-bad">
+                <div class="bad">
+                    <h4><i class="fas fa-times-circle"></i> 违反原则</h4>
+                    <div class="code-block">
+<pre><span class="code-class">UserService</span> {
+    <span class="code-function">saveUser</span>() { <span class="code-comment">// 保存用户</span> }
+    <span class="code-function">sendEmail</span>() { <span class="code-comment">// 发送邮件</span> }
+    <span class="code-function">generateReport</span>() { <span class="code-comment">// 生成报表</span> }
+    <span class="code-function">logActivity</span>() { <span class="code-comment">// 记录日志</span> }
+}</pre>
+                    </div>
+                </div>
+                <div class="good">
+                    <h4><i class="fas fa-check-circle"></i> 遵循原则</h4>
+                    <div class="code-block">
+<pre><span class="code-class">UserService</span> { <span class="code-function">saveUser</span>() {} }
+<span class="code-class">EmailService</span> { <span class="code-function">sendEmail</span>() {} }
+<span class="code-class">ReportService</span> { <span class="code-function">generateReport</span>() {} }
+<span class="code-class">LoggerService</span> { <span class="code-function">logActivity</span>() {} }</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 开闭原则 -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-icon"><i class="fas fa-lock-open"></i></div>
+                <div class="principle-title">
+                    <span class="letter">O - 开闭原则 (OCP)</span>
+                    <h2>Open Closed Principle</h2>
+                </div>
+            </div>
+            <div class="principle-desc">
+                <strong>核心思想：</strong>对扩展开放，对修改关闭。用抽象构建框架，用实现扩展细节。
+                <br><strong>好处：</strong>提高代码的可复用性和可维护性，降低变更带来的风险。
+            </div>
+            <div class="good-bad">
+                <div class="bad">
+                    <h4><i class="fas fa-times-circle"></i> 违反原则</h4>
+                    <div class="code-block">
+<pre><span class="code-function">calculateFee</span>(type) {
+    <span class="code-keyword">if</span> (type === <span class="code-string">'student'</span>) { <span class="code-comment">// 学生票</span> }
+    <span class="code-keyword">if</span> (type === <span class="code-string">'adult'</span>) { <span class="code-comment">// 成人票</span> }
+    <span class="code-comment">// 每新增类型都要修改这里</span>
+}</pre>
+                    </div>
+                </div>
+                <div class="good">
+                    <h4><i class="fas fa-check-circle"></i> 遵循原则</h4>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">Ticket</span> {
+    <span class="code-function">getFee</span>(): <span class="code-keyword">number</span>;
+}
+<span class="code-class">StudentTicket</span> <span class="code-keyword">implements</span> <span class="code-class">Ticket</span> { ... }
+<span class="code-class">AdultTicket</span> <span class="code-keyword">implements</span> <span class="code-class">Ticket</span> { ... }
+<span class="code-comment">// 新增类型只需扩展，无需修改</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 里氏替换原则 -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-icon"><i class="fas fa-exchange-alt"></i></div>
+                <div class="principle-title">
+                    <span class="letter">L - 里氏替换原则 (LSP)</span>
+                    <h2>Liskov Substitution Principle</h2>
+                </div>
+            </div>
+            <div class="principle-desc">
+                <strong>核心思想：</strong>子类可以扩展父类的功能，但不能改变原有父类函数的行为。
+                <br><strong>核心理解：</strong>子类对象能够替换父类对象，而程序行为不变。
+            </div>
+            <div class="good-bad">
+                <div class="bad">
+                    <h4><i class="fas fa-times-circle"></i> 违反原则</h4>
+                    <div class="code-block">
+<pre><span class="code-class">Rectangle</span> {
+    <span class="code-function">setWidth</span>(w) { <span class="code-keyword">this</span>.width = w; }
+    <span class="code-function">setHeight</span>(h) { <span class="code-keyword">this</span>.height = h; }
+}
+<span class="code-class">Square</span> <span class="code-keyword">extends</span> <span class="code-class">Rectangle</span> {
+    <span class="code-comment">// 正方形宽高必须相等，行为与父类不一致！</span>
+    <span class="code-function">setWidth</span>(w) { <span class="code-keyword">this</span>.width = w; <span class="code-keyword">this</span>.height = w; }
+}</pre>
+                    </div>
+                </div>
+                <div class="good">
+                    <h4><i class="fas fa-check-circle"></i> 遵循原则</h4>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">Shape</span> {
+    <span class="code-function">area</span>(): <span class="code-keyword">number</span>;
+}
+<span class="code-class">Rectangle</span> <span class="code-keyword">implements</span> <span class="code-class">Shape</span> { ... }
+<span class="code-class">Square</span> <span class="code-keyword">implements</span> <span class="code-class">Shape</span> { ... }
+<span class="code-comment">// 各自独立，互不影响</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 接口隔离原则 -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-icon"><i class="fas fa-plug"></i></div>
+                <div class="principle-title">
+                    <span class="letter">I - 接口隔离原则 (ISP)</span>
+                    <h2>Interface Segregation Principle</h2>
+                </div>
+            </div>
+            <div class="principle-desc">
+                <strong>核心思想：</strong>建立单一接口，尽量细化接口，类之间的依赖关系建立在最小接口上。
+                <br><strong>核心理解：</strong>客户端不应依赖它不需要的接口，一个类对另一个类的依赖应建立在最小的接口上。
+            </div>
+            <div class="good-bad">
+                <div class="bad">
+                    <h4><i class="fas fa-times-circle"></i> 违反原则</h4>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">IAnimal</span> {
+    <span class="code-function">fly</span>();
+    <span class="code-function">run</span>();
+    <span class="code-function">swim</span>();
+}
+<span class="code-class">Dog</span> <span class="code-keyword">implements</span> <span class="code-class">IAnimal</span> {
+    <span class="code-function">fly</span>() { <span class="code-keyword">throw</span> <span class="code-string">"狗不会飞"</span>; }
+}</pre>
+                    </div>
+                </div>
+                <div class="good">
+                    <h4><i class="fas fa-check-circle"></i> 遵循原则</h4>
+                    <div class="code-block">
+<pre><span class="code-keyword">interface</span> <span class="code-class">IFly</span> { <span class="code-function">fly</span>(); }
+<span class="code-keyword">interface</span> <span class="code-class">IRun</span> { <span class="code-function">run</span>(); }
+<span class="code-keyword">interface</span> <span class="code-class">ISwim</span> { <span class="code-function">swim</span>(); }
+<span class="code-class">Dog</span> <span class="code-keyword">implements</span> <span class="code-class">IRun</span>, <span class="code-class">ISwim</span> { ... }</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 依赖倒置原则 -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-icon"><i class="fas fa-arrow-down"></i></div>
+                <div class="principle-title">
+                    <span class="letter">D - 依赖倒置原则 (DIP)</span>
+                    <h2>Dependency Inversion Principle</h2>
+                </div>
+            </div>
+            <div class="principle-desc">
+                <strong>核心思想：</strong>高层模块不应该依赖低层模块，两者都应该依赖抽象。抽象不应该依赖细节，细节应该依赖抽象。
+                <br><strong>核心理解：</strong>面向接口编程，而不是面向实现。
+            </div>
+            <div class="good-bad">
+                <div class="bad">
+                    <h4><i class="fas fa-times-circle"></i> 违反原则</h4>
+                    <div class="code-block">
+<pre<span class="code-class">OrderService</span> {
+    <span class="code-keyword">private</span> <span class="code-class">MySQLRepository</span> repo;
+    <span class="code-function">save</span>() {
+        repo.<span class="code-function">save</span>();
+    }
+}
+<span class="code-comment">// 直接依赖具体实现，耦合度高</span></pre>
+                    </div>
+                </div>
+                <div class="good">
+                    <h4><i class="fas fa-check-circle"></i> 遵循原则</h4>
+                    <div class="code-block">
+<pre<span class="code-class">OrderService</span> {
+    <span class="code-keyword">private</span> <span class="code-class">IRepository</span> repo;
+    <span class="code-function">save</span>() {
+        repo.<span class="code-function">save</span>();
+    }
+}
+<span class="code-class">MySQLRepository</span> <span class="code-keyword">implements</span> <span class="code-class">IRepository</span> { ... }
+<span class="code-comment">// 依赖抽象，便于扩展和替换</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 合成复用原则 -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-icon"><i class="fas fa-puzzle-piece"></i></div>
+                <div class="principle-title">
+                    <span class="letter">C - 合成复用原则 (CRP)</span>
+                    <h2>Composite Reuse Principle</h2>
+                </div>
+            </div>
+            <div class="principle-desc">
+                <strong>核心思想：</strong>尽量使用对象组合(has-a)/聚合，而不是继承(is-a)来达到复用目的。
+                <br><strong>核心理解：</strong>继承会让类之间的关系变得复杂，组合更灵活。
+            </div>
+            <div class="good-bad">
+                <div class="bad">
+                    <h4><i class="fas fa-times-circle"></i> 违反原则</h4>
+                    <div class="code-block">
+<pre<span class="code-class">ClassA</span> {
+    <span class="code-function">methodA</span>() {}
+}
+<span class="code-class">ClassB</span> <span class="code-keyword">extends</span> <span class="code-class">ClassA</span> {
+    <span class="code-comment">// 继承关系过于紧密</span>
+}
+<span class="code-comment">// ClassB 的改变会影响 ClassA</span></pre>
+                    </div>
+                </div>
+                <div class="good">
+                    <h4><i class="fas fa-check-circle"></i> 遵循原则</h4>
+                    <div class="code-block">
+<pre<span class="code-class">ClassA</span> {
+    <span class="code-function">methodA</span>() {}
+}
+<span class="code-class">ClassB</span> {
+    <span class="code-keyword">private</span> <span class="code-class">ClassA</span> obj;
+    <span class="code-function">methodB</span>() {
+        obj.<span class="code-function">methodA</span>();
+    }
+}
+<span class="code-comment">// 组合关系，更灵活，可动态替换</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 技术知识库 | <a href="tech-knowledge.html">返回技术知识总览</a></p>
+    </footer>
+</body>
+</html>

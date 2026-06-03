@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>罗小添 - 能源行业项目 | 加氢站 | SCADA监控</title>
+    <meta name="description" content="罗小添能源行业项目经验：加气站(加氢站)综合管理平台、加气站(加氢站)自动化控制系统（项目经理）、智慧加气站平台、SCADA监控系统">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .arch-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .arch-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .arch-box p {
+            margin: 8px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .layer-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-right: 8px;
+        }
+        .layer-presentation { background: rgba(255,255,255,0.3); }
+        .layer-component { background: rgba(255,255,255,0.25); }
+        .layer-business { background: rgba(255,255,255,0.2); }
+        .layer-data { background: rgba(255,255,255,0.15); }
+        .layer-device { background: rgba(255,255,255,0.1); }
+        
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .tech-badge {
+            background: rgba(255,255,255,0.15);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .feature-item h5 {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+        .feature-item p {
+            color: #666;
+            font-size: 13px;
+            margin: 0;
+        }
+        
+        .flow-diagram {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .flow-step {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+        }
+        .flow-step-num {
+            background: #667eea;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .flow-step-text {
+            color: #555;
+            font-size: 13px;
+        }
+        
+        .highlight-project {
+            border: 2px solid #667eea;
+            background: linear-gradient(to bottom, rgba(102,126,234,0.05), white);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-code"></i> 罗小添
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" style="color: var(--main); font-weight: bold;">首页</a></li>
+                <li class="dropdown">
+                    <a href="index.html">行业项目</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="chip.html">光模块制造</a></li>
+                        <li><a href="energy.html">能源行业(加气/加氢站)</a></li>
+                        <li><a href="transit.html">轨道交通</a></li>
+                    </ul>
+                </li>
+                <li><a href="career.html">职业经历</a></li>
+                <li><a href="about.html">关于我</a></li>
+                <li><a href="project-management.html">项目管理</a></li>
+                <li><a href="tech-knowledge.html">技术知识</a></li>
+                <li><a href="contact.html">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 行业导航标签 -->
+        <div class="job-nav-tabs">
+            <a href="chip.html" class="job-tab">
+                <i class="fas fa-microchip"></i>
+                <span>光模块制造</span>
+            </a>
+            <a href="energy.html" class="job-tab active">
+                <i class="fas fa-bolt"></i>
+                <span>能源行业(加气/加氢站)</span>
+            </a>
+            <a href="transit.html" class="job-tab">
+                <i class="fas fa-train"></i>
+                <span>轨道交通</span>
+            </a>
+        </div>
+
+        <!-- 项目介绍 -->
+        <h2 class="section-title">能源行业项目</h2>
+
+        <!-- 技术栈总览 -->
+        <div style="background: var(--light); border-radius: 12px; padding: 20px; margin-bottom: 30px;">
+            <h4 style="margin-bottom: 15px; color: var(--main);"><i class="fas fa-laptop-code" style="margin-right: 8px;"></i>技术栈 · 发展历程</h4>
+            
+            <!-- 过去 -->
+            <div style="margin-bottom: 15px;">
+                <span style="background: #6c757d; color: white; padding: 2px 10px; border-radius: 10px; font-size: 11px; margin-right: 8px;">过去</span>
+                <span style="color: #6c757d; font-size: 13px;">ASP.NET MVC、WinForm、SqlSugar、MySQL</span>
+            </div>
+            
+            <!-- 现在 -->
+            <div>
+                <span style="background: #165DFF; color: white; padding: 2px 10px; border-radius: 10px; font-size: 11px; margin-right: 8px;">现在</span>
+                <span style="color: #165DFF; font-size: 13px;">C#/.NET Core、WPF、Qt/QML、C++、SCADA、OPC UA、Modbus TCP/RTU、Redis、InfluxDB</span>
+            </div>
+        </div>
+
+        <!-- ========== 加氢站综合管理平台 - 置顶项目 ========== -->
+        <div class="project-item highlight-project" style="margin-bottom: 40px;">
+            <div class="project-header">
+                <h4>
+                    <i class="fas fa-star" style="color: #f39c12; margin-right: 8px;"></i>
+                    加气站(加氢站)综合管理平台
+                </h4>
+                <div class="project-period">2014 - 2018</div>
+            </div>
+            <div class="project-tech">技术栈：ASP.NET MVC、WinForm、SqlSugar、RabbitMQ、MySQL、Modbus TCP</div>
+            <div class="project-content">
+                <!-- 项目概述 -->
+                <div class="arch-box">
+                    <h3><i class="fas fa-info-circle"></i> 项目概述</h3>
+                    <p>连接公司与线下各加气站(加氢站)，实现<strong>一卡通用、存值积分、优惠券、商品兑换</strong>等功能，同时通过实时数据监控方便财务结算与运营管理。支撑20+加氢站并发数据采集。</p>
+                </div>
+
+                <!-- 系统架构 -->
+                <h4 style="margin: 20px 0 15px; color: #333;">
+                    <i class="fas fa-layer-group" style="color: #667eea; margin-right: 8px;"></i>
+                    系统架构
+                </h4>
+                
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h5><i class="fas fa-desktop" style="margin-right: 5px; color: #667eea;"></i>表现层</h5>
+                        <p>WinForm主窗口、监控面板、加气记录Tab页、用户管理、系统设置、报表查询</p>
+                    </div>
+                    <div class="feature-item">
+                        <h5><i class="fas fa-puzzle-piece" style="margin-right: 5px; color: #667eea;"></i>组件层</h5>
+                        <p>自定义ButtonEx、MultiComboBox、TabItemClose控件库、LxtMonitor监控组件</p>
+                    </div>
+                    <div class="feature-item">
+                        <h5><i class="fas fa-cogs" style="margin-right: 5px; color: #667eea;"></i>业务层</h5>
+                        <p>TCP/COM通信协议插件框架、数据实体服务、业务逻辑处理</p>
+                    </div>
+                    <div class="feature-item">
+                        <h5><i class="fas fa-database" style="margin-right: 5px; color: #667eea;"></i>数据层</h5>
+                        <p>MySQL/MSSQL双数据库支持、数据工厂模式、统一访问接口</p>
+                    </div>
+                </div>
+
+                <!-- 核心模块 -->
+                <h4 style="margin: 20px 0 15px; color: #333;">
+                    <i class="fas fa-boxes" style="color: #667eea; margin-right: 8px;"></i>
+                    核心模块设计
+                </h4>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <thead>
+                            <tr style="background: #e9ecef;">
+                                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #dee2e6;">模块</th>
+                                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #dee2e6;">职责</th>
+                                <th style="padding: 10px; text-align: left; border-bottom: 1px solid #dee2e6;">核心功能</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;"><strong>Lxtassembly</strong></td>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">WPF自定义控件库</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">扩展按钮、组合框、Tab控件等</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;"><strong>WpfMonitors</strong></td>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">监控组件库</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">LxtMonitor、TCPMonitor、标准流量计监控</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;"><strong>IFuncPlugin</strong></td>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">通信协议插件</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">TCP/COM协议实现、数据解析、日志记录</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;"><strong>DataHelper</strong></td>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">数据库访问层</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #dee2e6;">MySQL/MSSQL工厂模式、数据访问</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px;"><strong>ICControler</strong></td>
+                                <td style="padding: 10px;">IC卡设备控制</td>
+                                <td style="padding: 10px;">IC卡读写、加密解密、设备通信</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 技术实现 -->
+                <h4 style="margin: 20px 0 15px; color: #333;">
+                    <i class="fas fa-code" style="color: #667eea; margin-right: 8px;"></i>
+                    关键技术实现
+                </h4>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <h5 style="margin-bottom: 10px; color: #667eea; font-size: 14px;">
+                            <i class="fas fa-th"></i> 监控面板布局机制
+                        </h5>
+                        <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: #555; line-height: 1.8;">
+                            <li>Grid动态布局，每行最多6个监控控件</li>
+                            <li>列宽使用Star单位按比例分配</li>
+                            <li>支持串口/TCP双通信模式</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <h5 style="margin-bottom: 10px; color: #667eea; font-size: 14px;">
+                            <i class="fas fa-network-wired"></i> 通信协议架构
+                        </h5>
+                        <ul style="margin: 0; padding-left: 18px; font-size: 12px; color: #555; line-height: 1.8;">
+                            <li>AsyncTcpServer异步服务端</li>
+                            <li>包头标识(0xCD/0xAB)解析</li>
+                            <li>支持粘连数据包处理</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 数据采集流程 -->
+                <h4 style="margin: 20px 0 15px; color: #333;">
+                    <i class="fas fa-project-diagram" style="color: #667eea; margin-right: 8px;"></i>
+                    核心业务流程
+                </h4>
+
+                <div class="flow-diagram">
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
+                        <div style="text-align: center; padding: 12px; background: white; border-radius: 8px;">
+                            <div style="background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">1</div>
+                            <div style="font-size: 12px; color: #333; font-weight: 500;">设备数据</div>
+                            <div style="font-size: 10px; color: #888;">串口/TCP</div>
+                        </div>
+                        <div style="text-align: center; padding: 12px; background: white; border-radius: 8px;">
+                            <div style="background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">2</div>
+                            <div style="font-size: 12px; color: #333; font-weight: 500;">协议解析</div>
+                            <div style="font-size: 10px; color: #888;">Unpackprocessing</div>
+                        </div>
+                        <div style="text-align: center; padding: 12px; background: white; border-radius: 8px;">
+                            <div style="background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">3</div>
+                            <div style="font-size: 12px; color: #333; font-weight: 500;">数据分发</div>
+                            <div style="font-size: 10px; color: #888;">按设备ID路由</div>
+                        </div>
+                        <div style="text-align: center; padding: 12px; background: white; border-radius: 8px;">
+                            <div style="background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">4</div>
+                            <div style="font-size: 12px; color: #333; font-weight: 500;">UI更新</div>
+                            <div style="font-size: 10px; color: #888;">Dispatcher</div>
+                        </div>
+                        <div style="text-align: center; padding: 12px; background: white; border-radius: 8px;">
+                            <div style="background: #667eea; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;">5</div>
+                            <div style="font-size: 12px; color: #333; font-weight: 500;">记录入库</div>
+                            <div style="font-size: 10px; color: #888;">RecordData</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目职责 -->
+                <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 15px 20px; border-radius: 10px; margin-top: 15px;">
+                    <h5 style="margin-bottom: 12px; color: #333; font-size: 14px;">
+                        <i class="fas fa-user-tie" style="color: #667eea; margin-right: 8px;"></i>
+                        个人职责
+                    </h5>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 13px; color: #555;">
+                        <div><i class="fas fa-check" style="color: #00B42A; margin-right: 6px;"></i>Modbus TCP协议对接PLC与多站点设备</div>
+                        <div><i class="fas fa-check" style="color: #00B42A; margin-right: 6px;"></i>封装通信接口，支撑20+站点并发采集</div>
+                        <div><i class="fas fa-check" style="color: #00B42A; margin-right: 6px;"></i>会员卡业务、资源接口开发</div>
+                        <div><i class="fas fa-check" style="color: #00B42A; margin-right: 6px;"></i>RabbitMQ消息队列异步处理</div>
+                    </div>
+                </div>
+
+                <!-- 系统界面展示 -->
+                <div style="margin-top: 20px;">
+                    <h5 style="margin-bottom: 12px; color: #333; font-size: 14px;">
+                        <i class="fas fa-images" style="color: #667eea; margin-right: 8px;"></i>
+                        系统界面展示
+                    </h5>
+                    <div class="project-image-gallery">
+                        <div class="gallery-item" style="grid-column: 1 / -1; max-width: 700px; margin: 0 auto;">
+                            <img src="./gif/station/station-main.gif" alt="加气站(加氢站)SCADA系统运行演示" style="width: 100%; max-height: 400px; object-fit: contain;">
+                            <div class="gallery-caption">SCADA系统运行演示</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="./images/station/ICsystem_Main.png" alt="加气站系统主界面">
+                            <div class="gallery-caption">系统主界面</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="./images/station/ICsystemLogin.png" alt="系统登录界面">
+                            <div class="gallery-caption">系统登录界面</div>
+                        </div>
+                
+                        <div class="gallery-item">
+                            <img src="./images/station/station_login.png" alt="加气站登录界面">
+                            <div class="gallery-caption">加气站登录界面</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 其他项目 ========== -->
+        <div class="project-item">
+            <div class="project-header">
+                <h4>加气站(加氢站)自动化控制系统（项目经理）</h4>
+                <div class="project-period">2022 - 2024</div>
+            </div>
+            <div class="project-tech">技术栈：C#、WPF、SCADA、工业通信协议、数据库设计、安全监控系统</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>作为项目经理带领8人技术团队研发加气站(加氢站)自动化控制系统，实现设备智能化控制、安全监测和数据管理，满足加气站(加氢站)自动化运营需求。</p>
+                <p>
+                    <strong>项目管理职责：</strong>
+                    <br>1. 项目规划与团队管理：制定项目计划，组建技术团队，协调开发、测试和业务部门，确保项目按时交付；
+                    <br>2. 需求分析与系统设计：深入理解加气机/加氢机工作原理，设计系统架构，包括控制逻辑、安全监控、数据采集等模块；
+                    <br>3. 技术方案制定：选择C#/.NET和WPF作为主要开发技术，集成SCADA监控功能，实现设备状态实时监控；
+                    <br>4. 质量管控：建立测试流程，确保系统稳定性，组织安全评估和计量精度测试；
+                    <br>5. 证书获取：带领团队完成国家安全技术认证和计量器具型式批准，确保产品符合国家标准。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>获得国家安全证书和计量器具证书，系统稳定运行率>99.5%，提高生产效率30%，已在多个加气站(加氢站)成功部署。</div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-header">
+                <h4>智慧加气站(加氢站)平台架构</h4>
+                <div class="project-period">2023 - 至今</div>
+            </div>
+            <div class="project-tech">技术栈：实时通信、数据可视化</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>构建智慧加气站(加氢站)监控系统，实现设备状态实时监控、数据采集和运营管理。</p>
+                <p>
+                    <strong>技术职责：</strong>
+                    <br>1. SCADA开发：使用WPF开发SCADA监控界面，实现设备状态监控、报警系统、趋势分析；
+                    <br>2. 实时通信：开发高性能通信模块，实现实时数据采集和传输；
+                    <br>3. 数据可视化：开发数据可视化组件，支持多种图表和3D展示；
+                    <br>4. 系统集成：集成多种工业协议，实现异构系统的数据融合。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>降低设备故障率25%，提升运维效率40%，支持远程监控和预测性维护。</div>
+
+                <!-- 系统架构图 -->
+                <div style="margin-top: 20px;">
+                    <h5 style="margin-bottom: 12px; color: #333; font-size: 14px;">
+                        <i class="fas fa-sitemap" style="color: #667eea; margin-right: 8px;"></i>
+                        智慧加气站(加氢站)平台架构图
+                    </h5>
+                    <div style="text-align: center;">
+                        <img src="./images/station/智慧加气站平台架构.png" alt="智慧加气站(加氢站)平台架构" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-header">
+                <h4>加气站(加氢站)SCADA监控系统</h4>
+                <div class="project-period">2018 - 2023</div>
+            </div>
+            <div class="project-tech">技术栈：.NET Framework、WinForm、Modbus RTU/TCP、S7 协议、SQL Server、自定义控件</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>实现加气站(加氢站)设备实时监控、数据采集、流程控制与远程管理，满足 LNG/LH2 设备防爆要求与国家计量器具生产标准。</p>
+                <p>
+                    <strong>核心职责：</strong>
+                    <br>1. 主导上位机软件全流程开发：基于 .NET Framework + WinForm 搭建 C/S 架构系统，设计 UI 界面与设备通信逻辑；
+                    <br>2. 通过 Modbus（RTU/TCP）、S7 协议对接 PLC 与工业设备，实现流量计、传感器数据采集与加气/加氢流程控制；
+                    <br>3. 独立封装设备通信接口，设计自定义用户控件，优化多设备并发通信性能；
+                    <br>4. 负责软件测试、BUG 修复与技术文档编写，支撑 20+ 加气站(加氢站)稳定运行。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>系统稳定运行率达 99.8%，满足国家计量器具生产标准，提升加气站运营效率与安全水平。</div>
+
+                <!-- 系统运行演示 -->
+                <div style="margin-top: 20px;">
+                    <h5 style="margin-bottom: 12px; color: #333; font-size: 14px;">
+                        <i class="fas fa-video" style="color: #667eea; margin-right: 8px;"></i>
+                        系统运行演示
+                    </h5>
+                    <div style="text-align: center;">
+                        <img src="./images/Gas(Hydrogen)StationSCADAMonitoringSystem/scanda_station4.gif" alt="加气站(加氢站)SCADA监控系统运行演示" style="max-width: 100%; max-height: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-header">
+                <h4>加气站(加氢站)出厂充装标定平台系统</h4>
+                <div class="project-period">2019 - 2022</div>
+            </div>
+            <div class="project-tech">技术栈：WinForm、.NET Framework、Modbus 协议、PLC 对接、国家计量标准适配</div>
+            <div class="project-content">
+                <p><strong>项目背景：</strong>开发机械特装检测装备检验平台，涉及管线工艺、PLC、传感器、流量计、上位机检测软件等技术，满足加气机/加氢机出厂检验要求。</p>
+                <p>
+                    <strong>个人职责：</strong>
+                    <br>1. 主导上位机软件开发，基于 WinForm 实现标定流程 UI 界面与逻辑控制；
+                    <br>2. 通过 Modbus 协议对接 PLC 与传感器，实现数据自动采集与标定流程自动化；
+                    <br>3. 编写测试方案与技术文档，满足国家计量器具生产标准。
+                </p>
+                <div class="project-achieve"><strong>项目成果：</strong>提升出厂检验效率 30%，完全符合国家相关标准，已批量应用于生产流程。</div>
+            </div>
+        </div>
+
+        <!-- 相关项目推荐 -->
+        <div class="project-category">
+            <h3>相关行业项目</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <a href="chip.html" style="text-decoration: none;">
+                    <div style="padding: 25px; background: var(--light); border-radius: 12px; text-align: center; transition: all 0.3s ease;">
+                        <i class="fas fa-microchip" style="font-size: 36px; color: var(--main); margin-bottom: 10px;"></i>
+                        <h4 style="margin-bottom: 8px;">芯片制造</h4>
+                        <p style="color: #666; font-size: 14px;">光模块MES系统</p>
+                    </div>
+                </a>
+                <a href="transit.html" style="text-decoration: none;">
+                    <div style="padding: 25px; background: var(--light); border-radius: 12px; text-align: center; transition: all 0.3s ease;">
+                        <i class="fas fa-train" style="font-size: 36px; color: var(--main); margin-bottom: 10px;"></i>
+                        <h4 style="margin-bottom: 8px;">轨道交通</h4>
+                        <p style="color: #666; font-size: 14px;">供电安全管理系统</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-info">
+            <p>© 2026 罗小添 | 个人项目展示站</p>
+            <p>GitHub: <a href="https://github.com/royeLuo333" target="_blank">@royeLuo333</a></p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>
