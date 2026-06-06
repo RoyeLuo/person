@@ -402,43 +402,150 @@ thread->start();
         </div>
 
         <div class="card">
-            <h2>网络编程</h2>
-<pre><code><span class="comment">// HTTP请求（Qt5+）</span>
-<span class="class">QNetworkAccessManager</span> *manager = <span class="keyword">new</span> <span class="class">QNetworkAccessManager</span>(<span class="keyword">this</span>);
-<span class="class">QNetworkRequest</span> request(QUrl(<span class="string">"https://api.example.com/data"</span>));
-request.setHeader(QNetworkRequest::ContentTypeHeader, <span class="string">"application/json"</span>);
+            <h2>工业通信协议</h2>
 
-<span class="comment">// GET请求</span>
-<span class="class">QNetworkReply</span> *reply = manager-><span class="function">get</span>(request);
-<span class="function">connect</span>(reply, &QNetworkReply::finished, [<span class="keyword">this</span>, reply]() {
-    <span class="keyword">if</span> (reply->error() == QNetworkReply::NoError) {
-        QByteArray data = reply->readAll();
-        <span class="comment">// 处理数据</span>
+            <h3>Modbus RTU / TCP</h3>
+            <p>Modbus是工业自动化领域最常用的通信协议，QT中通过第三方库如QModbus或自行封装串口/TCP实现。</p>
+
+            <div class="grid">
+                <div class="grid-item">
+                    <h4>Modbus RTU（串口）</h4>
+                    <p>基于RS-232/RS-485串行通信，适用于近距离设备直连。</p>
+                    <span class="tag">RTU帧格式</span>
+                    <span class="tag">CRC校验</span>
+                    <span class="tag">QSerialPort</span>
+                </div>
+                <div class="grid-item">
+                    <h4>Modbus TCP（以太网）</h4>
+                    <p>基于TCP/IP网络通信，适用于远程监控和多设备组网。</p>
+                    <span class="tag">端口502</span>
+                    <span class="tag">MBAP报文头</span>
+                    <span class="tag">QTcpSocket</span>
+                </div>
+            </div>
+<pre><code><span class="comment">// Modbus TCP 通信示例（基于QTcpSocket）</span>
+<span class="keyword">class</span> <span class="class">ModbusTcpClient</span> : <span class="keyword">public</span> <span class="class">QObject</span>
+{
+    Q_OBJECT
+<span class="keyword">public</span>:
+    <span class="function">ModbusTcpClient</span>(<span class="keyword">const</span> QString &ip, quint16 port = 502)
+    {
+        socket = <span class="keyword">new</span> <span class="class">QTcpSocket</span>(<span class="keyword">this</span>);
+        <span class="function">connect</span>(socket, &QTcpSocket::readyRead, <span class="keyword">this</span>, &ModbusTcpClient::onDataReceived);
+        socket-><span class="function">connectToHost</span>(ip, port);
     }
-    reply->deleteLater();
-});
 
-<span class="comment">// POST请求</span>
-<span class="class">QNetworkRequest</span> request(QUrl(<span class="string">"https://api.example.com/login"</span>));
-QByteArray postData = <span class="string">"username=admin&amp;password=123"</span>.toUtf8();
-manager-><span class="function">post</span>(request, postData);
+    <span class="comment">// 读取保持寄存器（功能码 0x03）</span>
+    QByteArray <span class="function">readHoldingRegisters</span>(quint16 startAddr, quint16 count)
+    {
+        QByteArray frame;
+        frame.append(<span class="number">0x00</span>); frame.append(<span class="number">0x01</span>);  <span class="comment">// 事务标识符</span>
+        frame.append(<span class="number">0x00</span>); frame.append(<span class="number">0x00</span>);  <span class="comment">// 协议标识符</span>
+        frame.append(<span class="number">0x00</span>); frame.append(<span class="number">0x06</span>);  <span class="comment">// 长度</span>
+        frame.append(<span class="number">0x01</span>);                           <span class="comment">// 单元标识符</span>
+        frame.append(<span class="number">0x03</span>);                           <span class="comment">// 功能码：读保持寄存器</span>
+        frame.append(startAddr >> <span class="number">8</span>);                       <span class="comment">// 起始地址高字节</span>
+        frame.append(startAddr & <span class="number">0xFF</span>);                   <span class="comment">// 起始地址低字节</span>
+        frame.append(count >> <span class="number">8</span>);                         <span class="comment">// 寄存器数量高字节</span>
+        frame.append(count & <span class="number">0xFF</span>);                     <span class="comment">// 寄存器数量低字节</span>
+        socket->write(frame);
+        <span class="keyword">return</span> frame;
+    }
 
-<span class="comment">// TCP通信</span>
-<span class="class">QTcpSocket</span> *socket = <span class="keyword">new</span> <span class="class">QTcpSocket</span>(<span class="keyword">this</span>);
-socket-><span class="function">connectToHost</span>(<span class="string">"192.168.1.100"</span>, <span class="number">8080</span>);
-<span class="keyword">if</span> (socket->waitForConnected()) {
-    socket->write(<span class="string">"Hello Server\n"</span>);
-    socket->waitForReadyRead();
-    QString response = socket->readAll();
-}
+    <span class="comment">// 写入单个寄存器（功能码 0x06）</span>
+    <span class="keyword">void</span> <span class="function">writeSingleRegister</span>(quint16 addr, quint16 value)
+    {
+        QByteArray frame;
+        frame.append(<span class="number">0x00</span>); frame.append(<span class="number">0x01</span>);
+        frame.append(<span class="number">0x00</span>); frame.append(<span class="number">0x00</span>);
+        frame.append(<span class="number">0x00</span>); frame.append(<span class="number">0x06</span>);
+        frame.append(<span class="number">0x01</span>);
+        frame.append(<span class="number">0x06</span>);                           <span class="comment">// 功能码：写单个寄存器</span>
+        frame.append(addr >> <span class="number">8</span>);
+        frame.append(addr & <span class="number">0xFF</span>);
+        frame.append(value >> <span class="number">8</span>);
+        frame.append(value & <span class="number">0xFF</span>);
+        socket->write(frame);
+    }
 
-<span class="comment">// TCP服务器</span>
-<span class="class">QTcpServer</span> *server = <span class="keyword">new</span> <span class="class">QTcpServer</span>(<span class="keyword">this</span>);
-<span class="function">connect</span>(server, &QTcpServer::newConnection, [<span class="keyword">this</span>](){
-    <span class="class">QTcpSocket</span> *client = server->nextPendingConnection();
-    <span class="comment">// 处理客户端连接</span>
-});
-server->listen(QHostAddress::Any, <span class="number">8080</span>);</code></pre>
+<span class="keyword">private</span> <span class="keyword">slots</span>:
+    <span class="keyword">void</span> <span class="function">onDataReceived</span>()
+    {
+        QByteArray data = socket->readAll();
+        <span class="comment">// 解析Modbus TCP响应帧...</span>
+        <span class="function">emit</span> dataReady(data);
+    }
+
+<span class="keyword">signals</span>:
+    <span class="keyword">void</span> <span class="function">dataReady</span>(<span class="keyword">const</span> QByteArray &data);
+
+<span class="keyword">private</span>:
+    <span class="class">QTcpSocket</span> *socket;
+};</code></pre>
+
+            <h3>标准TCP通信 vs 透传TCP</h3>
+            <table>
+                <tr><th>特性</th><th>标准TCP（协议帧）</th><th>透传TCP</th></tr>
+                <tr><td>数据格式</td><td>自定义协议帧，含帧头/长度/校验/帧尾</td><td>原始数据流，不做解析</td></tr>
+                <tr><td>适用场景</td><td>上位机与PLC/设备的结构化通信</td><td>上位机直传指令到设备端</td></tr>
+                <tr><td>数据解析</td><td>上位机负责组帧和解析</td><td>上位机不解析，仅转发</td></tr>
+                <tr><td>典型应用</td><td>Modbus TCP、S7协议、自定义协议</td><td>串口服务器透传、调试工具</td></tr>
+            </table>
+
+<pre><code><span class="comment">// 透传TCP示例：直接转发原始二进制数据</span>
+<span class="keyword">class</span> <span class="class">TransparentTcpClient</span> : <span class="keyword">public</span> <span class="class">QObject</span>
+{
+    Q_OBJECT
+<span class="keyword">public</span>:
+    <span class="function">TransparentTcpClient</span>(<span class="keyword">const</span> QString &ip, quint16 port)
+    {
+        socket = <span class="keyword">new</span> <span class="class">QTcpSocket</span>(<span class="keyword">this</span>);
+        <span class="function">connect</span>(socket, &QTcpSocket::readyRead, [<span class="keyword">this</span>]() {
+            <span class="comment">// 透传模式下直接推送原始数据，不做协议解析</span>
+            <span class="function">emit</span> rawDataReceived(socket->readAll());
+        });
+        socket-><span class="function">connectToHost</span>(ip, port);
+    }
+
+    <span class="comment">// 发送透传数据（十六进制指令）</span>
+    <span class="keyword">void</span> <span class="function">sendRaw</span>(<span class="keyword">const</span> QByteArray &data)
+    {
+        <span class="keyword">if</span> (socket->state() == QAbstractSocket::ConnectedState) {
+            socket->write(data);
+        }
+    }
+
+    <span class="comment">// 发送十六进制字符串指令</span>
+    <span class="keyword">void</span> <span class="function">sendHex</span>(<span class="keyword">const</span> QString &hex)
+    {
+        QByteArray data = QByteArray::fromHex(hex.toUtf8());
+        <span class="function">sendRaw</span>(data);
+    }
+
+<span class="keyword">signals</span>:
+    <span class="keyword">void</span> <span class="function">rawDataReceived</span>(<span class="keyword">const</span> QByteArray &data);
+    <span class="keyword">void</span> <span class="function">connected</span>();
+    <span class="keyword">void</span> <span class="function">disconnected</span>();
+
+<span class="keyword">private</span>:
+    <span class="class">QTcpSocket</span> *socket;
+};
+
+<span class="comment">// 使用示例</span>
+TransparentTcpClient *client = <span class="keyword">new</span> TransparentTcpClient(<span class="string">"192.168.1.100"</span>, <span class="number">8000</span>);
+<span class="comment">// 发送Modbus RTU指令的十六进制（读寄存器 0x03）</span>
+client-><span class="function">sendHex</span>(<span class="string">"01 03 00 00 00 02 C4 0B"</span>);</code></pre>
+
+            <div class="highlight-box">
+                <strong>工业通信开发要点：</strong>
+                <ul>
+                    <li>Modbus TCP标准端口为502，透传TCP可自定义端口</li>
+                    <li>标准TCP需设计协议帧结构（帧头+地址+功能码+数据+校验+帧尾）</li>
+                    <li>透传TCP不解析数据包内容，仅负责数据的双向转发</li>
+                    <li>多设备通信需使用多线程或异步IO避免界面卡顿</li>
+                    <li>工业场景需增加断线重连、超时处理、心跳保持机制</li>
+                </ul>
+            </div>
         </div>
 
         <div class="card">
